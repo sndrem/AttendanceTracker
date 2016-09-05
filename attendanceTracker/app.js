@@ -6,7 +6,6 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
-var users = require('./routes/users');
 
 var app = express();
 
@@ -29,7 +28,6 @@ app.use(require('node-sass-middleware')({
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
-app.use('/users', users);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -60,6 +58,11 @@ app.use(function(err, req, res, next) {
     message: err.message,
     error: {}
   });
+});
+
+app.set('port', 3000);
+app.listen(app.get('port'), function() {
+  console.log("App started on " + app.get('port') + ". To terminate press Ctrl+C");
 });
 
 
