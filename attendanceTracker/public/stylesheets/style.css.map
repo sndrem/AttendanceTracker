@@ -2,8 +2,9 @@
 	"version": 3,
 	"file": "style.css",
 	"sources": [
-		"style.sass"
+		"style.sass",
+		"02_basics/_variables.sass"
 	],
-	"mappings": "AAAA,AAAA,IAAI,CAAC;EACH,OAAO,EAAE,IAAK;EACd,IAAI,EAAE,kDAAmD,GAAG;;AAE9D,AAAA,CAAC,CAAC;EACA,KAAK,EAAE,OAAQ,GAAG",
+	"mappings": "AAEA,AAAA,IAAI,CAAC;EACH,OAAO,EAAE,IAAK;EACd,IAAI,EAAE,kDAAmD;EACzD,KAAK,ECJE,IAAI,GDIM;;AAEnB,AAAA,CAAC,CAAC;EACA,KAAK,EAAE,OAAQ,GAAG",
 	"names": []
 }
