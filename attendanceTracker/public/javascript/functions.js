@@ -13,7 +13,11 @@ $(function() {
 	auth = firebase.auth();
 
 	myApp.login = function(email, password) {
-		auth.signInWithEmailAndPassword(email, password).catch(function(error) {
+		auth.signInWithEmailAndPassword(email, password).then(function(e){
+			console.log(e);
+			$("legend").html("You successfully logged in!");
+			window.location.replace("/dashboard");
+		}, function(error) {
 			console.log("Could not sign in with email and password");
 			console.log(error.code);
 			console.log(error.message);
@@ -30,10 +34,14 @@ $(function() {
 	};
 
 	myApp.register = function(email, password) {
-		auth.createUserWithEmailAndPassword(email, password).catch(function(error) {
+		auth.createUserWithEmailAndPassword(email, password).then(function(e) {
+			$("legend").html("You successfully registered your new user!");
+		}, function(error) {
+			$("legend").html("Could not create user");
 			console.log("Could not create user with email and password");
 			console.log(error.code);
 			console.log(error.message);
+			myApp.resetForm();
 		});
 	};
 
@@ -60,12 +68,36 @@ $(function() {
 		return pattern.test(email);
 	};
 
+	myApp.resetForm = function() {
+		$("form")[0].reset();
+	}
 
-	$("#signInButton").on('click', function(e) {
+
+	$("#loginButton").on('click', function(e) {
+		$("legend").html("");
 		e.preventDefault();
 		var email = $("#email").val();
 		var password = $("#password").val();
-		myApp.login(email, password);
+		var statusMessages = [];
+		
+		if(email.length == 0 || !myApp.isValidEmail(email)) {
+			statusMessages.push("Please provide a valid email address");
+		}
+
+		if(password.length == 0) {
+			statusMessages.push("Please provide a password");
+		}
+
+		if(statusMessages.length == 0) {
+			myApp.login(email, password);	
+		} else {
+			var $legend = $("legend");
+			$legend.append("<ul></ul>");
+			$.each(statusMessages, function(index, element){
+				$legend.find("ul").append("<li class=\"bg-danger\">" + element + "</li>");
+			})
+		}
+		
 	});
 
 	$("#registerButton").on('click', function(e) {
@@ -98,8 +130,7 @@ $(function() {
 			var $legend = $("legend");
 			$legend.append("<ul></ul>");
 			$.each(statusMessages, function(index, element){
-				console.log(element);
-				$legend.find("ul").append("<li class=\"bg-error\">" + element + "</li>");
+				$legend.find("ul").append("<li class=\"bg-danger\">" + element + "</li>");
 			});
 		}		
 
@@ -115,8 +146,7 @@ $(function() {
 
 	auth.onAuthStateChanged(function(firebaseUser) {
 		if(firebaseUser) {
-			myApp.saveTokenCookie();			
-			console.log(firebaseUser.email + " er logget inn");
+			myApp.saveTokenCookie();		
 		} else {
 			console.log("Ingen logget inn");
 		}
