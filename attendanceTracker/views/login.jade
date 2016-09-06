@@ -1,31 +1,15 @@
 extends layout
 block navigation
-	nav.navbar.navbar-default
-		.container-fluid
-			.navbar-header
-				button(type="button", data-toggle="collapse" data-target="#navbar-collapse" , aria-expanded="false").navbar-toggle.collapsed
-					span.sr-only Toggle navigation
-					span.icon-bar
-					span.icon-bar
-					span.icon-bar
-				a(href="/").navbar-brand Tregas
-
-			.collapse.navbar-collapse#navbar-collapse
-				ul.nav.navbar-nav.navbar-right
-					li
-						a(href="/logout")
-							i.material-icons &#xE879
-							| Log out
-
+	include partials/registerNavigation
 block content
 	h3= title
 	form(action="#")
 		.form-group
 			label(for="email") Email
-			input.form-control(type="text" name="email" placeholder="Email")
+			input.form-control(type="email" name="email" placeholder="Email")
 		.form-group
 			label(for="password") Password
-			input.form-control(type="text" name="password" placeholder="Password")
+			input.form-control(type="password" name="password" placeholder="Password")
 		.form-group
 			a(href="/register") No user? <br> Register here
 			button.btn.btn-primary.pull-right#loginButton Log In

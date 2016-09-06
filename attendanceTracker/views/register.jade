@@ -3,15 +3,17 @@ extends layout
 block content
 	h3= title
 	form(action="#")
+		legend#statusMessage
+
 		.form-group
 			label(for="email") Email
-			input.form-control(type="text" name="email" placeholder="Email")
+			input.form-control(type="email" id="email" name="email" placeholder="Email")
 		.form-group
 			label(for="password") Password
-			input.form-control(type="text" name="password" placeholder="Password")
+			input.form-control(type="password" id="password" name="password" placeholder="Password")
 		.form-group
 			label(for="confirmPassword") Confirm Password
-			input.form-control(type="text" name="confirmPassword" placeholder="Confirm Password")
+			input.form-control(type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password")
 		.form-group
-			a(href="/register") Already a user? <br> Log In Here
+			a(href="/login") Already a user? <br> Log In Here
 			button.btn.btn-primary.pull-right#registerButton Create User
