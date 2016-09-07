@@ -13,8 +13,8 @@ $(function() {
 	auth = firebase.auth();
 
 	myApp.login = function(email, password) {
-		auth.signInWithEmailAndPassword(email, password).then(function(e){
-			console.log(e);
+		auth.signInWithEmailAndPassword(email, password).then(function(user){
+			console.log(user);
 			$("legend").html("You successfully logged in!");
 			$.session.set("loggedIn", true);
 			window.location.assign("/dashboard");
@@ -29,6 +29,7 @@ $(function() {
 		auth.signOut().then(function(e) {
 			console.log("User successfully signed out");
 			$.session.remove("loggedIn");
+            myApp.removeTokenCookie();
 			window.location.replace("/");
 		}), function(error) {
 			console.log("An error occured. Could not sign out");
@@ -142,6 +143,8 @@ $(function() {
 		myApp.signOut();
 		myApp.removeTokenCookie();
 	});
+
+
 
 	auth.onAuthStateChanged(function(firebaseUser) {
 		if(firebaseUser) {

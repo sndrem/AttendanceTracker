@@ -4,6 +4,8 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var expressValidator = require("express-validator");
+var expressSession = require("express-session");
 
 var routes = require('./routes/index');
 
@@ -18,6 +20,7 @@ app.set('view engine', 'jade');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(expressValidator());
 app.use(cookieParser());
 app.use(require('node-sass-middleware')({
   src: path.join(__dirname, 'public'),
@@ -26,6 +29,11 @@ app.use(require('node-sass-middleware')({
   sourceMap: true
 }));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(expressSession({
+    secret: 'hfusyr83748fesf7&%&#&783u8ru/(Y',
+    saveUninitialized: false,
+    resave: false
+}));
 
 app.use('/', routes);
 
