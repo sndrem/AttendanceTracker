@@ -15,6 +15,7 @@ function authenticate(req, res, next) {
 		firebase.auth().verifyIdToken(idToken).then(function(decodedToken) {
 		  var uid = decodedToken.uid;
 		  req.user = decodedToken;
+		  res.locals.isLoggedIn = true;
 		  next();
 		}).catch(function(error) {
 		  // Handle error
@@ -25,6 +26,7 @@ function authenticate(req, res, next) {
 		res.redirect("/");
 	}
 }
+
 
 /* GET home page. */
 router.get('/', function(req, res, next) {

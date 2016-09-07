@@ -7,15 +7,16 @@ var config = {
 };
 firebase.initializeApp(config);
 
-auth = firebase.auth();
+
 $(function() {
 	var myApp = {};
-
+	auth = firebase.auth();
 
 	myApp.login = function(email, password) {
 		auth.signInWithEmailAndPassword(email, password).then(function(e){
 			console.log(e);
 			$("legend").html("You successfully logged in!");
+			$.session.set("loggedIn", true);
 			window.location.assign("/dashboard");
 		}, function(error) {
 			console.log("Could not sign in with email and password");
@@ -27,6 +28,7 @@ $(function() {
 	myApp.signOut = function() {
 		auth.signOut().then(function(e) {
 			console.log("User successfully signed out");
+			$.session.remove("loggedIn");
 			window.location.replace("/");
 		}), function(error) {
 			console.log("An error occured. Could not sign out");
@@ -36,6 +38,7 @@ $(function() {
 	myApp.register = function(email, password) {
 		auth.createUserWithEmailAndPassword(email, password).then(function(e) {
 			$("legend").html("You successfully registered your new user!");
+			$.session.set("loggedIn", true);
 		}, function(error) {
 			$("legend").html("Could not create user");
 			console.log("Could not create user with email and password");
@@ -133,8 +136,6 @@ $(function() {
 				$legend.find("ul").append("<li class=\"bg-danger\">" + element + "</li>");
 			});
 		}		
-
-		
 	});
 
 	$("#logOutButton").on('click', function(e) {
@@ -142,9 +143,7 @@ $(function() {
 		myApp.removeTokenCookie();
 	});
 
-});
-
-auth.onAuthStateChanged(function(firebaseUser) {
+	auth.onAuthStateChanged(function(firebaseUser) {
 		if(firebaseUser) {
 			myApp.saveTokenCookie();
 			console.log("User logged in");		
@@ -152,4 +151,8 @@ auth.onAuthStateChanged(function(firebaseUser) {
 			console.log("Ingen logget inn");
 		}
 	});
+
+});
+
+
 

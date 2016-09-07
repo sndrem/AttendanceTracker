@@ -1,7 +1,10 @@
 extends layout
 block navigation
-	include partials/dashboardNavigation
+    include partials/dashboardNavigation
 
 block content
-	h3 #{title} #{user}
-	
+    h3 #{title} #{user}
+    if (isLoggedIn == true)
+        p Hello World, I am logged in!
+    else 
+        p Goodbye World, I am logging out. 
