@@ -50,7 +50,7 @@ $(function() {
 	};
 
 	myApp.saveTokenCookie = function() {
-		auth.currentUser.getToken(true).then(function(idToken) {
+		auth.currentUser.getToken(false).then(function(idToken) {
 			Cookies.set('token', idToken, {
 				domain: window.location.hostname,
 				expire: 1 / 24,
@@ -76,7 +76,7 @@ $(function() {
 		$("form")[0].reset();
 	}
 
-
+ 
 	$("#loginButton").on('click', function(e) {
 		$("legend").html("");
 		e.preventDefault();
@@ -140,16 +140,13 @@ $(function() {
 	});
 
 	$("#logOutButton").on('click', function(e) {
-		myApp.signOut();
-		myApp.removeTokenCookie();
+        myApp.signOut();
 	});
-
-
 
 	auth.onAuthStateChanged(function(firebaseUser) {
 		if(firebaseUser) {
 			myApp.saveTokenCookie();
-			console.log("User logged in");		
+			console.log("User logged in");
 		} else {
 			console.log("Ingen logget inn");
 		}
