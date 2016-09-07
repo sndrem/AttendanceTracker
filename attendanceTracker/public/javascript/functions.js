@@ -7,16 +7,16 @@ var config = {
 };
 firebase.initializeApp(config);
 
-
+auth = firebase.auth();
 $(function() {
 	var myApp = {};
-	auth = firebase.auth();
+
 
 	myApp.login = function(email, password) {
 		auth.signInWithEmailAndPassword(email, password).then(function(e){
 			console.log(e);
 			$("legend").html("You successfully logged in!");
-			window.location.replace("/dashboard");
+			window.location.assign("/dashboard");
 		}, function(error) {
 			console.log("Could not sign in with email and password");
 			console.log(error.code);
@@ -142,14 +142,14 @@ $(function() {
 		myApp.removeTokenCookie();
 	});
 
+});
 
-
-	auth.onAuthStateChanged(function(firebaseUser) {
+auth.onAuthStateChanged(function(firebaseUser) {
 		if(firebaseUser) {
-			myApp.saveTokenCookie();		
+			myApp.saveTokenCookie();
+			console.log("User logged in");		
 		} else {
 			console.log("Ingen logget inn");
 		}
 	});
-});
 
