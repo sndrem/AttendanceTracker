@@ -47,4 +47,9 @@ router.get("/dashboard", authenticate, function(req, res, next) {
     res.render("dashboard", {title: "Velkommen", user: req.user.email});
 });
 
+/* about us route */
+router.get("/about", function(req, res, next){
+  res.render("about");
+});
+
 module.exports = router;
