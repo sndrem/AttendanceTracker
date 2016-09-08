@@ -1,0 +1,17 @@
+extends layout
+
+
+block content
+    .row
+        .col-xs-12.col-sm-6.col-md-6
+            h3 Velkommen
+            p Velkommen til Tregas. Tregas er UIB sitt offisielle verktøy for å ta fravær i labgrupper og i seminartimer
+    .row    
+        .col-xs-12.col-sm-6.col-md-6
+            h3 For studenter
+            p Som student kan du enkelt opprette en bruker med mail og passord. Registreringen tar kort tid og trengs bare å gjøres en gang.
+            a(href="/register").btn.btn-default Register
+        .col-xs-12.col-sm-6.col-md-6
+            h3 For studentassistener
+            p Som studentassistent skal du ha fått brukernavn og passord fra emneansvarlig ved faget. Bruk det til å logge inn med.
+            a(href="/login").btn.btn-default Log in

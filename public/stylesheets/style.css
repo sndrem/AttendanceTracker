@@ -1,0 +1,25 @@
+@import 'https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700,900';
+i {
+  vertical-align: bottom; }
+
+a {
+  color: #A95A10; }
+
+html {
+  position: relative;
+  min-height: 100%; }
+
+body {
+  font-family: "Roboto", sans-serif;
+  color: #455A64;
+  background: #ECEFF1; }
+
+.container {
+  margin-bottom: 16%; }
+
+footer {
+  position: absolute;
+  bottom: 0;
+  padding-bottom: 1%; }
+
+/*# sourceMappingURL=style.css.map */
