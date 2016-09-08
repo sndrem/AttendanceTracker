@@ -12,6 +12,27 @@ $(function() {
 	var myApp = {};
 	auth = firebase.auth();
 
+    myApp.checkLoggedinUser = function() {
+        var cookie = Cookies.get('token');
+        if(cookie != null) {
+            myApp.showLoggedInNavigation();
+        }
+    };
+
+    myApp.showLoggedInNavigation = function() {
+        console.log("Should show this awesome menu");
+        var $navbar = $(".navbar-nav");
+        var navigation = "<li>" +
+                        "<a href=\"/dashboard\"><i class=\"material-icons\">&#xE853;</i>Dashboard</a>" +
+                        "</li>" +
+                        "<li>" +
+                        "<a href=\"#\" id=\"logOutButton\"><i class=\"material-icons\">&#xE879;</i>Log Out</a>" +
+                        "</li>";
+        $navbar.html(navigation);
+    };
+
+
+
 	myApp.login = function(email, password) {
 		auth.signInWithEmailAndPassword(email, password).then(function(user){
 			console.log(user);
@@ -76,6 +97,7 @@ $(function() {
 		$("form")[0].reset();
 	}
 
+    myApp.checkLoggedinUser();
  
 	$("#loginButton").on('click', function(e) {
 		$("legend").html("");
@@ -136,12 +158,15 @@ $(function() {
 			$.each(statusMessages, function(index, element){
 				$legend.find("ul").append("<li class=\"bg-danger\">" + element + "</li>");
 			});
-		}		
+		}
 	});
 
 	$("#logOutButton").on('click', function(e) {
+        e.preventDefault();
         myApp.signOut();
 	});
+
+    
 
 	auth.onAuthStateChanged(function(firebaseUser) {
 		if(firebaseUser) {
