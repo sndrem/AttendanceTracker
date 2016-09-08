@@ -49,7 +49,7 @@ router.get("/dashboard", authenticate, function(req, res, next) {
 
 /* about us route */
 router.get("/about", function(req, res, next){
-  res.render("about");
+  res.render("about", {title: "About us"});
 });
 
 module.exports = router;
