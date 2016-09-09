@@ -4,8 +4,8 @@ var cookieParser = require('cookie-parser');
 var firebase = require('firebase');
 // Initialize Firebase
 var config = {
-    serviceAccount: "./attendanceTracker-service-key.json",
-    databaseURL: "https://chat-application-1e611.firebaseio.com/"
+    serviceAccount: "./attendance-tracker-service-account-key.json",
+    databaseURL: "https://attendancetracker-8103e.firebaseio.com/"
 };
 firebase.initializeApp(config);
 
@@ -43,9 +43,29 @@ router.get("/register", function(req, res, next) {
 });
 
 /* Dashboard route */
-router.get("/dashboard", authenticate, function(req, res, next) {
-    res.render("dashboard", {title: "Velkommen", user: req.user.email});
+router.get("/dashboard", authenticate, getSeminars, function(req, res, next) {
+    res.render("dashboard", {model: req.viewModel});
 });
+
+function getSeminars(req, res, next) {
+    var seminarRef = firebase.database().ref("seminars");
+    var viewModel = {
+        user: req.user.email,
+        seminars: [],
+        title: "Velkommen"
+    };
+    seminarRef.on('child_added', function(snapshot, prevChildKey) {
+        console.log(snapshot.val());
+        console.log(snapshot.numChildren());
+        snapshot.forEach(function(childSnapshot) {
+            console.log(childSnapshot.val());
+            viewModel.seminars.push(childSnapshot.val());
+        });
+        req.viewModel = viewModel;
+        
+    });
+    next();
+}
 
 /* about us route */
 router.get("/about", function(req, res, next){
