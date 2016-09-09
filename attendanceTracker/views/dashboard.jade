@@ -1,4 +1,8 @@
 extends layout
 
 block content
-    h3 #{title} #{user}
+    h3 #{model.title} #{model.user}
+    h4 Your seminars
+    ul
+        for seminar in model.seminars
+            li #{seminar.name}

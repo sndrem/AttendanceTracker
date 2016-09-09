@@ -1,9 +1,9 @@
 // Initialize Firebase
 var config = {
-	apiKey: "AIzaSyDHGGERts7Lp5lQdyjUDABYWAXKfT-33eQ",
-	authDomain: "chat-application-1e611.firebaseapp.com",
-	databaseURL: "https://chat-application-1e611.firebaseio.com",
-	storageBucket: "chat-application-1e611.appspot.com",
+apiKey: "AIzaSyDH123CsCOZjz5rxjaXNmoSYTIgB35FamQ",
+authDomain: "attendancetracker-8103e.firebaseapp.com",
+databaseURL: "https://attendancetracker-8103e.firebaseio.com",
+storageBucket: "",
 };
 firebase.initializeApp(config);
 
@@ -12,6 +12,7 @@ $(function() {
 	var myApp = {};
 	auth = firebase.auth();
 
+    // TODO Verifisere token
     myApp.checkLoggedinUser = function() {
         var cookie = Cookies.get('token');
         if(cookie != null) {
@@ -34,8 +35,10 @@ $(function() {
 
 
 	myApp.login = function(email, password) {
-		auth.signInWithEmailAndPassword(email, password).then(function(user){
-			console.log(user);
+		auth.signInWithEmailAndPassword(email, password).then(function(error, user){
+			if(error) {
+                return;
+            }
 			$("legend").html("You successfully logged in!");
 			$.session.set("loggedIn", true);
 			window.location.assign("/dashboard");
@@ -57,10 +60,12 @@ $(function() {
 		}
 	};
 
+
 	myApp.register = function(email, password) {
 		auth.createUserWithEmailAndPassword(email, password).then(function(e) {
 			$("legend").html("You successfully registered your new user!");
 			$.session.set("loggedIn", true);
+            window.location.assign("/dashboard");
 		}, function(error) {
 			$("legend").html("Could not create user");
 			console.log("Could not create user with email and password");
