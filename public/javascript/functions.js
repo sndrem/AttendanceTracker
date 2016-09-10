@@ -14,11 +14,18 @@ $(function() {
 
     // TODO Verifisere token
     myApp.checkLoggedinUser = function() {
-        var cookie = Cookies.get('token');
-        if(cookie != null) {
+        if(myApp.userIsLoggedIn()) {
             myApp.showLoggedInNavigation();
         }
     };
+
+    myApp.userIsLoggedIn = function() {
+        var storedToken = Cookies.get('token');
+        if(!storedToken) {
+            return false;
+        }
+        return true;
+    }
 
     myApp.showLoggedInNavigation = function() {
         console.log("Should show this awesome menu");
@@ -31,8 +38,6 @@ $(function() {
                         "</li>";
         $navbar.html(navigation);
     };
-
-
 
 	myApp.login = function(email, password) {
 		auth.signInWithEmailAndPassword(email, password).then(function(error, user){
