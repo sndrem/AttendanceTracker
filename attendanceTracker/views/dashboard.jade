@@ -1,9 +1,0 @@
-extends layout
-
-block content
-    h3 #{model.title} #{model.user}
-    h4 Your seminars
-    ul
-        for seminar in model.seminars
-            for s in seminar
-                li #{s.name} #{s.day}
