@@ -15,7 +15,7 @@ function authenticate(req, res, next) {
         firebase.auth().verifyIdToken(idToken).then(function(decodedToken) {
           var uid = decodedToken.uid;
           req.user = decodedToken;
-          next();
+          return next();
         }).catch(function(error) {
           // Handle error
           console.log("Could not verify token");
@@ -43,9 +43,13 @@ router.get("/register", function(req, res, next) {
 });
 
 /* Dashboard route */
-router.get("/dashboard", authenticate, getSeminars, function(req, res, next) {
-    res.render("dashboard", {model: req.viewModel});
-});
+router.get("/dashboard", authenticate, getSeminars, renderSeminars);
+
+function renderSeminars(req, res, next) {
+    res.render("dashboard", {
+        model: req.viewModel
+    });
+}
 
 function getSeminars(req, res, next) {
     var seminarRef = firebase.database().ref("seminars");
@@ -54,18 +58,16 @@ function getSeminars(req, res, next) {
         seminars: [],
         title: "Velkommen"
     };
-    seminarRef.on('child_added', function(snapshot, prevChildKey) {
-        console.log(snapshot.val());
-        console.log(snapshot.numChildren());
-        snapshot.forEach(function(childSnapshot) {
-            console.log(childSnapshot.val());
-            viewModel.seminars.push(childSnapshot.val());
-        });
-        req.viewModel = viewModel;
-        
+    req.viewModel = viewModel;
+
+    seminarRef.once('value').then(function(snap){
+        console.log("Printer verdien", snap.val());
+        req.viewModel.seminars = snap.val();
+        next();
     });
-    next();
 }
+
+
 
 /* about us route */
 router.get("/about", function(req, res, next){
