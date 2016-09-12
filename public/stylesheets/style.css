@@ -5,7 +5,17 @@ i {
 a {
   color: #A95A10; }
 
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding-bottom: 1%;
+  text-align: center;
+  background: #f8f8f8; }
+
 html {
+  padding: 0;
+  margin: 0;
   position: relative;
   min-height: 100%; }
 
@@ -16,12 +26,5 @@ body {
 
 .container {
   margin-bottom: 16%; }
-
-footer {
-  position: absolute;
-  bottom: 0;
-  right: 20%;
-  left: 20%;
-  padding-bottom: 1%; }
 
 /*# sourceMappingURL=style.css.map */
