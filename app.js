@@ -29,7 +29,7 @@ app.use(require('node-sass-middleware')({
   sourceMap: true
 }));
 app.use(express.static(path.join(__dirname, 'public')));
-app.use("/seminarDetails", express.static("public"));
+app.use("/seminarDetails/:courseKey/:seminarKey", express.static("public"));
 app.use(expressSession({
     secret: 'hfusyr83748fesf7&%&#&783u8ru/(Y',
     saveUninitialized: false,

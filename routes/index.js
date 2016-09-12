@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var cookieParser = require('cookie-parser');
 var firebase = require('firebase');
+var seminarService = require("../modules/seminar-service");
 
 // Initialize Firebase
 var config = {
@@ -44,7 +45,7 @@ router.get("/register", function(req, res, next) {
 });
 
 /* Dashboard route */
-router.get("/dashboard", authenticate, getSeminars, renderSeminars);
+router.get("/dashboard", authenticate, seminarService.getSeminars, renderSeminars);
 
 function renderSeminars(req, res, next) {
     res.render("dashboard", {
@@ -52,41 +53,14 @@ function renderSeminars(req, res, next) {
     });
 }
 
-function getSeminars(req, res, next) {
-    var seminarRef = firebase.database().ref("seminars");
-    var viewModel = {
-        user: req.user.email,
-        seminars: [],
-        title: "Velkommen"
-    };
-    req.viewModel = viewModel;
-
-    seminarRef.once('value').then(function(snap){
-        req.viewModel.seminars = snap.val();
-        next();
-    });
-}
 
 /* seminarDetails */
-router.get("/seminarDetails/:courseKey/:seminarKey", getSeminarStudents, function(req, res, next){
+router.get("/seminarDetails/:courseKey/:seminarKey", seminarService.getSeminarStudents, function(req, res, next){
 
     var seminarKey = req.params.seminarKey;
     var courseKey = req.params.courseKey;
-
-    res.render("seminarDetails", {title: "bob", key: seminarKey});
+    res.render("seminarDetails", {title: "bob", key: seminarKey, students: req.seminarStudents});
 });
-
-function getSeminarStudents(req, res, next) {
-    var seminarKey = req.params.seminarKey;
-    var courseKey = req.params.courseKey;
-
-    var studentRef = firebase.database().ref("seminars").child(courseKey).child(seminarKey);
-    studentRef.once('value').then(function(snapshot) {
-        console.log(snapshot.val());
-        next();
-    });
-}
-
 
 /* about us route */
 router.get("/about", function(req, res, next){

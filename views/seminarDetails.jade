@@ -2,4 +2,8 @@ extends layout
 
 block content
     h3 #{key} - #{title}
+    ul
+    for student, key in students
+        li #{student} med nøkkel: #{key}
+
 
