@@ -41,9 +41,6 @@ $(function() {
 
 	myApp.login = function(email, password) {
 		auth.signInWithEmailAndPassword(email, password).then(function(error, user){
-			if(error) {
-                return;
-            }
 			$("legend").html("You successfully logged in!");
 			$.session.set("loggedIn", true);
 			window.location.assign("/dashboard");
