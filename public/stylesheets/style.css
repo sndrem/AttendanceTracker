@@ -20,6 +20,8 @@ body {
 footer {
   position: absolute;
   bottom: 0;
+  right: 20%;
+  left: 20%;
   padding-bottom: 1%; }
 
 /*# sourceMappingURL=style.css.map */
