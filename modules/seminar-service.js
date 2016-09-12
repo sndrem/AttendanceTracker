@@ -1,4 +1,5 @@
 var firebase = require("firebase");
+var userService = require("../modules/user-service")
 var seminarService = {};
 
 seminarService.getSeminarStudents = function(req, res, next) {
@@ -7,9 +8,11 @@ seminarService.getSeminarStudents = function(req, res, next) {
 
     var studentRef = firebase.database().ref("seminars").child(courseKey).child(seminarKey).child("students");
     studentRef.once('value').then(function(snapshot) {
-        console.log(snapshot.val());
+        
         req.seminarStudents = snapshot.val();
         next();
+        userService.getNames(req, res, next);
+        
     });
 }
 
