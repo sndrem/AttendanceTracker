@@ -176,12 +176,6 @@ $(function() {
         myApp.signOut();
 	});
 
-	/* tester klikking av seminar-linker, til seminarDetails:KEY */
-	$(".thumbnail a").on("click", function(e){
-		//e.preventDefault();
-		console.log("work");
-	})
-
 
 	auth.onAuthStateChanged(function(firebaseUser) {
 		if(firebaseUser) {

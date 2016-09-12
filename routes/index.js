@@ -67,14 +67,12 @@ function getSeminars(req, res, next) {
     });
 }
 
-/* tester seminarDetails */
-
+/* seminarDetails */
 router.get("/seminarDetails:seminarKey", function(req, res, next){
 
     var key = req.params.seminarKey;
     var keyLength = key.length;
     var miniKey = key.substring(1,keyLength);
-
 
     res.render("seminarDetails", {title: "bob", key: miniKey});
 });
