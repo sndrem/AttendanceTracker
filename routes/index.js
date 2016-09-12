@@ -67,6 +67,18 @@ function getSeminars(req, res, next) {
     });
 }
 
+/* tester seminarDetails */
+
+router.get("/seminarDetails:__", function(req, res, next){
+    // en rar bug. Den skriver ut test i 
+    //konsollen uansett hvilken av seminar-undersidene jeg går på
+    // feks INFO132GR3, eller SV100GR2
+
+    console.log("test");
+    res.render("seminarDetails", {title: "bob"});
+
+    next();    
+});
 
 
 /* about us route */
