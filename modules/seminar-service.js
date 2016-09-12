@@ -8,11 +8,8 @@ seminarService.getSeminarStudents = function(req, res, next) {
 
     var studentRef = firebase.database().ref("seminars").child(courseKey).child(seminarKey).child("students");
     studentRef.once('value').then(function(snapshot) {
-        
         req.seminarStudents = snapshot.val();
         next();
-        userService.getNames(req, res, next);
-        
     });
 }
 
