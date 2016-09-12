@@ -56,13 +56,14 @@ function renderSeminars(req, res, next) {
 
 
 /* seminarDetails */
-router.get("/seminarDetails/:courseKey/:seminarKey", seminarService.getSeminarStudents, userService.getNames, renderSeminarDetails);
-
-function renderSeminarDetails(req, res, next) {
+router.get("/seminarDetails/:courseKey/:seminarKey", seminarService.getSeminarStudents, userService.getNames, function(req, res, next) {
     var seminarKey = req.params.seminarKey;
     var courseKey = req.params.courseKey;
-    console.log("Should be populated with names", req.studentNames);
-    res.render("seminarDetails", {title: "bob", key: seminarKey, students: req.studentNames});
+    res.render("seminarDetails", {title: seminarKey, key: seminarKey, students: req.studentNames});
+});
+
+function renderSeminarDetails(req, res, next) {
+   
 }
 
 /* about us route */

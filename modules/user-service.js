@@ -5,6 +5,9 @@ var userService = {};
 
 userService.getNames = function(req, res, next){
     // Get the keys (uid's) of the seminarStudents
+    if(req.seminarStudents == null) {
+        res.render("noStudents", {message: "No students assigned to this course"});
+    }
     var keys = Object.keys(req.seminarStudents);
     // Create a reference to the user node in Firebase
     var userRef = firebase.database().ref("users");

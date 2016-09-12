@@ -1,9 +1,13 @@
 extends layout
 
 block content
-    h3 #{key} - #{title}
-    ul
-    for student in students
-        li #{student}
+    h3 #{title}
+    form(action="/registerAttendance" method="POST" name="attendanceForm")
+        for student in students
+            .form-group
+                label.form-control #{student} 
+                    input(type="checkbox", name="studentCheckbox", value="#{student}")
+
+        button.btn.btn-primary Save Attendance
 
 
