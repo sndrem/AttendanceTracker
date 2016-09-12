@@ -10,10 +10,10 @@ block content
                     .thumbnail
                         a(href="/seminarDetails:#{key}")
                             h4 #{seminar.name}
-                            ul
-                                li #{seminar.day}
-                                li Start: #{seminar.startTime}
-                                li Slutt: #{seminar.endTime}
+                        ul
+                            li #{seminar.day}
+                            li Start: #{seminar.startTime}
+                            li Slutt: #{seminar.endTime}
                         p
                             a(href="/removeSeminar:#{key}").btn.btn-danger Remove Seminar
 
