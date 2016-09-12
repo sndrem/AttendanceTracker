@@ -173,6 +173,25 @@ $(function() {
         myApp.signOut();
 	});
 
+    $("#addGroup").on('click', function(e) {
+        e.preventDefault();
+        $("#searchForm").toggleClass('hide');
+    });
+
+    /**
+     * Typeahead.js autocomplete setup
+     */
+    var seminars = new Bloodhound({
+        datumTokenizer: Bloodhound.tokenizers.whitespace,
+        queryTokenizer: Bloodhound.tokenizers.whitespace,
+        prefetch: '/searchSeminars'
+    });
+
+    $(".typeahead").typeahead(null, {
+        name: 'seminars',
+        source: seminars
+    });
+
 
 	auth.onAuthStateChanged(function(firebaseUser) {
 		if(firebaseUser) {

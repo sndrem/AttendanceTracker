@@ -62,9 +62,17 @@ router.get("/seminarDetails/:courseKey/:seminarKey", seminarService.getSeminarSt
     res.render("seminarDetails", {title: seminarKey, key: seminarKey, students: req.studentNames});
 });
 
-function renderSeminarDetails(req, res, next) {
-   
-}
+/* Post to save attendance */
+router.post("/registerAttendance", function(req, res, next){
+    console.log(req.body);
+    next();
+});
+
+/* Post to search for seminars */
+router.get("/searchSeminars", function(req, res, next) {
+    var seminars = ['info132 gruppe 3', 'info132 gruppe 2'];
+    res.json(seminars);
+});
 
 /* about us route */
 router.get("/about", function(req, res, next){

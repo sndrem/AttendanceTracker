@@ -3,6 +3,12 @@ extends layout
 block content
     h3 #{model.title} #{model.user}
     h4 Your seminars
+    a(href="#")#addGroup Search for Groups
+    form(id="searchForm", action="/searchSeminars", method="POST").hide
+        .form-group
+            input.form-control.typeahead(type="text" name="seminarSearch", placeholder="Search for a seminar group")
+        .form-group
+            button#addSeminar.form-control.btn.btn-primary Add Seminar
     section.seminars.row
         for seminars, parentKey in model.seminars
     

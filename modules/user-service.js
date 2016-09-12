@@ -4,10 +4,12 @@ var seminarService = require("../modules/seminar-service");
 var userService = {};
 
 userService.getNames = function(req, res, next){
-    // Get the keys (uid's) of the seminarStudents
+    
+    // If there are noe seminarStudents, we simply render a page with a message
     if(req.seminarStudents == null) {
         res.render("noStudents", {message: "No students assigned to this course"});
     }
+    // Get the keys (uid's) of the seminarStudents
     var keys = Object.keys(req.seminarStudents);
     // Create a reference to the user node in Firebase
     var userRef = firebase.database().ref("users");
