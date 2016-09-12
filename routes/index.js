@@ -69,15 +69,14 @@ function getSeminars(req, res, next) {
 
 /* tester seminarDetails */
 
-router.get("/seminarDetails:__", function(req, res, next){
-    // en rar bug. Den skriver ut test i 
-    //konsollen uansett hvilken av seminar-undersidene jeg går på
-    // feks INFO132GR3, eller SV100GR2
+router.get("/seminarDetails:seminarKey", function(req, res, next){
 
-    console.log("test");
-    res.render("seminarDetails", {title: "bob"});
+    var key = req.params.seminarKey;
+    var keyLength = key.length;
+    var miniKey = key.substring(1,keyLength);
 
-    next();    
+
+    res.render("seminarDetails", {title: "bob", key: miniKey});
 });
 
 
