@@ -1,11 +1,4 @@
 extends layout
-block navigation
-    include partials/navigation
-
-// nå kan man bruke #{key} for å få fagkoden
-
-//siden må gå til firebase. Den vil bruke uid til studenten og seminar-key for å hente ut relevant info
-//seminar-key hentes fra url og kan hentes ved å skrive #{key}
 
 block content
     h3 #{key} - #{title}

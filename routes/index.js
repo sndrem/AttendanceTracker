@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var cookieParser = require('cookie-parser');
 var firebase = require('firebase');
+
 // Initialize Firebase
 var config = {
     serviceAccount: "./attendance-tracker-service-account-key.json",
@@ -61,21 +62,30 @@ function getSeminars(req, res, next) {
     req.viewModel = viewModel;
 
     seminarRef.once('value').then(function(snap){
-        console.log("Printer verdien", snap.val());
         req.viewModel.seminars = snap.val();
         next();
     });
 }
 
 /* seminarDetails */
-router.get("/seminarDetails:seminarKey", function(req, res, next){
+router.get("/seminarDetails/:courseKey/:seminarKey", getSeminarStudents, function(req, res, next){
 
-    var key = req.params.seminarKey;
-    var keyLength = key.length;
-    var miniKey = key.substring(1,keyLength);
+    var seminarKey = req.params.seminarKey;
+    var courseKey = req.params.courseKey;
 
-    res.render("seminarDetails", {title: "bob", key: miniKey});
+    res.render("seminarDetails", {title: "bob", key: seminarKey});
 });
+
+function getSeminarStudents(req, res, next) {
+    var seminarKey = req.params.seminarKey;
+    var courseKey = req.params.courseKey;
+
+    var studentRef = firebase.database().ref("seminars").child(courseKey).child(seminarKey);
+    studentRef.once('value').then(function(snapshot) {
+        console.log(snapshot.val());
+        next();
+    });
+}
 
 
 /* about us route */

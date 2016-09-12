@@ -4,11 +4,12 @@ block content
     h3 #{model.title} #{model.user}
     h4 Your seminars
     section.seminars.row
-        for seminars in model.seminars
+        for seminars, parentKey in model.seminars
+    
             for seminar, key in seminars
                 .col-xs-12.col-sm-12.col-md-6.col-lg-4
                     .thumbnail
-                        a(href="/seminarDetails:#{key}")
+                        a(href="/seminarDetails/#{parentKey}/#{key}")
                             h4 #{seminar.name}
                         ul
                             li #{seminar.day}
