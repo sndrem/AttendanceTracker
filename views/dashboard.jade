@@ -4,14 +4,17 @@ block content
     h3 #{model.title} #{model.user}
     h4 Your seminars
     a(href="#")#addGroup Search for Groups
-    form(id="searchForm", action="/searchSeminars", method="POST").hide
-        .form-group
-            input.form-control.typeahead(type="text" name="seminarSearch", placeholder="Search for a seminar group")
-        .form-group
-            button#addSeminar.form-control.btn.btn-primary Add Seminar
+    table#seminarTable.table-hover.table
+        thead
+            tr
+                th Name
+                th Day
+                th Start time
+                th End time
+                th Room
+        tbody
     section.seminars.row
         for seminars, parentKey in model.seminars
-    
             for seminar, key in seminars
                 .col-xs-12.col-sm-12.col-md-6.col-lg-4
                     .thumbnail

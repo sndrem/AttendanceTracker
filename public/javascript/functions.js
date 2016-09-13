@@ -175,23 +175,46 @@ $(function() {
 
     $("#addGroup").on('click', function(e) {
         e.preventDefault();
-        $("#searchForm").toggleClass('hide');
+        console.log("Skal hente data om seminargruppene");
+        $.ajax({
+            url: '/listSeminars',
+            type: 'GET',
+            dataType: 'json',
+            data: {},
+            success: function(data) {
+                showSeminarList(data);
+            }
+        })
+        .done(function() {
+            console.log("success");
+        })
+        .fail(function() {
+            console.log("error");
+        })
+        .always(function() {
+            console.log("complete");
+        });
     });
 
-    /**
-     * Typeahead.js autocomplete setup
-     */
-    var seminars = new Bloodhound({
-        datumTokenizer: Bloodhound.tokenizers.whitespace,
-        queryTokenizer: Bloodhound.tokenizers.whitespace,
-        prefetch: '/searchSeminars'
-    });
-
-    $(".typeahead").typeahead(null, {
-        name: 'seminars',
-        source: seminars
-    });
-
+    function showSeminarList(data) {
+        var $table = $("#seminarTable tbody");
+        $table.html("");
+        for(var subject in data) {
+            console.log("Printing subject", data[subject]);
+            for(var key in data[subject]) {
+                console.log("Printing key: " , key);
+                console.log("Printing value: " , data[subject][key]);
+                $table.append("<tr>" +
+                        "<td>" + data[subject][key].name + "</td>" +
+                        "<td>" + data[subject][key].day + "</td>" +
+                        "<td>" + data[subject][key].startTime + "</td>" +
+                        "<td>" + data[subject][key].endTime + "</td>" +
+                        "<td>" + data[subject][key].room + "</td>" +
+                        "</tr>");
+            }
+            
+        }
+    }
 
 	auth.onAuthStateChanged(function(firebaseUser) {
 		if(firebaseUser) {

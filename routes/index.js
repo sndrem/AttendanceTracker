@@ -69,9 +69,12 @@ router.post("/registerAttendance", function(req, res, next){
 });
 
 /* Post to search for seminars */
-router.get("/searchSeminars", function(req, res, next) {
-    var seminars = ['info132 gruppe 3', 'info132 gruppe 2'];
-    res.json(seminars);
+router.get("/listSeminars", function(req, res, next) {
+    var seminarRef = firebase.database().ref("seminars");
+    seminarRef.once('value').then(function(snap){
+        console.log(snap.val());
+        res.send(JSON.stringify(snap.val()));
+    });
 });
 
 /* about us route */
