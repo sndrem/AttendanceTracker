@@ -59,13 +59,15 @@ function renderSeminars(req, res, next) {
 router.get("/seminarDetails/:courseKey/:seminarKey", seminarService.getSeminarStudents, userService.getNames, function(req, res, next) {
     var seminarKey = req.params.seminarKey;
     var courseKey = req.params.courseKey;
+
     res.render("seminarDetails", {title: seminarKey, key: seminarKey, students: req.studentNames});
 });
 
 /* Post to save attendance */
 router.post("/registerAttendance", function(req, res, next){
-    console.log(req.body);
-    next();
+    var checked = req.body.studentCheckbox;
+    
+    res.render("registerAttendance", {title: checked});
 });
 
 /* Post to search for seminars */

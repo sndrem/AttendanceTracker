@@ -173,6 +173,7 @@ $(function() {
         myApp.signOut();
 	});
 
+
     $("#addGroup").on('click', function(e) {
         e.preventDefault();
         console.log("Skal hente data om seminargruppene");
