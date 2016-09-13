@@ -28,3 +28,7 @@ node_modules
 
 # Debug log from npm
 npm-debug.log
+.project
+.settings/.jsdtscope
+.settings/org.eclipse.wst.jsdt.ui.superType.container
+.settings/org.eclipse.wst.jsdt.ui.superType.name
