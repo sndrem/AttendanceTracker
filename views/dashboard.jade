@@ -4,14 +4,16 @@ block content
     h3 #{model.title} #{model.user}
     h4 Your seminars
     a(href="#")#addGroup Search for Groups
-    table#seminarTable.table-hover.table
+    table#seminarTable.table-hover.table.table-responsive.hide
         thead
             tr
                 th Name
                 th Day
+                th Place
                 th Start time
                 th End time
                 th Room
+                th Sign Up
         tbody
     section.seminars.row
         for seminars, parentKey in model.seminars

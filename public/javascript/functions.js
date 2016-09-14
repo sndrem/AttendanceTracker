@@ -173,45 +173,84 @@ $(function() {
         myApp.signOut();
 	});
 
+
     $("#addGroup").on('click', function(e) {
         e.preventDefault();
-        console.log("Skal hente data om seminargruppene");
-        $.ajax({
-            url: '/listSeminars',
-            type: 'GET',
-            dataType: 'json',
-            data: {},
-            success: function(data) {
-                showSeminarList(data);
-            }
-        })
-        .done(function() {
-            console.log("success");
-        })
-        .fail(function() {
-            console.log("error");
-        })
-        .always(function() {
-            console.log("complete");
-        });
+        var $seminarTable = $("#seminarTable");
+        if($seminarTable.hasClass('hide')) {
+            $seminarTable.removeClass('hide');
+            $.ajax({
+                url: '/listSeminars',
+                type: 'GET',
+                dataType: 'json',
+                data: {},
+                async: true,
+                success: function(data) {
+                    showSeminarList(data);
+                    addClickEventForSeminarRegistration();
+                }
+            })
+            .done(function() {
+                console.log("success");
+            })
+            .fail(function() {
+                console.log("error");
+            })
+            .always(function() {
+                console.log("complete");
+            });
+        } else {
+            $seminarTable.addClass('hide');
+        }
     });
+
+    function addClickEventForSeminarRegistration() {
+        $(".registerForSeminarBtn").on('click', function(e){
+            e.preventDefault();
+            var courseKey = $(this).data('coursekey');
+            var seminarKey = $(this).data('seminarkey');
+            $.ajax({
+                url: '/signUpForSeminar/' + courseKey + "/" + seminarKey,
+                type: 'POST',
+                dataType: 'JSON',
+                data: {
+                    course: courseKey,
+                    seminar: seminarKey
+                },
+                success: function(data) {
+                    alert(data.message);
+                }
+            })
+            .done(function() {
+                console.log("success");
+            })
+            .fail(function(data) {
+                console.log("error");
+            })
+            .always(function() {
+                console.log("complete");
+            });
+            
+        });
+    }
 
     function showSeminarList(data) {
         var $table = $("#seminarTable tbody");
         $table.html("");
         for(var subject in data) {
-            console.log("Printing subject", data[subject]);
             for(var key in data[subject]) {
-                console.log("Printing key: " , key);
-                console.log("Printing value: " , data[subject][key]);
+                var course = data[subject][key];
+                console.log(course);
                 $table.append("<tr>" +
-                        "<td>" + data[subject][key].name + "</td>" +
-                        "<td>" + data[subject][key].day + "</td>" +
-                        "<td>" + data[subject][key].startTime + "</td>" +
-                        "<td>" + data[subject][key].endTime + "</td>" +
-                        "<td>" + data[subject][key].room + "</td>" +
+                        "<td>" + course.name + "</td>" +
+                        "<td>" + course.day + "</td>" +
+                        "<td>" + course.address + "</td>" +
+                        "<td>" + course.startTime + "</td>" +
+                        "<td>" + course.endTime + "</td>" +
+                        "<td>" + course.room + "</td>" +
+                        "<td><a data-coursekey=\"" + subject + "\" data-seminarkey=\"" + key + "\" class=\"registerForSeminarBtn\" href=\"#\">Sign Up</a></td>" +
                         "</tr>");
-            }
+            }  
         }
     }
 

@@ -13,6 +13,19 @@ seminarService.getSeminarStudents = function(req, res, next) {
     });
 }
 
+seminarService.addStudentToSeminar = function(req, res, next) {
+    console.log("Should add student" + req.user.email + " to seminar");
+    var user = req.user.email;
+    var userUID = req.user.uid;
+    var courseID = req.params.courseID;
+    var seminarID = req.params.seminarID;
+    var seminarRef = firebase.database().ref("seminars").child(courseID).child(seminarID).child("students");
+    seminarRef.child(userUID).set({
+        attends: true
+    });
+    next();
+}
+
 seminarService.getSeminars = function(req, res, next) {
     console.log("Getting reference to seminars");
     var seminarRef = firebase.database().ref("seminars");

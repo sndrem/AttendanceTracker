@@ -59,13 +59,15 @@ function renderSeminars(req, res, next) {
 router.get("/seminarDetails/:courseKey/:seminarKey", seminarService.getSeminarStudents, userService.getNames, function(req, res, next) {
     var seminarKey = req.params.seminarKey;
     var courseKey = req.params.courseKey;
+
     res.render("seminarDetails", {title: seminarKey, key: seminarKey, students: req.studentNames});
 });
 
 /* Post to save attendance */
 router.post("/registerAttendance", function(req, res, next){
-    console.log(req.body);
-    next();
+    var checked = req.body.studentCheckbox;
+    
+    res.render("registerAttendance", {title: checked});
 });
 
 /* Post to search for seminars */
@@ -75,6 +77,19 @@ router.get("/listSeminars", function(req, res, next) {
         console.log(snap.val());
         res.send(JSON.stringify(snap.val()));
     });
+});
+
+/* Post to signUpForSeminars */
+router.post("/signUpForSeminar/:courseID/:seminarID", authenticate, seminarService.addStudentToSeminar, function(req, res, next) {
+    // TODO Save to database
+    // return status code and text
+    console.log(req.params);
+    // Skal vi returnere JSON er det viktig at vi setter Content-Type til application/json
+    res.setHeader('Content-Type', 'application/json');
+
+    res.send(JSON.stringify({
+        'message': "You signed up for " + req.params.seminarID + ", which belongs to " + req.params.courseID
+    }));
 });
 
 /* about us route */
