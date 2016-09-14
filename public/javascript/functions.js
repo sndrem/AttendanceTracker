@@ -176,41 +176,44 @@ $(function() {
 
     $("#addGroup").on('click', function(e) {
         e.preventDefault();
-        console.log("Skal hente data om seminargruppene");
-        $.ajax({
-            url: '/listSeminars',
-            type: 'GET',
-            dataType: 'json',
-            data: {},
-            success: function(data) {
-                showSeminarList(data);
-            }
-        })
-        .done(function() {
-            console.log("success");
-        })
-        .fail(function() {
-            console.log("error");
-        })
-        .always(function() {
-            console.log("complete");
-        });
+        var $seminarTable = $("#seminarTable");
+        if($seminarTable.hasClass('hide')) {
+            $seminarTable.removeClass('hide');
+            $.ajax({
+                url: '/listSeminars',
+                type: 'GET',
+                dataType: 'json',
+                data: {},
+                success: function(data) {
+                    showSeminarList(data);
+                }
+            })
+            .done(function() {
+                console.log("success");
+            })
+            .fail(function() {
+                console.log("error");
+            })
+            .always(function() {
+                console.log("complete");
+            });
+        } else {
+            $seminarTable.addClass('hide');
+        }
     });
 
     function showSeminarList(data) {
         var $table = $("#seminarTable tbody");
         $table.html("");
         for(var subject in data) {
-            console.log("Printing subject", data[subject]);
             for(var key in data[subject]) {
-                console.log("Printing key: " , key);
-                console.log("Printing value: " , data[subject][key]);
                 $table.append("<tr>" +
                         "<td>" + data[subject][key].name + "</td>" +
                         "<td>" + data[subject][key].day + "</td>" +
                         "<td>" + data[subject][key].startTime + "</td>" +
                         "<td>" + data[subject][key].endTime + "</td>" +
                         "<td>" + data[subject][key].room + "</td>" +
+                        "<td><a href=\"signUpForSeminar/" + key + "\">Sign Up</a></td>" +
                         "</tr>");
             }
             
