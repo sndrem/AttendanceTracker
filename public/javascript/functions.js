@@ -212,7 +212,6 @@ $(function() {
                         "<td>" + data[subject][key].room + "</td>" +
                         "</tr>");
             }
-            
         }
     }
 
