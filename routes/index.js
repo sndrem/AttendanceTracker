@@ -81,7 +81,7 @@ router.get("/listSeminars", function(req, res, next) {
 
 /* Post to signUpForSeminars */
 router.post("/signUpForSeminar/:courseID/:seminarID", authenticate, seminarService.addStudentToSeminar, function(req, res, next) {
-    // Save to database
+    // TODO Save to database
     // return status code and text
     console.log(req.params);
     // Skal vi returnere JSON er det viktig at vi setter Content-Type til application/json
