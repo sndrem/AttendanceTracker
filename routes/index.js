@@ -80,7 +80,7 @@ router.get("/listSeminars", function(req, res, next) {
 });
 
 /* Post to signUpForSeminars */
-router.post("/signUpForSeminar/:seminarID", function(req, res, next) {
+router.post("/signUpForSeminar/:courseID/:seminarID", authenticate, seminarService.addStudentToSeminar, function(req, res, next) {
     // Save to database
     // return status code and text
     console.log(req.params);
@@ -88,7 +88,7 @@ router.post("/signUpForSeminar/:seminarID", function(req, res, next) {
     res.setHeader('Content-Type', 'application/json');
 
     res.send(JSON.stringify({
-        'message': "You signed up for " + req.params.seminarID
+        'message': "You signed up for " + req.params.seminarID + ", which belongs to " + req.params.courseID
     }));
 });
 

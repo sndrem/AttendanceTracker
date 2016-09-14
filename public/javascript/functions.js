@@ -207,14 +207,17 @@ $(function() {
     function addClickEventForSeminarRegistration() {
         $(".registerForSeminarBtn").on('click', function(e){
             e.preventDefault();
+            var courseKey = $(this).data('coursekey');
             var seminarKey = $(this).data('seminarkey');
             $.ajax({
-                url: '/signUpForSeminar/' + seminarKey,
+                url: '/signUpForSeminar/' + courseKey + "/" + seminarKey,
                 type: 'POST',
                 dataType: 'JSON',
-                data: {seminar: seminarKey},
+                data: {
+                    course: courseKey,
+                    seminar: seminarKey
+                },
                 success: function(data) {
-                    console.log("This should be a success");
                     alert(data.message);
                 }
             })
@@ -245,10 +248,9 @@ $(function() {
                         "<td>" + course.startTime + "</td>" +
                         "<td>" + course.endTime + "</td>" +
                         "<td>" + course.room + "</td>" +
-                        "<td><a data-seminarkey=\"" + key + "\" class=\"registerForSeminarBtn\" href=\"#\">Sign Up</a></td>" +
+                        "<td><a data-coursekey=\"" + subject + "\" data-seminarkey=\"" + key + "\" class=\"registerForSeminarBtn\" href=\"#\">Sign Up</a></td>" +
                         "</tr>");
-            }
-            
+            }  
         }
     }
 

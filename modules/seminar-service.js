@@ -13,6 +13,11 @@ seminarService.getSeminarStudents = function(req, res, next) {
     });
 }
 
+seminarService.addStudentToSeminar = function(req, res, next) {
+    console.log("Should add student" + req.user.email + " to seminar");
+    next();
+}
+
 seminarService.getSeminars = function(req, res, next) {
     console.log("Getting reference to seminars");
     var seminarRef = firebase.database().ref("seminars");
