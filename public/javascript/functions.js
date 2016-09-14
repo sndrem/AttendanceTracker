@@ -207,12 +207,13 @@ $(function() {
         $table.html("");
         for(var subject in data) {
             for(var key in data[subject]) {
+                var course = data[subject][key];
                 $table.append("<tr>" +
-                        "<td>" + data[subject][key].name + "</td>" +
-                        "<td>" + data[subject][key].day + "</td>" +
-                        "<td>" + data[subject][key].startTime + "</td>" +
-                        "<td>" + data[subject][key].endTime + "</td>" +
-                        "<td>" + data[subject][key].room + "</td>" +
+                        "<td>" + course.name + "</td>" +
+                        "<td>" + course.day + "</td>" +
+                        "<td>" + course.startTime + "</td>" +
+                        "<td>" + course.endTime + "</td>" +
+                        "<td>" + course.room + "</td>" +
                         "<td><a href=\"signUpForSeminar/" + key + "\">Sign Up</a></td>" +
                         "</tr>");
             }
