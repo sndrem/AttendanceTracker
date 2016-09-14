@@ -208,9 +208,11 @@ $(function() {
         for(var subject in data) {
             for(var key in data[subject]) {
                 var course = data[subject][key];
+                console.log(course);
                 $table.append("<tr>" +
                         "<td>" + course.name + "</td>" +
                         "<td>" + course.day + "</td>" +
+                        "<td>" + course.address + "</td>" +
                         "<td>" + course.startTime + "</td>" +
                         "<td>" + course.endTime + "</td>" +
                         "<td>" + course.room + "</td>" +
