@@ -79,6 +79,19 @@ router.get("/listSeminars", function(req, res, next) {
     });
 });
 
+/* Post to signUpForSeminars */
+router.post("/signUpForSeminar/:seminarID", function(req, res, next) {
+    // Save to database
+    // return status code and text
+    console.log(req.params);
+    // Skal vi returnere JSON er det viktig at vi setter Content-Type til application/json
+    res.setHeader('Content-Type', 'application/json');
+
+    res.send(JSON.stringify({
+        'message': "You signed up for " + req.params.seminarID
+    }));
+});
+
 /* about us route */
 router.get("/about", function(req, res, next){
   res.render("about", {title: "About us"});

@@ -184,8 +184,10 @@ $(function() {
                 type: 'GET',
                 dataType: 'json',
                 data: {},
+                async: true,
                 success: function(data) {
                     showSeminarList(data);
+                    addClickEventForSeminarRegistration();
                 }
             })
             .done(function() {
@@ -202,6 +204,33 @@ $(function() {
         }
     });
 
+    function addClickEventForSeminarRegistration() {
+        $(".registerForSeminarBtn").on('click', function(e){
+            e.preventDefault();
+            var seminarKey = $(this).data('seminarkey');
+            $.ajax({
+                url: '/signUpForSeminar/' + seminarKey,
+                type: 'POST',
+                dataType: 'JSON',
+                data: {seminar: seminarKey},
+                success: function(data) {
+                    console.log("This should be a success");
+                    alert(data.message);
+                }
+            })
+            .done(function() {
+                console.log("success");
+            })
+            .fail(function(data) {
+                console.log("error");
+            })
+            .always(function() {
+                console.log("complete");
+            });
+            
+        });
+    }
+
     function showSeminarList(data) {
         var $table = $("#seminarTable tbody");
         $table.html("");
@@ -216,7 +245,7 @@ $(function() {
                         "<td>" + course.startTime + "</td>" +
                         "<td>" + course.endTime + "</td>" +
                         "<td>" + course.room + "</td>" +
-                        "<td><a href=\"signUpForSeminar/" + key + "\">Sign Up</a></td>" +
+                        "<td><a data-seminarkey=\"" + key + "\" class=\"registerForSeminarBtn\" href=\"#\">Sign Up</a></td>" +
                         "</tr>");
             }
             
