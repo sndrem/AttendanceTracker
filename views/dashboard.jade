@@ -16,16 +16,15 @@ block content
                 th Sign Up
         tbody
     section.seminars.row
-        for seminars, parentKey in model.seminars
-            for seminar, key in seminars
-                .col-xs-12.col-sm-12.col-md-6.col-lg-4
-                    .thumbnail
-                        a(href="/seminarDetails/#{parentKey}/#{key}")
-                            h4 #{seminar.name}
-                        ul
-                            li #{seminar.day}
-                            li Start: #{seminar.startTime}
-                            li Slutt: #{seminar.endTime}
-                        p
-                            a(href="/removeSeminar:#{key}").btn.btn-danger Remove Seminar
+        for seminar in model
+            .col-xs-12.col-sm-12.col-md-6.col-lg-4
+                .thumbnail
+                    a(href="/seminarDetails/#{parentKey}/#{key}")
+                        h4 #{seminar.name}
+                    ul
+                        li #{seminar.day}
+                        li Start: #{seminar.startTime}
+                        li Slutt: #{seminar.endTime}
+                    p
+                        a(href="/removeSeminar:#{key}").btn.btn-danger Remove Seminar
 

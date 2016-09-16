@@ -1,4 +1,5 @@
 var firebase = require("firebase");
+var async = require("async");
 var userService = require("../modules/user-service")
 var seminarService = {};
 
@@ -23,6 +24,11 @@ seminarService.addStudentToSeminar = function(req, res, next) {
     seminarRef.child(userUID).set({
         attends: true
     });
+
+    var groupRef = firebase.database().ref("users").child(userUID).child("groups");
+    var payload = {};
+    payload[courseID] = seminarID;
+    groupRef.push(payload);
     next();
 }
 
@@ -36,7 +42,7 @@ seminarService.getSeminars = function(req, res, next) {
         seminars: [],
         title: "Velkommen"
     };
-    console.log("Printing the request before adding viewModel to it: " , req);
+    // console.log("Printing the request before adding viewModel to it: " , req);
     req.viewModel = viewModel;
     console.log("Tries to fetch the values from the snap")
     seminarRef.once('value').then(function(snap){
@@ -44,6 +50,34 @@ seminarService.getSeminars = function(req, res, next) {
         console.log("Added data to the view model. Please continue...");
         next();
     });
+}
+
+seminarService.getUserSeminars = function(req, res, next) {
+    var userSeminarRef = firebase.database().ref("users");
+    var user = req.user.uid;
+    userSeminarRef.child(user).child('groups').once('value', function(snapshot){
+        req.userSeminars = snapshot.val();
+        next();
+    });
+}
+
+seminarService.getUserSeminarDetails = function(req, res, next) {
+    var ref = firebase.database().ref("seminars");
+    var userSeminars = req.userSeminars;
+    req.userSeminars = [];
+    async.eachOf(userSeminars, function(value, key, callback){
+            console.log("Value: ", value);
+            console.log("Key: ", key);
+            ref.child(key).child(value).once('value', function(snapshot){
+                req.userSeminars.push(snapshot.val());
+                callback();
+            });
+            
+    }, function(error){
+        next();
+    });
+
+
 }
 
 module.exports = seminarService;

@@ -46,11 +46,12 @@ router.get("/register", function(req, res, next) {
 });
 
 /* Dashboard route */
-router.get("/dashboard", authenticate, seminarService.getSeminars, renderSeminars);
+router.get("/dashboard", authenticate, seminarService.getUserSeminars, seminarService.getUserSeminarDetails, renderSeminars);
 
 function renderSeminars(req, res, next) {
+    console.log("Printing user seminars", req.userSeminars);
     res.render("dashboard", {
-        model: req.viewModel
+        model: req.userSeminars
     });
 }
 
