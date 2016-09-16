@@ -64,20 +64,24 @@ seminarService.getUserSeminars = function(req, res, next) {
 seminarService.getUserSeminarDetails = function(req, res, next) {
     var ref = firebase.database().ref("seminars");
     var userSeminars = req.userSeminars;
+    var key = Obje
+    console.log(userSeminars);
     req.userSeminars = [];
-    async.eachOf(userSeminars, function(value, key, callback){
-            console.log("Value: ", value);
-            console.log("Key: ", key);
-            ref.child(key).child(value).once('value', function(snapshot){
-                req.userSeminars.push(snapshot.val());
-                callback();
-            });
+
+    // async.eachOf(userSeminars, function(value, key, callback){
+    //         console.log("Value: ", value);
+    //         var courseKey = Object.keys(value)[0];
+    //         console.log("Kursnøkkel: " , courseKey);
+    //         console.log("Key: ", key);
+    //         ref.child(key).child(courseKey).once('value', function(snapshot){
+    //             console.log(snapshot.val());
+    //             req.userSeminars.push(snapshot.val());
+    //             callback();
+    //         });
             
-    }, function(error){
-        next();
-    });
-
-
+    // }, function(error){
+    //     next();
+    // });
 }
 
 module.exports = seminarService;

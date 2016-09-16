@@ -46,7 +46,7 @@ router.get("/register", function(req, res, next) {
 });
 
 /* Dashboard route */
-router.get("/dashboard", authenticate, seminarService.getUserSeminars, seminarService.getUserSeminarDetails, renderSeminars);
+router.get("/dashboard", authenticate, seminarService.getUserSeminars, renderSeminars);
 
 function renderSeminars(req, res, next) {
     console.log("Printing user seminars", req.userSeminars);
