@@ -4,6 +4,7 @@ var cookieParser = require('cookie-parser');
 var firebase = require('firebase');
 var seminarService = require("../modules/seminar-service");
 var userService = require("../modules/user-service");
+var seminarSchedule = require("../modules/seminar-schedule");
 
 // Initialize Firebase
 var config = {
@@ -95,7 +96,10 @@ router.post("/signUpForSeminar/:courseID/:seminarID", authenticate, seminarServi
 
 /* about us route */
 router.get("/about", function(req, res, next){
-  res.render("about", {title: "About us"});
+    var ref = firebase.database().ref("seminars").child("INFO132").child("INFO132GR1").child("dates");
+    console.log(seminarSchedule.getDatesArray(ref));
+    //seminarSchedule.pushDate(ref, "2016-10-03");
+    res.render("about", {title: "About us"});
 });
 
 module.exports = router;
