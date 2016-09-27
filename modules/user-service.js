@@ -35,7 +35,7 @@ var userService = {
                 res.message = err;
                 next();
             } else {
-                console.log("Success. Should redirect to dashboard");
+                res.message = "User created";
                 next();
             }
         });
