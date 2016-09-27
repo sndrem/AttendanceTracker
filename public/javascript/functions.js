@@ -33,6 +33,15 @@ $(function() {
 	myApp.login = function(email, password) {
 		// TODO Post request to server
         // Server should log in
+        $.post('/login',
+         {
+            email: email,
+            password: password
+        }, function(data, textStatus, xhr) {
+            /*optional stuff to do after success */
+            console.log(data);
+            $("legend").html(data);
+        });
 	};
 
 	myApp.signOut = function() {
@@ -55,6 +64,7 @@ $(function() {
             /*optional stuff to do after success */
             console.log(data.message);
             $("#statusMessage").html(data.message);
+            myApp.resetForm();
         });
 	};
 
@@ -87,11 +97,11 @@ $(function() {
 		var password = $("#password").val();
 		var statusMessages = [];
 		
-		if(email.length == 0 || !myApp.isValidEmail(email)) {
+		if(isEmpty(email) || !myApp.isValidEmail(email)) {
 			statusMessages.push("Please provide a valid email address");
 		}
 
-		if(password.length == 0) {
+		if(isEmpty(password)) {
 			statusMessages.push("Please provide a password");
 		}
 

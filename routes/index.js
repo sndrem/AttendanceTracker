@@ -47,11 +47,17 @@ router.get('/login', function(req, res, next) {
 router.post('/register', userService.registerUser, function(req, res, next) {
     var message = {
         'sqlMessage': JSON.stringify(res.message),
-        'message': JSON.stringify(res.message)
+        'message': res.message
     }
     console.log(message);
     res.status(200).json(message);
 
+});
+
+/* POST login page */
+router.post("/login", userService.authenticate, function(req, res, next) {
+    console.log(req.message);
+    res.status(200).send(req.message);
 });
 
 /* GET Dashboard page */
