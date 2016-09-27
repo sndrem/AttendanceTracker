@@ -41,15 +41,23 @@ router.get('/login', function(req, res, next) {
     res.render('login', {'title': "Log in"});
 });
 
+
+
 /* POST registration page */
 router.post('/register', userService.registerUser, function(req, res, next) {
-    if(res.error) {
-        console.log(res.error);
-        res.status(200).send(res.error);
-    } else {
-        res.status(200).send("User created");
+    var message = {
+        'sqlMessage': JSON.stringify(res.message),
+        'message': "A user with student ID " + req.body.studentID + " already exists."
     }
+    console.log(message);
+    res.status(200).json(message);
 
 });
+
+/* GET Dashboard page */
+router.get("/dashboard", function(req, res, next) {
+    res.render("dashboard", {'title': 'Dashboard'});
+});
+
 
 module.exports = router;

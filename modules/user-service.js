@@ -32,10 +32,10 @@ var userService = {
         console.log("Tries to insert new person");
         connection.query(insertQuery, values, function(err, result){
             if(err) {
-                res.error = err;
+                res.message = err;
                 next();
             } else {
-                res.result = result;
+                console.log("Success. Should redirect to dashboard");
                 next();
             }
         });

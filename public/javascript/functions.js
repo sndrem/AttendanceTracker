@@ -53,7 +53,8 @@ $(function() {
             },
             function(data, textStatus, xhr) {
             /*optional stuff to do after success */
-            console.log(data);
+            console.log(data.message);
+            $("#statusMessage").html(data.message);
         });
 	};
 
@@ -78,7 +79,6 @@ $(function() {
 		$("form")[0].reset();
 	}
 
-    myApp.checkLoggedinUser();
  
 	$("#loginButton").on('click', function(e) {
 		$("legend").html("");
@@ -116,8 +116,6 @@ $(function() {
         var email = $("#email").val();
 		var password = $("#password").val();
 		var confirmPassword = $("#confirmPassword").val();
-        console.log(password);
-        console.log(confirmPassword);
         var statusMessages = [];
 
 
