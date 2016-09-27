@@ -190,6 +190,7 @@ $(function() {
                 data: {},
                 async: true,
                 success: function(data) {
+                    console.log(data);
                     showSeminarList(data);
                     addClickEventForSeminarRegistration();
                 }
@@ -211,18 +212,17 @@ $(function() {
     function addClickEventForSeminarRegistration() {
         $(".registerForSeminarBtn").on('click', function(e){
             e.preventDefault();
-            var courseKey = $(this).data('coursekey');
             var seminarKey = $(this).data('seminarkey');
+            console.log(seminarKey);
             $.ajax({
-                url: '/signUpForSeminar/' + courseKey + "/" + seminarKey,
+                url: '/signUpForSeminar/' + seminarKey,
                 type: 'POST',
                 dataType: 'JSON',
                 data: {
-                    course: courseKey,
-                    seminar: seminarKey
+                    seminarGroup: seminarKey
                 },
                 success: function(data) {
-                    alert(data.message);
+                    alert(data);
                 }
             })
             .done(function() {
@@ -241,20 +241,13 @@ $(function() {
     function showSeminarList(data) {
         var $table = $("#seminarTable tbody");
         $table.html("");
-        for(var subject in data) {
-            for(var key in data[subject]) {
-                var course = data[subject][key];
-                console.log(course);
-                $table.append("<tr>" +
-                        "<td>" + course.name + "</td>" +
-                        "<td>" + course.day + "</td>" +
-                        "<td>" + course.address + "</td>" +
-                        "<td>" + course.startTime + "</td>" +
-                        "<td>" + course.endTime + "</td>" +
-                        "<td>" + course.room + "</td>" +
-                        "<td><a data-coursekey=\"" + subject + "\" data-seminarkey=\"" + key + "\" class=\"registerForSeminarBtn\" href=\"#\">Sign Up</a></td>" +
-                        "</tr>");
-            }  
+        for(var i = 0; i < data.length; i++) {
+            var course = data[i];
+            $table.append("<tr>" +
+                    "<td>" + course.courseID + "</td>" +
+                    "<td>" + course.name + "</td>" +
+                    "<td><a data-seminarkey=\"" + course.semGrID + "\" class=\"registerForSeminarBtn\" href=\"#\">Sign Up</a></td>" +
+                    "</tr>");   
         }
     }
 });

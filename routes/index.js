@@ -70,5 +70,17 @@ router.get("/dashboard", seminarService.getAllSeminarGroups, function(req, res, 
     res.render("dashboard", {'model': model});
 });
 
+/* GET list all seminars */
+router.get("/listSeminars", seminarService.getAllSeminarGroups, function(req, res, next) {
+    res.status(200).send(req.seminarGroups);
+});
+
+/* POST Signup for seminar */
+router.post("/signUpForSeminar/:semGrID", function(req, res, next) {
+    // Should add data to is_in_seminar_group table
+    // TODO Need to collect the user id. Perhaps from a session variable.
+    res.json(JSON.stringify("This should create a connection between the user and the seminar group with id " + req.params.semGrID + " to the database"));
+});
+
 
 module.exports = router;
