@@ -1,41 +1,49 @@
-var firebase = require("firebase");
-var async = require("async");
-var seminarService = require("../modules/seminar-service");
-var userService = {};
+var md5 = require('md5');
+var connection = require("../modules/connection");
+var mysql = require('mysql');
+var connection = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: '',
+    database: 'atdb'
+});
 
-userService.getNames = function(req, res, next){
-    
-    // If there are noe seminarStudents, we simply render a page with a message
-    if(req.seminarStudents == null) {
-        res.render("noStudents", {message: "No students assigned to this course"});
-    }
-    // Get the keys (uid's) of the seminarStudents
-    var keys = Object.keys(req.seminarStudents);
-    // Create a reference to the user node in Firebase
-    var userRef = firebase.database().ref("users");
-    // Attach an array on the request object for storing the student names
-    req.studentNames = [];
-    // Here we use the async-library to help is with the asynchronous hell
-    // We loop through each key, then gets the name in the database
-    async.eachOf(keys, function(value, key, callback){
-         userRef.child(value).child('name').once('value', function(snapshot){
-            // Her pusher vi hver verdi (altså navnene) til arrayet for å holde
-            // på studentnavnene
-            req.studentNames.push(snapshot.val());
-            // Så skriver vi ut til konsollen fordi vi ikke aner hva vi egentlig driver med
-            console.log(snapshot.val());
-            // Aner ikke hvorfor vi må kalle callback(), men det må vi, for hvis ikke
-            // så blir denne koden til en sutrete liten jente som ikke vil sende oss data
-            callback();
+var userService = {
+    registerUser: function(req, res, next) {
+        var firstName = req.body.firstName;
+        var lastName = req.body.lastName;
+        var studentID = req.body.studentID;
+        var email = req.body.email;
+        var password = req.body.email;
+        var confirmPassword = req.body.confirmPassword;
+        var salt = "85478tug9efunc78ryw378e983wud";
+        // TODO - Sjekke email og passord
+
+        var values = {
+            StudID: studentID,
+            fName: firstName,
+            lName: lastName,
+            eMail: email,
+            password: md5(password + salt),
+            salt: salt
+        }
+
+        var insertQuery = "INSERT INTO person SET ?";
+        console.log("Tries to insert new person");
+        connection.query(insertQuery, values, function(err, result){
+            if(err) {
+                res.error = err;
+                next();
+            } else {
+                res.result = result;
+                next();
+            }
         });
-    }, function(error) {
-        // Jeg har en vag anelse om at callback() egentlig er denne metoden her
-        if(error) {
-            console.log("There was a devastating error", error);
-        } 
-        next();
-    });
-}
+
+    }
+};
+
+
 
 
 

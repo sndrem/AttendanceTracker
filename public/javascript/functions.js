@@ -1,16 +1,7 @@
-// Initialize Firebase
-var config = {
-apiKey: "AIzaSyDH123CsCOZjz5rxjaXNmoSYTIgB35FamQ",
-authDomain: "attendancetracker-8103e.firebaseapp.com",
-databaseURL: "https://attendancetracker-8103e.firebaseio.com",
-storageBucket: "",
-};
-firebase.initializeApp(config);
 
 
 $(function() {
 	var myApp = {};
-	auth = firebase.auth();
 
     // TODO Verifisere token
     myApp.checkLoggedinUser = function() {
@@ -40,51 +31,34 @@ $(function() {
     };
 
 	myApp.login = function(email, password) {
-		auth.signInWithEmailAndPassword(email, password).then(function(error, user){
-			$("legend").html("You successfully logged in!");
-			$.session.set("loggedIn", true);
-			window.location.assign("/dashboard");
-		}, function(error) {
-			console.log("Could not sign in with email and password");
-			console.log(error.code);
-			console.log(error.message);
-		});
+		// TODO Post request to server
+        // Server should log in
 	};
 
 	myApp.signOut = function() {
-		auth.signOut().then(function(e) {
-			console.log("User successfully signed out");
-			$.session.remove("loggedIn");
-            myApp.removeTokenCookie();
-			window.location.replace("/");
-		}), function(error) {
-			console.log("An error occured. Could not sign out");
-		}
+		// TODO - Sign out trough server
 	};
 
 
-	myApp.register = function(email, password) {
-		auth.createUserWithEmailAndPassword(email, password).then(function(e) {
-			$("legend").html("You successfully registered your new user!");
-			$.session.set("loggedIn", true);
-            window.location.assign("/dashboard");
-		}, function(error) {
-			$("legend").html("Could not create user");
-			console.log("Could not create user with email and password");
-			console.log(error.code);
-			console.log(error.message);
-			myApp.resetForm();
-		});
+	myApp.register = function(firstName, lastName, studentID, email, password, confirmPassword) {
+		// TODO Post request to server for registration
+        $.post('/register', 
+            {   
+                firstName: firstName,
+                lastName: lastName,
+                studentID: studentID,
+                email: email,
+                password: password,
+                confirmPassword: confirmPassword
+            },
+            function(data, textStatus, xhr) {
+            /*optional stuff to do after success */
+            console.log(data);
+        });
 	};
 
 	myApp.saveTokenCookie = function() {
-		auth.currentUser.getToken(false).then(function(idToken) {
-			Cookies.set('token', idToken, {
-				domain: window.location.hostname,
-				expire: 1 / 24,
-				path: "/"
-			});
-		});
+		// TODO save token cookie for keeping status of logged in
 	};
 
 	myApp.removeTokenCookie = function() {
@@ -136,20 +110,38 @@ $(function() {
 	$("#registerButton").on('click', function(e) {
 		$("legend").html("");
 		e.preventDefault();
-		var email = $("#email").val();
+		var firstName = $("#firstName").val();
+        var lastName = $("#lastName").val();
+        var studentID = $("#studentID").val();
+        var email = $("#email").val();
 		var password = $("#password").val();
 		var confirmPassword = $("#confirmPassword").val();
-		var statusMessages = [];
+        console.log(password);
+        console.log(confirmPassword);
+        var statusMessages = [];
 
-		if(email.length == 0 || !myApp.isValidEmail(email)) {
+
+        if(isEmpty(firstName)) {
+            statusMessages.push("Please provide a first name");
+        }
+
+        if(isEmpty(lastName)) {
+            statusMessages.push("Please provide a last name");
+        }
+
+        if(isEmpty(studentID)) {
+            statusMessages.push("Please provide a student id");
+        }
+
+		if(isEmpty(email) || !myApp.isValidEmail(email)) {
 			statusMessages.push("Please provide a valid email address");
 		}
 
-		if(password.length == 0) {
+		if(isEmpty(password)) {
 			statusMessages.push("Please provide a password");
 		}
 
-		if(confirmPassword.length == 0) {
+		if(isEmpty(confirmPassword)) {
 			statusMessages.push("Please confirm your password");
 		}
 
@@ -157,8 +149,8 @@ $(function() {
 			statusMessages.push("Your chosen password and confirmation password does not match");
 		}
 
-		if(statusMessages.length == 0) {
-			myApp.register(email, password);
+		if(isEmpty(statusMessages)) {
+			myApp.register(firstName, lastName, studentID, email, password, confirmPassword);
 		} else {
 			var $legend = $("legend");
 			$legend.append("<ul></ul>");
@@ -167,6 +159,10 @@ $(function() {
 			});
 		}
 	});
+
+    function isEmpty(value) {
+        return value.length == 0;
+    }
 
 	$("#logOutButton").on('click', function(e) {
         e.preventDefault();
@@ -253,16 +249,6 @@ $(function() {
             }  
         }
     }
-
-	auth.onAuthStateChanged(function(firebaseUser) {
-		if(firebaseUser) {
-			myApp.saveTokenCookie();
-			console.log("User logged in");
-		} else {
-			console.log("Ingen logget inn");
-		}
-	});
-
 });
 
 

@@ -1,19 +1,28 @@
 extends layout
 
 block content
-	h3= title
-	form(action="#")
-		legend#statusMessage All fields are required
-
-		.form-group
-			label(for="email") Email
-			input.form-control(type="email" id="email" name="email" placeholder="Email")
-		.form-group
-			label(for="password") Password
-			input.form-control(type="password" id="password" name="password" placeholder="Password")
-		.form-group
-			label(for="confirmPassword") Confirm Password
-			input.form-control(type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password")
-		.form-group
-			a(href="/login") Already a user? <br> Log In Here
-			button.btn.btn-primary.pull-right#registerButton Create User
+    h3= title
+    form(action="#")
+        legend#statusMessage All fields are required
+        
+        .form-group
+            label(for="firstName") Fornavn
+            input.form-control(type="text" id="firstName" name="firstName" placeholder="First name")
+        .form-group
+            label(for="lastName") Etternavn
+            input.form-control(type="text" id="lastName" name="lastName" placeholder="Last name")
+        .form-group
+            label(for="email") Email
+            input.form-control(type="email" id="email" name="email" placeholder="Email")
+        .form-group
+            label(for="studentID") Student username
+            input.form-control(type="text" id="studentID" name="studentID" placeholder="Student username")
+        .form-group
+            label(for="password") Password
+            input.form-control(type="password" id="password" name="password" placeholder="Password")
+        .form-group
+            label(for="confirmPassword") Confirm Password
+            input.form-control(type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password")
+        .form-group
+            a(href="/login") Already a user? <br> Log In Here
+            button.btn.btn-primary.pull-right#registerButton Create User
