@@ -7,24 +7,18 @@ block content
     table#seminarTable.table-hover.table.table-responsive.hide
         thead
             tr
+                th Course ID
                 th Name
-                th Day
-                th Place
-                th Start time
-                th End time
-                th Room
-                th Sign Up
         tbody
     section.seminars.row
-        for seminar in model
+        for seminar in model.seminars
             .col-xs-12.col-sm-12.col-md-6.col-lg-4
                 .thumbnail
-                    a(href="/seminarDetails/#{parentKey}/#{key}")
+                    a(href="/seminarDetails/#{seminar.semGrID}")
                         h4 #{seminar.name}
                     ul
-                        li #{seminar.day}
-                        li Start: #{seminar.startTime}
-                        li Slutt: #{seminar.endTime}
+                        li #{seminar.courseID}
+                        li Name: #{seminar.name}
                     p
-                        a(href="/removeSeminar:#{key}").btn.btn-danger Remove Seminar
+                        a(href="/removeSeminar/#{seminar.semGrID}").btn.btn-danger Remove Seminar
 

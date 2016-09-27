@@ -61,8 +61,13 @@ router.post("/login", userService.authenticate, function(req, res, next) {
 });
 
 /* GET Dashboard page */
-router.get("/dashboard", function(req, res, next) {
-    res.render("dashboard", {'title': 'Dashboard'});
+router.get("/dashboard", seminarService.getAllSeminarGroups, function(req, res, next) {
+    console.log(req.seminarGroups);
+    var model = {
+        title: 'Dashboard',
+        seminars: req.seminarGroups
+    }
+    res.render("dashboard", {'model': model});
 });
 
 
