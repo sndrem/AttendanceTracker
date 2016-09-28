@@ -5,7 +5,10 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var expressValidator = require("express-validator");
-var expressSession = require("express-session");
+var session = require('client-sessions');
+var userService = require("./modules/user-service");
+
+
 
 var routes = require('./routes/index');
 
@@ -30,11 +33,37 @@ app.use(require('node-sass-middleware')({
 }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use("/seminarDetails/:courseKey/:seminarKey", express.static("public"));
-app.use(expressSession({
-    secret: 'hfusyr83748fesf7&%&#&783u8ru/(Y',
-    saveUninitialized: false,
-    resave: false
+app.use(session({
+    cookieName: 'session',
+    secret: '387fgrhgur87euy8whfseyugd#/$&/"rhdYGDYF/',
+    duration: 30 * 60 * 1000,
+    activeDuration: 5 * 60 * 1000,
+    httpOnly: true,
+    secure: true,
+    ephemeral: true
 }));
+
+app.use(function(req, res, next){
+    // Hvis det finnes en bruker
+    if(req.session && req.session.user) {
+        // Lagre brukeren til session
+        userService.getUser(req.session.user.eMail, function(err, user) {
+            if(user) {
+                // console.log("User found. Wooho!", user);
+                req.user = user;
+                delete req.user.password;
+                req.session.user = user;
+                res.locals.user = user;    
+            }
+            next();
+        });
+        // console.log("Printing user: ", req.session.user);
+
+    } else {
+        console.log("No user session available");
+        next();
+    }
+});
 
 app.use('/', routes);
 

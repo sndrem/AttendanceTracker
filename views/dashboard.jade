@@ -1,4 +1,6 @@
 extends layout
+block navigation
+    include ./partials/dashboardNavigation
 
 block content
     h3 #{model.title} #{model.user}

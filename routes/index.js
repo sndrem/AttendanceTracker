@@ -6,6 +6,7 @@ var seminarService = require("../modules/seminar-service");
 var userService = require("../modules/user-service");
 var seminarSchedule = require("../modules/seminar-schedule");
 
+
 connection.connect();
 
 function authenticate(req, res, next) {
@@ -41,6 +42,12 @@ router.get('/login', function(req, res, next) {
     res.render('login', {'title': "Log in"});
 });
 
+/* GET logout page */
+router.get("/logout", function(req, res, next) {
+    req.session.reset();
+    res.redirect("/");
+});
+
 
 
 /* POST registration page */
@@ -56,12 +63,11 @@ router.post('/register', userService.registerUser, function(req, res, next) {
 
 /* POST login page */
 router.post("/login", userService.authenticate, function(req, res, next) {
-    console.log(req.message);
-    res.status(200).send(req.message);
+    res.status(200).send("All okay. Carry on my son...");
 });
 
 /* GET Dashboard page */
-router.get("/dashboard", seminarService.getAllSeminarGroups, function(req, res, next) {
+router.get("/dashboard", userService.requireLogin, seminarService.getAllSeminarGroups, function(req, res, next) {
     console.log(req.seminarGroups);
     var model = {
         title: 'Dashboard',

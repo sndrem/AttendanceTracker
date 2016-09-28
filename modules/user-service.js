@@ -46,8 +46,9 @@ var userService = {
     authenticate: function(req, res, next) {
         var email = req.body.email;
         var password = req.body.password;
+        console.log("Email: " , email);
 
-        var getUserQuery = "SELECT eMail, password, salt FROM person WHERE eMail = ? LIMIT 1";
+        var getUserQuery = "SELECT * FROM person WHERE eMail = ? LIMIT 1";
         connection.query(getUserQuery, [email], function(err, result){
             if(err) {
                 console.log("Error: ", err);
@@ -56,13 +57,30 @@ var userService = {
                // TODO
                // Må sjekke her om passordet som brukeren skriver inn + salt i md5-funksjonen
                // er lik passordet som er lagret i databasen
-               req.message = "User found. Should procede to dashboard...";
-               next();
+                req.message = "User found. Should procede to dashboard...";
+                req.session.user = result[0];
+                console.log("Printing user session inside authentice method: ", req.session.user);
+                next();
             } else {
                 console.log("No users found with email: " + email);
                 req.message = "No users found with email: " + email;
                 next();
             }
+        });
+    },
+
+    requireLogin: function(req, res, next) {
+        if(!req.user) {
+            res.redirect("/login");
+        } else {
+            next();
+        }
+    },
+
+    getUser: function(email, callback) {
+        var getUserQuery = "SELECT * FROM person WHERE eMail = ?";
+        connection.query(getUserQuery, [email], function(err, result) {
+            callback(err, result);
         });
     }
 };

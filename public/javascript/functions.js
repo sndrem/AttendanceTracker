@@ -3,32 +3,7 @@
 $(function() {
 	var myApp = {};
 
-    // TODO Verifisere token
-    myApp.checkLoggedinUser = function() {
-        if(myApp.userIsLoggedIn()) {
-            myApp.showLoggedInNavigation();
-        }
-    };
-
-    myApp.userIsLoggedIn = function() {
-        var storedToken = Cookies.get('token');
-        if(!storedToken) {
-            return false;
-        }
-        return true;
-    }
-
-    myApp.showLoggedInNavigation = function() {
-        console.log("Should show this awesome menu");
-        var $navbar = $(".navbar-nav");
-        var navigation = "<li>" +
-                        "<a href=\"/dashboard\"><i class=\"material-icons\">&#xE853;</i>Dashboard</a>" +
-                        "</li>" +
-                        "<li>" +
-                        "<a href=\"#\" id=\"logOutButton\"><i class=\"material-icons\">&#xE879;</i>Log Out</a>" +
-                        "</li>";
-        $navbar.html(navigation);
-    };
+    
 
 	myApp.login = function(email, password) {
 		// TODO Post request to server
@@ -40,12 +15,12 @@ $(function() {
         }, function(data, textStatus, xhr) {
             /*optional stuff to do after success */
             console.log(data);
-            $("legend").html(data);
+            console.log(textStatus);
+            console.log(xhr);
+            if(textStatus === 'success') {
+                document.location.href = "/dashboard";
+            }
         });
-	};
-
-	myApp.signOut = function() {
-		// TODO - Sign out trough server
 	};
 
 
@@ -68,18 +43,6 @@ $(function() {
         });
 	};
 
-	myApp.saveTokenCookie = function() {
-		// TODO save token cookie for keeping status of logged in
-	};
-
-	myApp.removeTokenCookie = function() {
-		console.log("Fjerner cookie med token");
-		Cookies.remove('token', {
-			domain: window.location.hostname,
-			path: "/"
-		});
-	};
-
 	myApp.isValidEmail = function(email) {
 		var pattern = /^([a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+(\.[a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+)*|"((([ \t]*\r\n)?[ \t]+)?([\x01-\x08\x0b\x0c\x0e-\x1f\x7f\x21\x23-\x5b\x5d-\x7e\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|\\[\x01-\x09\x0b\x0c\x0d-\x7f\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))*(([ \t]*\r\n)?[ \t]+)?")@(([a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.)+([a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.?$/i;
 		return pattern.test(email);
@@ -88,6 +51,7 @@ $(function() {
 	myApp.resetForm = function() {
 		$("form")[0].reset();
 	}
+
 
  
 	$("#loginButton").on('click', function(e) {
@@ -172,11 +136,6 @@ $(function() {
         return value.length == 0;
     }
 
-	$("#logOutButton").on('click', function(e) {
-        e.preventDefault();
-        myApp.signOut();
-	});
-
 
     $("#addGroup").on('click', function(e) {
         e.preventDefault();
@@ -250,6 +209,8 @@ $(function() {
                     "</tr>");   
         }
     }
+
+
 });
 
 
