@@ -78,5 +78,15 @@ router.get("/removeSeminar/:semGrID", userService.requireLogin, seminarService.r
     res.redirect("/dashboard");
 });
 
+/* GET Seminar details for student */
+router.get("/seminarDetails/:semGrID", userService.requireLogin, seminarService.getSeminarDetails, function(req, res, next) {
+    console.log(req.seminarDetails);
+    var values = {
+        title: 'Seminar details',
+        seminar: req.seminarDetails
+    }
+    res.render("seminarDetails", values);
+});
+
 
 module.exports = router;

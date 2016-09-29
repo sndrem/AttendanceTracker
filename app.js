@@ -43,6 +43,8 @@ app.use(session({
     ephemeral: true
 }));
 
+// Denne metoden kjøres på hver eneste request og sjekker om det finnes en session
+// for en user. Hvis det gjør det, så oppdaterer den session med riktige data fra databasen
 app.use(function(req, res, next){
     // Hvis det finnes en bruker
     if(req.session && req.session.user) {

@@ -2,12 +2,22 @@ extends layout
 
 block content
     h3 #{title}
-    form(action="/registerAttendance" method="POST" name="attendanceForm")
-        for student in students
-            .form-group
-                label.form-control #{student} 
-                    input(type="checkbox", name="studentCheckbox", value="#{student}")
+    
+    p Here is an overview over your attendance for #{seminar[0].name}
 
-        button.btn.btn-primary Save Attendance
+    table.table.table-hover
+        thead
+            tr
+                th Date
+                th Attended
+        tbody
+            for sem in seminar
+                tr
+                    td #{sem.date}
+                    if sem.attended == 1
+                        td Yes
+                    else 
+                        td No
+
 
 

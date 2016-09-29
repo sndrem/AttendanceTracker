@@ -11,6 +11,9 @@ var connection = mysql.createConnection({
 
 var seminarService = {
 
+    /*
+    Retrieves all seminargroups for a student
+     */
     getUserSeminarGroups: function(req, res, next) {
 
         var userSeminarGroupQuery =   "SELECT seminargroup.`semGrID`, seminargroup.`courseID`, seminargroup.`name` "
@@ -29,6 +32,9 @@ var seminarService = {
         });
     },
 
+    /*
+    Retrieves all seminar groups
+     */
     getAllSeminarGroups: function(req, res, next) {
         const query = "SELECT * FROM seminargroup";
         connection.query(query, function(err, result) {
@@ -41,6 +47,9 @@ var seminarService = {
         });
     },
 
+    /*
+    Adds a user to a seminar
+     */
     addUserToSeminar: function(req, res, next) {
         const seminarID = req.params.semGrID;
         const userID = req.user.StudID;
@@ -59,19 +68,38 @@ var seminarService = {
         });
     },
 
+    /*
+    Removes a user from a seminar
+     */
     removeUserFromSeminar: function(req, res, next) {
         const seminarID = req.params.semGrID;
         const userID = req.user.StudID;
-        const values = {
-            StudID: userID,
-            semGrID: seminarID
-        }
         const query = 'DELETE FROM is_in_seminar_group '
                     + 'WHERE StudID = ? AND semGrID = ?';
         connection.query(query, [userID, seminarID], function(err, result) {
             if(err) {
                 next(err);
             } else {
+                next();
+            }
+        });
+    },
+
+    getSeminarDetails: function(req, res, next) {
+        const seminarID = req.params.semGrID;
+        const userID = req.user.StudID;
+        const query =   'SELECT seminargroup.`name`, seminar.`semID`, seminar.`date`, seminar.`semGrID`, seminar.`place`, seminar.`oblig`, seminar.`duration`, seminar.`cancelled`, `attends_seminar`.`attended` FROM seminar '
+                    +   'JOIN `attends_seminar` '
+                    +   'ON seminar.`semID` = `attends_seminar`.`semID`'
+                    +   'JOIN `person`'
+                    +   'ON person.`StudID` = ? AND seminar.`semGrID` = ? '
+                    +   'JOIN seminargroup '
+                    +   'ON seminargroup.`semGrID` = seminar.`semGrID`';
+        connection.query(query, [userID, seminarID], function(err, result) {
+            if(err) {
+                next(err);
+            } else {
+                req.seminarDetails = result;
                 next();
             }
         });
