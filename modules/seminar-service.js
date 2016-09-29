@@ -104,6 +104,28 @@ var seminarService = {
                 next();
             }
         });
+    },
+
+    getNumberOfSeminarsForStudent: function(req, res, next) {
+        const userID = req.user.StudID;
+        const seminarID = req.params.semGrID;
+        const query =   " SELECT count(`attends_seminar`.`StudID`) as numOfSeminars "
+                      + " FROM `attends_seminar` "
+                      + " JOIN seminar "
+                      + " ON `attends_seminar`.`semID` = seminar.`semID` "
+                      + " JOIN seminargroup "
+                      + " ON seminar.`semGrID` = seminargroup.`semGrID` "
+                      + " WHERE `attends_seminar`.`StudID` = ? AND seminargroup.`semGrID` = ?";
+        connection.query(query, [userID, seminarID], function(err, result) {
+            
+            if(err) {
+                next(err);
+            } else {
+                req.seminarDetails.numOfSeminars = result[0].numOfSeminars;
+                next();
+            }
+        })
+
     }
 }
 
