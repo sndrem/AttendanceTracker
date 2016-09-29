@@ -11,15 +11,33 @@ var connection = mysql.createConnection({
 
 var seminarService = {
 
-    getAllSeminarGroups: function(req, res, next) {
+    getUserSeminarGroups: function(req, res, next) {
 
-        var allSeminarQuery = "SELECT * FROM seminargroup";
-        connection.query(allSeminarQuery, function(err, result) {
+        console.log("Fetching all user seminar groups for user with id: ", req.session.user.StudID);
+
+        var userSeminarGroupQuery =   "SELECT seminargroup.`semGrID`, seminargroup.`courseID`, seminargroup.`name` "
+                                + "FROM seminargroup "
+                                + "JOIN `is_in_seminar_group`  "
+                                + "ON `is_in_seminar_group`.`semGrID` = seminargroup.`semGrID` "
+                                + "JOIN person "
+                                + "ON `is_in_seminar_group`.`StudID` = ?"; 
+        connection.query(userSeminarGroupQuery, [req.session.user.StudID], function(err, result) {
             if(err) {
                 console.log("Error: " , err);
             } else {
                 req.seminarGroups = result;
                 next();
+            }
+        });
+    },
+
+    getAllSeminarGroups: function(req, res, next) {
+        const query = "SELECT * FROM seminargroup";
+        connection.query(query, function(err, result) {
+            if(err) {
+                next(err);
+            } else {
+                req.seminarGroups = result;
             }
         });
     }

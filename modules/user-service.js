@@ -46,7 +46,6 @@ var userService = {
     authenticate: function(req, res, next) {
         var email = req.body.email;
         var password = req.body.password;
-        console.log("Email: " , email);
 
         var getUserQuery = "SELECT * FROM person WHERE eMail = ? LIMIT 1";
         connection.query(getUserQuery, [email], function(err, result){
@@ -59,7 +58,7 @@ var userService = {
                // er lik passordet som er lagret i databasen
                 req.message = "User found. Should procede to dashboard...";
                 req.session.user = result[0];
-                console.log("Printing user session inside authentice method: ", req.session.user);
+                console.log("Printing session inside authenticate", req.session.user);
                 next();
             } else {
                 console.log("No users found with email: " + email);
@@ -70,17 +69,29 @@ var userService = {
     },
 
     requireLogin: function(req, res, next) {
+        console.log("Checking if user is logged in...\n\n");
         if(!req.user) {
+            console.log("User is not logged in");
             res.redirect("/login");
         } else {
+            console.log("User is logged in...\n\n");
             next();
         }
     },
 
     getUser: function(email, callback) {
+        console.log("Email: ", email);
         var getUserQuery = "SELECT * FROM person WHERE eMail = ?";
         connection.query(getUserQuery, [email], function(err, result) {
-            callback(err, result);
+            console.log("Getting user", result);
+            if(result.length == 0) {
+                callback({
+                    error: 'Could not find user'
+                }, []);
+            } else {
+                callback(err, result);    
+            }
+            
         });
     }
 };

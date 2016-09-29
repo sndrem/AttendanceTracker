@@ -9,22 +9,6 @@ var seminarSchedule = require("../modules/seminar-schedule");
 
 connection.connect();
 
-function authenticate(req, res, next) {
-    var idToken = req.cookies.token;
-    if(idToken) {
-        firebase.auth().verifyIdToken(idToken).then(function(decodedToken) {
-          var uid = decodedToken.uid;
-          req.user = decodedToken;
-          return next();
-        }).catch(function(error) {
-          // Handle error
-          console.log("Could not verify token");
-          res.send("Du må være logget inn for å se denne siden");
-        });
-    } else {
-        res.redirect("/");
-    }
-}
 
 
 /* GET home page. */
@@ -67,8 +51,7 @@ router.post("/login", userService.authenticate, function(req, res, next) {
 });
 
 /* GET Dashboard page */
-router.get("/dashboard", userService.requireLogin, seminarService.getAllSeminarGroups, function(req, res, next) {
-    console.log(req.seminarGroups);
+router.get("/dashboard", userService.requireLogin, seminarService.getUserSeminarGroups, function(req, res, next) {
     var model = {
         title: 'Dashboard',
         seminars: req.seminarGroups
@@ -77,7 +60,8 @@ router.get("/dashboard", userService.requireLogin, seminarService.getAllSeminarG
 });
 
 /* GET list all seminars */
-router.get("/listSeminars", seminarService.getAllSeminarGroups, function(req, res, next) {
+router.get("/listSeminars", userService.requireLogin, seminarService.getAllSeminarGroups, function(req, res, next) {
+    console.log("Getting all seminars", req.seminarGroups);
     res.status(200).send(req.seminarGroups);
 });
 
