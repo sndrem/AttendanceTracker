@@ -5,15 +5,20 @@ block content
     
     p Here is an overview over your attendance for #{seminar[0].name}
 
-    table.table.table-hover
+    table.table.table-striped
         thead
             tr
                 th Date
+                th place
+                th Duration in minutes
                 th Attended
+
         tbody
             for sem in seminar
                 tr
                     td #{sem.date}
+                    td #{sem.place}
+                    td #{sem.duration} minutes
                     if sem.attended == 1
                         td Yes
                     else 

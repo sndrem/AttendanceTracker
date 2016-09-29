@@ -94,7 +94,8 @@ var seminarService = {
                     +   'JOIN `person`'
                     +   'ON person.`StudID` = ? AND seminar.`semGrID` = ? '
                     +   'JOIN seminargroup '
-                    +   'ON seminargroup.`semGrID` = seminar.`semGrID`';
+                    +   'ON seminargroup.`semGrID` = seminar.`semGrID` '
+                    +   'ORDER BY seminar.`date`';
         connection.query(query, [userID, seminarID], function(err, result) {
             if(err) {
                 next(err);
