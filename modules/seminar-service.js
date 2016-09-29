@@ -57,6 +57,24 @@ var seminarService = {
                 next();
             }
         });
+    },
+
+    removeUserFromSeminar: function(req, res, next) {
+        const seminarID = req.params.semGrID;
+        const userID = req.user.StudID;
+        const values = {
+            StudID: userID,
+            semGrID: seminarID
+        }
+        const query = 'DELETE FROM is_in_seminar_group '
+                    + 'WHERE StudID = ? AND semGrID = ?';
+        connection.query(query, [userID, seminarID], function(err, result) {
+            if(err) {
+                next(err);
+            } else {
+                next();
+            }
+        });
     }
 }
 

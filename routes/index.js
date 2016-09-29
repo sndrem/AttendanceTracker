@@ -73,5 +73,10 @@ router.post("/signUpForSeminar/:semGrID", userService.requireLogin, seminarServi
     res.status(200).send("Seminar added");
 });
 
+/* GET remove seminar */
+router.get("/removeSeminar/:semGrID", userService.requireLogin, seminarService.removeUserFromSeminar, function(req, res, next) {
+    res.redirect("/dashboard");
+});
+
 
 module.exports = router;
