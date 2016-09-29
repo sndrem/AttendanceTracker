@@ -44,15 +44,11 @@ app.use(session({
 }));
 
 app.use(function(req, res, next){
-    console.log("\n\nChecking if there are any sessions available...\n\n\n");
     // Hvis det finnes en bruker
     if(req.session && req.session.user) {
-        console.log("Current state of req.session...: ", req.session, "\n\n");
         // Lagre brukeren til session
-        console.log("Session user : ", req.session.user);
         userService.getUser(req.session.user.eMail, function(err, user) {
             if(err) {
-                console.log("There was an error fetching the user");
                 next();
             }  else {
                 if(user) {
@@ -62,13 +58,10 @@ app.use(function(req, res, next){
                     res.locals.user = user[0];
                     next();    
                 }
-                
             }       
-            
         });
 
     } else {
-        console.log("No user session available");
         next();
     }
 });

@@ -13,8 +13,6 @@ var seminarService = {
 
     getUserSeminarGroups: function(req, res, next) {
 
-        console.log("Fetching all user seminar groups for user with id: ", req.session.user.StudID);
-
         var userSeminarGroupQuery =   "SELECT seminargroup.`semGrID`, seminargroup.`courseID`, seminargroup.`name` "
                                 + "FROM seminargroup "
                                 + "JOIN `is_in_seminar_group`  "
@@ -38,6 +36,25 @@ var seminarService = {
                 next(err);
             } else {
                 req.seminarGroups = result;
+                next();
+            }
+        });
+    },
+
+    addUserToSeminar: function(req, res, next) {
+        const seminarID = req.params.semGrID;
+        const userID = req.user.StudID;
+        const values = {
+            StudID: userID,
+            semGrID: seminarID
+        }
+        const query = "INSERT INTO is_in_seminar_group SET ?";
+        connection.query(query, values, function(err, result) {
+            if(err) {
+                next(err);
+            } else {
+                req.seminarAdded = result;
+                next();
             }
         });
     }

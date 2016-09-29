@@ -14,9 +14,6 @@ $(function() {
             password: password
         }, function(data, textStatus, xhr) {
             /*optional stuff to do after success */
-            console.log(data);
-            console.log(textStatus);
-            console.log(xhr);
             if(textStatus === 'success') {
                 document.location.href = "/dashboard";
             }
@@ -149,7 +146,6 @@ $(function() {
                 data: {},
                 async: true,
                 success: function(data) {
-                    console.log(data);
                     showSeminarList(data);
                     addClickEventForSeminarRegistration();
                 }
@@ -162,6 +158,7 @@ $(function() {
             })
             .always(function() {
                 console.log("complete");
+
             });
         } else {
             $seminarTable.addClass('hide');
@@ -192,6 +189,7 @@ $(function() {
             })
             .always(function() {
                 console.log("complete");
+                location.reload();
             });
             
         });

@@ -20,7 +20,6 @@ var userService = {
         // TODO - Sjekke email og passord
 
         password = md5(password.trim() + salt.trim());
-        console.log("Generating password " , password);
         var values = {
             StudID: studentID,
             fName: firstName,
@@ -31,7 +30,6 @@ var userService = {
         }
 
         var insertQuery = "INSERT INTO person SET ?";
-        console.log("Tries to insert new person");
         connection.query(insertQuery, values, function(err, result){
             if(err) {
                 res.message = err;
@@ -50,7 +48,6 @@ var userService = {
         var getUserQuery = "SELECT * FROM person WHERE eMail = ? LIMIT 1";
         connection.query(getUserQuery, [email], function(err, result){
             if(err) {
-                console.log("Error: ", err);
                 next(err);
             } else if(result.length > 0) {
                // TODO
@@ -58,10 +55,8 @@ var userService = {
                // er lik passordet som er lagret i databasen
                 req.message = "User found. Should procede to dashboard...";
                 req.session.user = result[0];
-                console.log("Printing session inside authenticate", req.session.user);
                 next();
             } else {
-                console.log("No users found with email: " + email);
                 req.message = "No users found with email: " + email;
                 next();
             }
@@ -69,21 +64,16 @@ var userService = {
     },
 
     requireLogin: function(req, res, next) {
-        console.log("Checking if user is logged in...\n\n");
         if(!req.user) {
-            console.log("User is not logged in");
             res.redirect("/login");
         } else {
-            console.log("User is logged in...\n\n");
             next();
         }
     },
 
     getUser: function(email, callback) {
-        console.log("Email: ", email);
         var getUserQuery = "SELECT * FROM person WHERE eMail = ?";
         connection.query(getUserQuery, [email], function(err, result) {
-            console.log("Getting user", result);
             if(result.length == 0) {
                 callback({
                     error: 'Could not find user'
