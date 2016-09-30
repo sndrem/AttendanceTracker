@@ -46,16 +46,17 @@ router.post('/register', userService.registerUser, function(req, res, next) {
 });
 
 /* POST login page */
-router.post("/login", userService.authenticate, function(req, res, next) {
+router.post("/login", userService.authenticate, userService.isAdmin, function(req, res, next) {
     res.status(200).send("All okay. Carry on my son...");
 });
 
 /* GET Dashboard page */
-router.get("/dashboard", userService.requireLogin, seminarService.getUserSeminarGroups, function(req, res, next) {
+router.get("/dashboard", userService.requireLogin, userService.isAdmin, seminarService.getUserSeminarGroups, function(req, res, next) {
     var model = {
         title: 'Dashboard',
         seminars: req.seminarGroups
     }
+    console.log("Session: ", req.session.user);
     res.render("dashboard", {'model': model});
 });
 

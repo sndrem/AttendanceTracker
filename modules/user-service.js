@@ -63,6 +63,21 @@ var userService = {
         });
     },
 
+    isAdmin: function(req, res, next) {
+        const studID = req.session.user.StudID;
+        const query = "SELECT adminType FROM admins "
+                    + "WHERE id = ?";
+        connection.query(query, [studID], function(err, result) {
+            if(err) {
+                next(err);
+            } else {
+                console.log(result);
+                req.session.user.adminType = result[0].adminType;
+                next();
+            }
+        });
+    },
+
     requireLogin: function(req, res, next) {
         if(!req.user) {
             res.redirect("/login");
@@ -79,7 +94,7 @@ var userService = {
                     error: 'Could not find user'
                 }, []);
             } else {
-                callback(err, result);    
+                callback(err, result);
             }
             
         });

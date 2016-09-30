@@ -58,9 +58,9 @@ app.use(function(req, res, next){
                     delete req.user.password;
                     req.session.user = user[0];
                     res.locals.user = user[0];
-                    next();    
+                    next();
                 }
-            }       
+            }
         });
 
     } else {
