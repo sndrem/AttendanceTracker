@@ -54,10 +54,12 @@ router.post("/login", userService.authenticate, userService.isAdmin, function(re
 router.get("/dashboard", userService.requireLogin, userService.isAdmin, seminarService.getUserSeminarGroups, function(req, res, next) {
     var model = {
         title: 'Dashboard',
-        seminars: req.seminarGroups
+        seminars: req.seminarGroups,
+        user: req.session.user
     }
-    console.log("Session: ", req.session.user);
-    res.render("dashboard", {'model': model});
+    // console.log("Session: ", req.session.user);
+    console.log(model);
+    res.render("dashboard", model);
 });
 
 /* GET list all seminars */

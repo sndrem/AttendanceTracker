@@ -68,6 +68,16 @@ app.use(function(req, res, next){
     }
 });
 
+// Denne metoden kjøres på hver eneste request og sjekker hvilken admin-type en bruker er
+// Dersom det ikke finnes en admintype så vet vi at vi har med en student å gjøre
+app.use(function(req, res, next) {
+    if(req.session && req.session.user) {
+        userService.isAdmin(req, res, next);
+    } else {
+        next();
+    }
+});
+
 app.use('/', routes);
 
 // catch 404 and forward to error handler

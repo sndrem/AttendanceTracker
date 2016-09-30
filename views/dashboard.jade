@@ -3,8 +3,11 @@ block navigation
     include ./partials/dashboardNavigation
 
 block content
-    h3 #{model.title} #{model.user}
-    h4 Your seminars
+    h3 #{title}: #{user.fName} #{user.lName}
+    if user.adminType == null
+        h4 Your seminars
+    else
+        h4 Your seminargroups
     a(href="#")#addGroup Search for Groups
     table#seminarTable.table-hover.table.table-responsive.hide
         thead
@@ -13,7 +16,7 @@ block content
                 th Name
         tbody
     section.seminars.row
-        for seminar in model.seminars
+        for seminar in seminars
             .col-xs-12.col-sm-12.col-md-6.col-lg-4
                 .thumbnail
                     a(href="/seminarDetails/#{seminar.semGrID}")

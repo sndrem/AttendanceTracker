@@ -71,8 +71,14 @@ var userService = {
             if(err) {
                 next(err);
             } else {
-                console.log(result);
-                req.session.user.adminType = result[0].adminType;
+                // If no results, we know that the user is not 
+                // an admin
+                if(result.length == 0) {
+                    req.session.user.adminType = null;
+                } else {
+                    // If result, we know store the type of admin for the user
+                    req.session.user.adminType = result[0].adminType;    
+                }
                 next();
             }
         });
