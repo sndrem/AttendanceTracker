@@ -108,6 +108,20 @@ var seminarService = {
         });
     },
 
+    getSeminarGroupDetails: function(req, res, next) {
+        const seminarID = req.params.semGrID;
+        const query = "SELECT * FROM seminargroup "
+                    + "WHERE semGrID = ?";
+        connection.query(query, [seminarID], function(err, result) {
+            if(err) {
+                next(err);
+            } else {
+                req.seminarGroupDetails = result[0];
+                next();
+            }
+        });
+    },
+
     getNumberOfSeminarsForStudent: function(req, res, next) {
         const userID = req.user.StudID;
         const seminarID = req.params.semGrID;

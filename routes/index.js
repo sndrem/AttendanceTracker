@@ -79,12 +79,14 @@ router.get("/removeSeminar/:semGrID", userService.requireLogin, seminarService.r
 });
 
 /* GET Seminar details for student */
-router.get("/seminarDetails/:semGrID", userService.requireLogin, seminarService.getSeminarDetails, seminarService.getNumberOfSeminarsForStudent, function(req, res, next) {
+router.get("/seminarDetails/:semGrID", userService.requireLogin, seminarService.getSeminarGroupDetails, seminarService.getSeminarDetails, seminarService.getNumberOfSeminarsForStudent, function(req, res, next) {
     console.log(req.seminarDetails);
     var values = {
         title: 'Seminar details',
-        seminar: req.seminarDetails
+        seminar: req.seminarDetails,
+        groupDetails: req.seminarGroupDetails
     }
+    console.log(values);
     res.render("seminarDetails", values);
 });
 
