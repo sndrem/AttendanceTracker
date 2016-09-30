@@ -16,16 +16,18 @@ var seminarService = {
      */
     getUserSeminarGroups: function(req, res, next) {
 
-        var userSeminarGroupQuery =   "SELECT seminargroup.`semGrID`, seminargroup.`courseID`, seminargroup.`name` "
-                                + "FROM seminargroup "
-                                + "JOIN `is_in_seminar_group`  "
-                                + "ON `is_in_seminar_group`.`semGrID` = seminargroup.`semGrID` "
-                                + "JOIN person "
-                                + "ON `is_in_seminar_group`.`StudID` = ?"; 
+        var userSeminarGroupQuery =  "SELECT seminargroup.`semGrID`, seminargroup.`courseID`, seminargroup.`name` "
+                                +    "FROM seminargroup "
+                                +    "JOIN `is_in_seminar_group`  "
+                                +    "on `is_in_seminar_group`.`semGrID` = seminargroup.`semGrID` "
+                                +    "JOIN person "
+                                +    "ON `is_in_seminar_group`.`StudID` = person.`StudID`"
+                                +    "WHERE person.`StudID` = ?";
         connection.query(userSeminarGroupQuery, [req.session.user.StudID], function(err, result) {
             if(err) {
                 console.log("Error: " , err);
             } else {
+                console.log(result);
                 req.seminarGroups = result;
                 next();
             }
