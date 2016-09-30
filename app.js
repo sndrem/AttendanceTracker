@@ -33,6 +33,7 @@ app.use(require('node-sass-middleware')({
 }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use("/seminarDetails/:courseKey/:seminarKey", express.static("public"));
+app.use("/seminarDetails/:courseKey", express.static("public"));
 app.use(session({
     cookieName: 'session',
     secret: '387fgrhgur87euy8whfseyugd#/$&/"rhdYGDYF/',

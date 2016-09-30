@@ -57,8 +57,6 @@ router.get("/dashboard", userService.requireLogin, userService.isAdmin, seminarS
         seminars: req.seminarGroups,
         user: req.session.user
     }
-    // console.log("Session: ", req.session.user);
-    console.log(model);
     res.render("dashboard", model);
 });
 
