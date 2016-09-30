@@ -133,7 +133,6 @@ var seminarService = {
                       + " ON seminar.`semGrID` = seminargroup.`semGrID` "
                       + " WHERE `attends_seminar`.`StudID` = ? AND seminargroup.`semGrID` = ?";
         connection.query(query, [userID, seminarID], function(err, result) {
-            
             if(err) {
                 next(err);
             } else {

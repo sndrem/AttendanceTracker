@@ -20,9 +20,9 @@ block content
                     td #{sem.place}
                     td #{sem.duration} minutes
                     if sem.attended == 1
-                        td Yes
+                        td.success Yes
                     else 
-                        td No
+                        td.danger No
 
     p Total number of seminars: #{seminar.numOfSeminars}
 
