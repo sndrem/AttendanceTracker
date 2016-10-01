@@ -32,6 +32,11 @@ router.get("/logout", function(req, res, next) {
     res.redirect("/");
 });
 
+/* GET about page */
+router.get("/about", function(req, res, next) {
+    res.render("about");
+})
+
 /* POST registration page */
 router.post('/register', userService.registerUser, function(req, res, next) {
     var message = {
