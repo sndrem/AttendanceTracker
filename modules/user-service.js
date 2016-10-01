@@ -84,6 +84,16 @@ var userService = {
         });
     },
 
+    isAssistant: function(req, res, next) {
+        if(req.session && req.session.user) {
+            if(req.session.user.adminType === 'assistant') {
+                next();
+            } else {
+                res.redirect("/");
+            }
+        }
+    },
+
     requireLogin: function(req, res, next) {
         if(!req.user) {
             res.redirect("/login");

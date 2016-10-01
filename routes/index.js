@@ -32,8 +32,6 @@ router.get("/logout", function(req, res, next) {
     res.redirect("/");
 });
 
-
-
 /* POST registration page */
 router.post('/register', userService.registerUser, function(req, res, next) {
     var message = {
@@ -48,47 +46,6 @@ router.post('/register', userService.registerUser, function(req, res, next) {
 /* POST login page */
 router.post("/login", userService.authenticate, userService.isAdmin, function(req, res, next) {
     res.status(200).send("All okay. Carry on my son...");
-});
-
-/* GET Dashboard page */
-router.get("/dashboard", userService.requireLogin, userService.isAdmin, seminarService.getUserSeminarGroups, function(req, res, next) {
-    var model = {
-        title: 'Dashboard',
-        seminars: req.seminarGroups,
-        user: req.session.user
-    }
-    res.render("dashboard", model);
-});
-
-/* GET list all seminars */
-router.get("/listSeminars", userService.requireLogin, seminarService.getAllSeminarGroups, function(req, res, next) {
-    console.log("Getting all seminars", req.seminarGroups);
-    res.status(200).send(req.seminarGroups);
-});
-
-/* POST Signup for seminar */
-router.post("/signUpForSeminar/:semGrID", userService.requireLogin, seminarService.addUserToSeminar, function(req, res, next) {
-    // Should add data to is_in_seminar_group table
-    // TODO Need to collect the user id. Perhaps from a session variable.
-    console.log(req.seminarAdded);
-    res.status(200).send("Seminar added");
-});
-
-/* GET remove seminar */
-router.get("/removeSeminar/:semGrID", userService.requireLogin, seminarService.removeUserFromSeminar, function(req, res, next) {
-    res.redirect("/dashboard");
-});
-
-/* GET Seminar details for student */
-router.get("/seminarDetails/:semGrID", userService.requireLogin, seminarService.getSeminarGroupDetails, seminarService.getSeminarDetails, seminarService.getNumberOfSeminarsForStudent, function(req, res, next) {
-    console.log(req.seminarDetails);
-    var values = {
-        title: 'Seminar details',
-        seminar: req.seminarDetails,
-        groupDetails: req.seminarGroupDetails
-    }
-    console.log(values);
-    res.render("seminarDetails", values);
 });
 
 

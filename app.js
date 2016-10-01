@@ -11,6 +11,8 @@ var userService = require("./modules/user-service");
 
 
 var routes = require('./routes/index');
+var students = require('./routes/students');
+var assistants = require('./routes/assistant');
 
 var app = express();
 
@@ -32,8 +34,10 @@ app.use(require('node-sass-middleware')({
   sourceMap: true
 }));
 app.use(express.static(path.join(__dirname, 'public')));
-app.use("/seminarDetails/:courseKey/:seminarKey", express.static("public"));
-app.use("/seminarDetails/:courseKey", express.static("public"));
+app.use("/students", express.static("public"));
+app.use("/assistant", express.static("public"));
+app.use("/students/seminarDetails/:courseKey/:seminarKey", express.static("public"));
+app.use("/students/seminarDetails/:courseKey", express.static("public"));
 app.use(session({
     cookieName: 'session',
     secret: '387fgrhgur87euy8whfseyugd#/$&/"rhdYGDYF/',
@@ -80,6 +84,8 @@ app.use(function(req, res, next) {
 });
 
 app.use('/', routes);
+app.use('/student', students);
+app.use('/assistant', assistants);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

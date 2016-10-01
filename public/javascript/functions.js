@@ -15,7 +15,7 @@ $(function() {
         }, function(data, textStatus, xhr) {
             /*optional stuff to do after success */
             if(textStatus === 'success') {
-                document.location.href = "/dashboard";
+                document.location.href = "/student/dashboard";
             }
         });
 	};
@@ -140,7 +140,7 @@ $(function() {
         if($seminarTable.hasClass('hide')) {
             $seminarTable.removeClass('hide');
             $.ajax({
-                url: '/listSeminars',
+                url: '/students/listSeminars',
                 type: 'GET',
                 dataType: 'json',
                 data: {},
