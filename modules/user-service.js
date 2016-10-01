@@ -75,9 +75,17 @@ var userService = {
                 // an admin
                 if(result.length == 0) {
                     req.session.user.adminType = null;
+                    req.redirect_url = '/student/dashboard';
                 } else {
                     // If result, we know store the type of admin for the user
-                    req.session.user.adminType = result[0].adminType;    
+                    req.session.user.adminType = result[0].adminType;
+                    const adminType = req.session.user.adminType;
+                    if(adminType === 'assistant') {
+                        req.redirect_url = '/assistant/dashboard';
+                    } else if(adminType === 'master') {
+                        console.log("We found a master");
+                        req.redirect_url = '/admin/dashboard';
+                    }
                 }
                 next();
             }

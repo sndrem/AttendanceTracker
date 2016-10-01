@@ -14,8 +14,9 @@ $(function() {
             password: password
         }, function(data, textStatus, xhr) {
             /*optional stuff to do after success */
+            console.log(data.redirect_url);
             if(textStatus === 'success') {
-                document.location.href = "/student/dashboard";
+                document.location.href = data.redirect_url;
             }
         });
 	};

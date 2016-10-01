@@ -45,7 +45,11 @@ router.post('/register', userService.registerUser, function(req, res, next) {
 
 /* POST login page */
 router.post("/login", userService.authenticate, userService.isAdmin, function(req, res, next) {
-    res.status(200).send("All okay. Carry on my son...");
+    console.log(req.redirect_url);
+    var data = {
+        redirect_url: req.redirect_url
+    }
+    res.status(200).json(data);
 });
 
 
