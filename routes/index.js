@@ -45,7 +45,6 @@ router.post('/register', userService.registerUser, function(req, res, next) {
 
 /* POST login page */
 router.post("/login", userService.authenticate, userService.isAdmin, function(req, res, next) {
-    console.log(req.redirect_url);
     var data = {
         redirect_url: req.redirect_url
     }
