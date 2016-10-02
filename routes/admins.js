@@ -16,5 +16,14 @@ router.get("/dashboard", userService.requireLogin, function(req, res, next) {
     res.render("adminDashboard", model);
 });
 
+/* GET createNewSeminarGroup view */
+router.get("/createNewSeminarGroup", userService.requireLogin, userService.isAdmin, seminarService.getAllSeminarGroups, function(req, res, next) {
+    const model = {
+        seminarGroups: req.seminarGroups
+    }
+    console.log(model);
+    res.render("createNewSeminarGroup", model);
+});
+
 
 module.exports = router;

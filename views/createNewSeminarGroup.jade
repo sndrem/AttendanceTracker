@@ -1,0 +1,27 @@
+extends layout
+block navigation
+    include ./partials/adminDashboardNavigation
+
+block content
+    h3 Create a new seminar group
+
+    .row
+        .col-xs-12.col-sm-12.col-md-8.col-lg-6
+            form(action="/createNewSeminarGroup", method="POST")
+                .form-group
+                    label(for="courseID") Course ID
+                    input(type="text" name="courseID" placeholder="Course ID, eg. INFO132").form-control
+                .form-group
+                    label(for="name") Group name
+                    input(type="text" name="name" placeholder="Group name, eg. INFO132 - Gruppe 1").form-control
+                .form-group
+                    button.btn.btn-primary Save seminar group
+
+
+        .col-xs-12.col-sm-12.col-md-4.col-lg-6
+            p These groups already exsists
+            ul
+                for seminar in seminarGroups
+                    li: b #{seminar.courseID} 
+                    | #{seminar.name}
+                
