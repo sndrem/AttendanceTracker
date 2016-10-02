@@ -36,6 +36,7 @@ app.use(require('node-sass-middleware')({
 app.use(express.static(path.join(__dirname, 'public')));
 app.use("/students", express.static("public"));
 app.use("/assistant", express.static("public"));
+app.use("/admin", express.static("public"));
 app.use("/students/seminarDetails/:courseKey/:seminarKey", express.static("public"));
 app.use("/students/seminarDetails/:courseKey", express.static("public"));
 app.use(session({

@@ -195,6 +195,44 @@ $(function() {
     	}
     });
 
+    $("#createSeminarBtn").on('click', function(e) {
+        e.preventDefault();
+        var courseID = $("#courseID").val();
+        var groupName = $("#groupName").val();
+        var statusMessages = [];
+
+        if(courseID === '') {
+            statusMessages.push("Course ID cannot be empty");
+        }
+
+        if(groupName === '') {
+            statusMessages.push("Group name cannot be empty");
+        }
+
+        if(statusMessages.length > 0) {
+            var $status = $("#status ul");
+            $status.html("");
+            for(var i = 0; i < statusMessages.length; i++) {
+                $status.append("<li class=\"bg-danger\">" + statusMessages[i] + "</li>");
+            }
+        } else {
+            $.post('/admin/createNewSeminarGroup',
+            {
+                courseID: courseID,
+                groupName: groupName
+            }, function(data, textStatus, xhr) {
+                console.log(textStatus);
+                console.log(data);
+            });
+        }
+    });
+
+    $("#courseID").keyup(function(e){
+        const value = $(this).val();
+        $("#groupName").val(value);
+    });
+
+
     function addClickEventForSeminarRegistration() {
         $(".registerForSeminarBtn").on('click', function(e){
             e.preventDefault();

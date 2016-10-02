@@ -38,7 +38,7 @@ var seminarService = {
     Retrieves all seminar groups
      */
     getAllSeminarGroups: function(req, res, next) {
-        const query = "SELECT * FROM seminargroup";
+        const query = "SELECT * FROM seminargroup ORDER BY courseID";
         connection.query(query, function(err, result) {
             if(err) {
                 next(err);
@@ -47,6 +47,39 @@ var seminarService = {
                 next();
             }
         });
+    },
+
+    /*
+    Creates a new seminar group
+     */
+    createSeminarGroup: function(req, res, next) {
+        console.log(req.body);
+        const courseID = req.body.courseID;
+        const groupName = req.body.groupName;
+        const query = "INSERT INTO seminargroup (courseID, name) "
+                    + "VALUES (?, ?);";
+        var statusMessages = [];
+        if(courseID === '') {
+            statusMessages.push("Course ID cannot be empty");
+        }
+
+        if(groupName === '') {
+            statusMessages.push("Group name cannot be empty");
+        }
+
+        if(statusMessages.length == 0) {
+            connection.query(query, [courseID, groupName], function(err, result) {
+                if(err) {
+                    next(err);
+                } else {
+                    req.queryResult = result[0];
+                    next();
+                }
+            });
+        } else {
+            req.statusMessages = statusMessages;
+            next();
+        }
     },
 
     /*
