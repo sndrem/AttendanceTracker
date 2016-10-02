@@ -166,6 +166,35 @@ $(function() {
         }
     });
 
+    $("#searchCourses").on("click", function(e) {
+    	e.preventDefault();
+    	var $courseTable = $("#courseTable");
+    	if($courseTable.hasClass("hide")) {
+    		$courseTable.removeClass("hide");
+    		$.ajax({
+    			url: "/students/listCourses",
+    			type: "GET",
+    			dataType: "json",
+    			data: {},
+    			async: true,
+    			success: function(data) {
+    				showCourseList(data);
+    			}
+    		})
+    		.done(function() {
+    			console.log("success");
+    		})
+    		.fail(function() {
+    			console.log("error");
+    		})
+    		.always(function() {
+    			console.log("complete");
+    		})
+    	} else {
+    		$courseTable.addClass("hide");
+    	}
+    });
+
     function addClickEventForSeminarRegistration() {
         $(".registerForSeminarBtn").on('click', function(e){
             e.preventDefault();
@@ -207,6 +236,19 @@ $(function() {
                     "<td><a data-seminarkey=\"" + course.semGrID + "\" class=\"registerForSeminarBtn\" href=\"#\">Sign Up</a></td>" +
                     "</tr>");   
         }
+    }
+
+    function showCourseList(data) {
+    	var $table = $("#courseTable tbody");
+    	$table.html("");
+    	for(var i = 0; i < data.length; i++) {
+    		var course = data[i];
+    		$table.append("<tr>" +
+    			"<td>" + course.courseID + "</td>" +
+    			"<td>" + course.name "</td>" +
+    			"<td>" + course.semester + "</td>" +
+    			"<tr>");
+    	}
     }
 
 

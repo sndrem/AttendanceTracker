@@ -21,6 +21,11 @@ router.get("/listSeminars", userService.requireLogin, seminarService.getAllSemin
     res.status(200).send(req.seminarGroups);
 });
 
+/* GET list all courses */
+router.get("/listCourses", userService.requireLogin, seminarService.getAllCourses, function(req, res, next) {
+    res.status(200).send(req.courses);
+});
+
 /* POST Signup for seminar */
 router.post("/signUpForSeminar/:semGrID", userService.requireLogin, seminarService.addUserToSeminar, function(req, res, next) {
     res.status(200).send("Seminar added");

@@ -50,6 +50,21 @@ var seminarService = {
     },
 
     /*
+    Retrieves all courses
+     */
+    getAllCourses: function(req, res, next) {
+        const query = "SELECT * FROM course";
+        connection.query(query, function(err, result) {
+            if(err) {
+                next(err);
+            } else {
+                req.courses = result;
+                next();
+            }
+        });
+    },
+
+    /*
     Adds a user to a seminar
      */
     addUserToSeminar: function(req, res, next) {
