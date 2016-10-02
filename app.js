@@ -6,13 +6,13 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var expressValidator = require("express-validator");
 var session = require('client-sessions');
+
+
 var userService = require("./modules/user-service");
-
-
-
 var routes = require('./routes/index');
 var students = require('./routes/students');
-var assistants = require('./routes/assistant');
+var assistants = require('./routes/assistants');
+var admins = require('./routes/admins');
 
 var app = express();
 
@@ -86,6 +86,7 @@ app.use(function(req, res, next) {
 app.use('/', routes);
 app.use('/student', students);
 app.use('/assistant', assistants);
+app.use('/admin', admins);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
