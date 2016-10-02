@@ -77,7 +77,7 @@ app.use(function(req, res, next){
 // Dersom det ikke finnes en admintype så vet vi at vi har med en student å gjøre
 app.use(function(req, res, next) {
     if(req.session && req.session.user) {
-        userService.isAdmin(req, res, next);
+        userService.checkAdminStatus(req, res, next);
     } else {
         next();
     }

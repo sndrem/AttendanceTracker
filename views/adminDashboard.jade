@@ -3,6 +3,22 @@ block navigation
     include ./partials/adminDashboardNavigation
 
 block content
-    h3 Hello #{user}
+    h2 Hello #{user}
 
     p What would you like to do?
+
+    .row
+        .col-xs-12.col-sm-6.col-md.4
+            .thumbnail
+                .caption
+                    h3 Register new student assistant
+                    p Here you can register a new student assistant
+
+                    p: a(href="/admin/createNewAssistant").btn.btn-primary Create new assistant 
+        .col-xs-12.col-sm-6.col-md.4
+            .thumbnail
+                .caption
+                    h3 Register a new seminar group
+                    p Here you can register a new seminar group
+
+                    p: a(href="/admin/createNewSeminarGroup").btn.btn-primary Create new seminar group 

@@ -63,7 +63,7 @@ var userService = {
         });
     },
 
-    isAdmin: function(req, res, next) {
+    checkAdminStatus: function(req, res, next) {
         const studID = req.session.user.StudID;
         const query = "SELECT adminType FROM admins "
                     + "WHERE id = ?";
@@ -90,6 +90,16 @@ var userService = {
                 next();
             }
         });
+    },
+
+    isAdmin: function(req, res, next) {
+        if(req.session && req.session.user) {
+            if(req.session.user.adminType === 'master') {
+                next();
+            } else {
+                res.redirect("/");
+            }
+        }
     },
 
     isAssistant: function(req, res, next) {

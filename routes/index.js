@@ -49,7 +49,7 @@ router.post('/register', userService.registerUser, function(req, res, next) {
 });
 
 /* POST login page */
-router.post("/login", userService.authenticate, userService.isAdmin, function(req, res, next) {
+router.post("/login", userService.authenticate, userService.checkAdminStatus, function(req, res, next) {
     var data = {
         redirect_url: req.redirect_url
     }

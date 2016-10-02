@@ -243,11 +243,12 @@ $(function() {
     	$table.html("");
     	for(var i = 0; i < data.length; i++) {
     		var course = data[i];
-    		$table.append("<tr>" +
-    			"<td>" + course.courseID + "</td>" +
-    			"<td>" + course.name "</td>" +
-    			"<td>" + course.semester + "</td>" +
-    			"<tr>");
+    		const html = "<tr>" +
+                        + "<td>" + course.courseID + "</td>"
+                        + "<td>" + course.name + "</td>"
+                        + "<td>" + course.semester + "</td>"
+                        + "<tr>";
+            $table.append(html);
     	}
     }
 
