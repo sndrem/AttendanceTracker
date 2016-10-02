@@ -34,11 +34,11 @@ app.use(require('node-sass-middleware')({
   sourceMap: true
 }));
 app.use(express.static(path.join(__dirname, 'public')));
-app.use("/students", express.static("public"));
+app.use("/student", express.static("public"));
 app.use("/assistant", express.static("public"));
 app.use("/admin", express.static("public"));
-app.use("/students/seminarDetails/:courseKey/:seminarKey", express.static("public"));
-app.use("/students/seminarDetails/:courseKey", express.static("public"));
+app.use("/student/seminarDetails/:courseKey/:seminarKey", express.static("public"));
+app.use("/student/seminarDetails/:courseKey", express.static("public"));
 app.use(session({
     cookieName: 'session',
     secret: '387fgrhgur87euy8whfseyugd#/$&/"rhdYGDYF/',

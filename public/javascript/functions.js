@@ -141,7 +141,7 @@ $(function() {
         if($seminarTable.hasClass('hide')) {
             $seminarTable.removeClass('hide');
             $.ajax({
-                url: '/students/listSeminars',
+                url: '/student/listSeminars',
                 type: 'GET',
                 dataType: 'json',
                 data: {},
@@ -221,8 +221,9 @@ $(function() {
                 courseID: courseID,
                 groupName: groupName
             }, function(data, textStatus, xhr) {
-                console.log(textStatus);
-                console.log(data);
+                if(textStatus === 'success') {
+                    $("#status").html(groupName + " created");
+                }
             });
         }
     });

@@ -70,9 +70,11 @@ var seminarService = {
         if(statusMessages.length == 0) {
             connection.query(query, [courseID, groupName], function(err, result) {
                 if(err) {
+                    console.log("Error", err);
                     next(err);
                 } else {
-                    req.queryResult = result[0];
+                    console.log("Result", result);
+                    req.queryResult = result;
                     next();
                 }
             });

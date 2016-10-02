@@ -29,11 +29,16 @@ router.post("/createNewSeminarGroup", userService.requireLogin, userService.isAd
     console.log("Should create a new semianr group");
     console.log(req.statusMessages);
     console.log(req.queryResult);
-    if(req.statusMessages.length > 0) {
+    if(req.statusMessages && res.statusMessages.length > 0) {
         res.status(400).json(req.statusMessages);
     } else {
         res. status(200).json(req.queryResult);
     }
+});
+
+/* GET createNewAssistant */
+router.get("/createNewAssistant", userService.requireLogin, userService.isAdmin, function(req, res, next) {
+    res.render("createNewAssistant");
 });
 
 
