@@ -47,5 +47,10 @@ router.post("/checkExistingUser", userService.requireLogin, userService.isAdmin,
     res.status(200).json(req.resultSet);
 });
 
+/* GET addAssistantToCourse */
+router.get("/addAssistantToCourse", userService.requireLogin, userService.isAdmin, function(req, res, next) {
+    res.render("addAssistantToCourse");
+});
+
 
 module.exports = router;
