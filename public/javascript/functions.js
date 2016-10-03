@@ -228,10 +228,27 @@ $(function() {
         }
     });
 
+    // This function call appends the value written in the courseID field
+    // to the groupName-field used when creating a new seminargroup
     $("#courseID").keyup(function(e){
         const value = $(this).val();
         $("#groupName").val(value);
     });
+
+    // This function call is called when an admin enters the student id when 
+    // registering a student assistant
+    $("#studentID").keyup(function(e) {
+        /* Act on the event */
+        var $this = $(this);
+        if($this.length > 0) {
+            console.log($(this).val());
+            // TODO Call database to check if student assistant exists
+        } else {
+            console.log("Whaaat");
+        }
+    });
+
+
 
 
     function addClickEventForSeminarRegistration() {
