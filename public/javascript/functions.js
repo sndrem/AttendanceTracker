@@ -166,7 +166,7 @@ $(function() {
         }
     });
 
-    $("#searchCourse").on("click", function(e) {
+    $("#inputCourse").one("click", function(e) {
     	e.preventDefault();
     	var $courseTable = $("#courseTable");
     	if($courseTable.hasClass("hide")) {
@@ -249,7 +249,17 @@ $(function() {
         }
     });
 
+    //sort the table on text input for courses
+    $("#inputCourse").keyup(function() {
+    	_this = this;
 
+    	$.each($("#courseTable tbody tr"), function() {
+    		if($(this).text().toLowerCase().indexOf($(_this).val().toLowerCase()) === -1)
+    			$(this).hide();
+    		else
+    			$(this).show();
+    	});
+    });
 
 
     function addClickEventForSeminarRegistration() {
@@ -302,7 +312,7 @@ $(function() {
     		var course = data[i];
     		$table.append("<tr>" +
                         + "<td>" + "</td>"
-                        + "<td>" + course.courseID + "</td>"
+                        + "<td class='courseId'>" + course.courseID + "</td>"
                         + "<td>" + course.name + "</td>"
                         + "<td>" + course.semester + "</td>"
                         + "<td>" + course.attendance + " %" + "</td>"
