@@ -121,6 +121,29 @@ var seminarService = {
     },
 
     /*
+    Adds a user to the enrolled_in table
+    */
+    addUserToCourse: function(req, res, next) {
+        const courseID = req.body.courseID;
+        const userID = req.session.user.StudID;
+        var values = {
+            StudID: userID,
+            courseID: courseID
+        }
+        const query = "INSERT INTO enrolled_in SET ?";
+        connection.query(query, values, function(err, result) {
+            if(err) {
+                console.log("There was an error", err);
+                next();
+            } else {
+
+                req.resultSet = result;
+                next();
+            }
+        })
+    },
+
+    /*
     Removes a user from a seminar
      */
     removeUserFromSeminar: function(req, res, next) {

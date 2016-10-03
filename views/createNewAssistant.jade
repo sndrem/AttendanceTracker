@@ -7,25 +7,25 @@ block content
 
     .row
         .col-xs-12.col-sm-12.col-md-8.col-lg-6
-            legend#status
-                ul
-            form(action="/createNewAssistant", method="POST")
+            legend#status 
+            p Here you can register a student as a student assistant. Write the student ID and if the student exists in the database, the input turns green. If it does not exists, then you must either #[a(href="/admin/createNewUser") create the user here] or tell the student to create the new #[a(href="/register") user himself here].
+            p You can connect the student assistant to a course right away, or do it later at the #[a(href="/admin/addAssistantToCourse") page for adding an assistant to courses].
+            form(action="/admin/createNewAssistant", method="POST")
                 .form-group
                     label(for="studentID") Student ID
                     input#studentID(type="text" name="studentID" placeholder="Student ID" required).form-control
                 .form-group
+                    label(for="courseID") Course ID
+                    input#courseID(type="text" name="courseID" placeholder="Course ID eg. INFO132" required disabled).form-control
+                .form-group.hide
                     label(for="firstName") First name
                     input#firstName(type="text" name="firstName" placeholder="First name").form-control
-                .form-group
+                .form-group.hide
                     label(for="lastName") Last name
                     input#lastName(type="text" name="lastName" placeholder="Last name").form-control
-                .form-group
+                .form-group.hide
                     label(for="email") Student email
                     input#email(type="email" name="email" placeholder="Student email" required).form-control
-                .form-grouptest
-                    label(for="password") Password
-                    input#password(type="password" name="password" placeholder="A random generated password" disabled).form-control
-                    a(href="#")#generateRandomPassword Generate random password
                 .form-group
                     button.btn.btn-primary#createSeminarAssBtn Register assistant
 

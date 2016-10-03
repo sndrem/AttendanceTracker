@@ -41,21 +41,22 @@ router.get("/createNewAssistant", userService.requireLogin, userService.isAdmin,
     res.render("createNewAssistant");
 });
 
+<<<<<<< HEAD
 /* POST checkExistingUser */
 router.post("/checkExistingUser", userService.requireLogin, userService.isAdmin, userService.checkExistingUser, function(req, res, next) {
     // TODO Return data to client
     res.status(200).json(req.resultSet);
 });
 
-/* POST addUserAsAssistant */
-router.post("/addUserAsAssistant", userService.requireLogin, userService.isAdmin, userService.registerUserAsAssistant, function(req, res, next) {
-    res.status(200).json(req.message);
-});
-
+=======
 /* GET addAssistantToCourse */
 router.get("/addAssistantToCourse", userService.requireLogin, userService.isAdmin, function(req, res, next) {
     res.render("addAssistantToCourse");
 });
 
+
+/* POST addAssistantToCourse */
+
+>>>>>>> 3509ceca28269b4ee0ee0eeac5d187cfb947b75e
 
 module.exports = router;

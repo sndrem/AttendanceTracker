@@ -27,13 +27,13 @@ router.get("/listCourses", userService.requireLogin, seminarService.getAllCourse
 });
 
 /* POST Signup for seminar */
-router.post("/signUpForSeminar/:semGrID", userService.requireLogin, seminarService.addUserToSeminar, function(req, res, next) {
+router.post("/signUpForSeminar/:semGrID", userService.requireLogin, seminarService.addUserToSeminar, seminarService.addUserToCourse, function(req, res, next) {
     res.status(200).send("Seminar added");
 });
 
 /* GET remove seminar */
 router.get("/removeSeminar/:semGrID", userService.requireLogin, seminarService.removeUserFromSeminar, function(req, res, next) {
-    res.redirect("/dashboard");
+    res.redirect("/student/dashboard");
 });
 
 /* GET Seminar details for student */

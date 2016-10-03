@@ -41,6 +41,25 @@ var userService = {
         });
     },
 
+    // Adds a user to the admin table as an assistant
+    registerUserAsAssistant: function(req, res, next) {
+        const adminID = req.body.studentID;
+        const adminType = req.body.adminType;
+        var query = "INSERT INTO admins (id, adminType) VALUES (?, ?)";
+        connection.query(query, [adminID, adminType], function(err, result) {
+            if(err) {
+                req.message = "User with ID: " + adminID + " is already an assistant";
+                next();
+            } else {
+                console.log(result);
+                req.message = "User with ID: " + adminID + " is now an assistant";
+                next();
+            }
+        });
+       
+        
+    },
+
     authenticate: function(req, res, next) {
         var email = req.body.email;
         var password = req.body.password;
@@ -130,7 +149,19 @@ var userService = {
             } else {
                 callback(err, result);
             }
-            
+        });
+    },
+
+    checkExistingUser: function(req, res, next) {
+        const studentID = req.body.studentID;
+        const query = "SELECT fName, lName, eMail FROM PERSON WHERE StudID = ? LIMIT 1";
+        connection.query(query, [studentID], function(err, result) {
+            if(err) {
+                next(err);
+            } else {
+                req.resultSet = result[0];
+                next();
+            }
         });
     }
 };

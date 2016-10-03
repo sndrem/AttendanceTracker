@@ -9,7 +9,7 @@ block content
     else
         h4 Your seminargroups
         p Admintype: #{user.adminType}
-    a(href="#")#addGroup Search for Groups
+    a(href="#")#searchForGroup Search for Groups
     table#seminarTable.table-hover.table.table-responsive.hide
         thead
             tr
@@ -26,7 +26,7 @@ block content
                         li #{seminar.courseID}
                         li Name: #{seminar.name}
                     p
-                        a(href="/removeSeminar/#{seminar.semGrID}").btn.btn-danger Remove Seminar
+                        a(href="/student/removeSeminar/#{seminar.semGrID}").btn.btn-danger Remove Seminar
 
     h4 Search for Courses
     input.form-control(type="course" id="inputCourse" name="course" placeholder="INFO132" style="width: 20%")
