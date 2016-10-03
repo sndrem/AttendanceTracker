@@ -228,6 +228,11 @@ $(function() {
         }
     });
 
+    $("#createSeminarAssBtn").on('click', function(e){
+        e.preventDefault();
+        console.log("Hello World");
+    });
+
     // This function call appends the value written in the courseID field
     // to the groupName-field used when creating a new seminargroup
     $("#courseID").keyup(function(e){
@@ -240,13 +245,67 @@ $(function() {
     $("#studentID").keyup(function(e) {
         /* Act on the event */
         var $this = $(this);
-        if($this.length > 0) {
+        colorMarkElement($this, '#fff');
+        // Vi sjekker ikke brukere dersom de har en studentid under 5 karakterer lang.
+        if($this.val().length > 5) {
             console.log($(this).val());
+            var studentID = $this.val();
             // TODO Call database to check if student assistant exists
-        } else {
-            console.log("Whaaat");
+            $.ajax({
+                url: '/admin/checkExistingUser',
+                type: 'POST',
+                dataType: 'JSON',
+                data: {
+                    studentID: studentID
+                },
+                success: function(data) {
+                    console.log(data);
+                    if(data) {
+                        colorMarkElement($this, '#91C368');
+                        unhideformFields();
+                        populateRegistrationFields(data);
+                    }
+                    else {
+                        colorMarkElement($this, '#FC4F4F');
+                    }
+                }
+            })
+            .done(function() {
+                console.log("success");
+            })
+            .fail(function() {
+                console.log("error");
+            })
+            .always(function() {
+                console.log("complete");
+            });
         }
     });
+
+    // Method to populate the registration fields for the creation of a new student assistant
+    function unhideformFields() {
+        $("form div.hide").each(function(index, val) {
+             /* iterate through array or object */
+             $(val).removeClass('hide');
+        });
+    }
+
+    function populateRegistrationFields(data) {
+        var $firstName = $("#firstName");
+        var $lastName = $("#lastName");
+        var $email = $("#email");
+        console.log(data.fName);
+        $firstName.val(data.fName).prop('disabled', true);
+        $lastName.val(data.lName).prop('disabled', true);
+        $email.val(data.eMail).prop('disabled', true);
+    }
+
+    // Function to mark a element as green
+    function colorMarkElement(element, color) {
+        element.css('background-color', color);
+        element.css('color', '#2d2d2d');
+    }
+
 
     function addClickEventForSeminarRegistration() {
         $(".registerForSeminarBtn").on('click', function(e){

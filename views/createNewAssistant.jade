@@ -9,23 +9,22 @@ block content
         .col-xs-12.col-sm-12.col-md-8.col-lg-6
             legend#status
                 ul
-            form(action="/createNewAssistant", method="POST")
+            form(action="/admin/createNewAssistant", method="POST")
                 .form-group
                     label(for="studentID") Student ID
                     input#studentID(type="text" name="studentID" placeholder="Student ID" required).form-control
                 .form-group
+                    label(for="courseID") Course ID
+                    input#courseID(type="text" name="courseID" placeholder="Course ID eg. INFO132" required).form-control
+                .form-group.hide
                     label(for="firstName") First name
                     input#firstName(type="text" name="firstName" placeholder="First name").form-control
-                .form-group
+                .form-group.hide
                     label(for="lastName") Last name
                     input#lastName(type="text" name="lastName" placeholder="Last name").form-control
-                .form-group
+                .form-group.hide
                     label(for="email") Student email
                     input#email(type="email" name="email" placeholder="Student email" required).form-control
-                .form-grouptest
-                    label(for="password") Password
-                    input#password(type="password" name="password" placeholder="A random generated password" disabled).form-control
-                    a(href="#")#generateRandomPassword Generate random password
                 .form-group
                     button.btn.btn-primary#createSeminarAssBtn Register assistant
 

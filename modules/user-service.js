@@ -130,7 +130,19 @@ var userService = {
             } else {
                 callback(err, result);
             }
-            
+        });
+    },
+
+    checkExistingUser: function(req, res, next) {
+        const studentID = req.body.studentID;
+        const query = "SELECT fName, lName, eMail FROM PERSON WHERE StudID = ? LIMIT 1";
+        connection.query(query, [studentID], function(err, result) {
+            if(err) {
+                next(err);
+            } else {
+                req.resultSet = result[0];
+                next();
+            }
         });
     }
 };
