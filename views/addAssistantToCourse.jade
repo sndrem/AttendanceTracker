@@ -3,13 +3,13 @@ block navigation
     include ./partials/adminDashboardNavigation
 
 block content
-	h2 Add an assistant to course
+    h2 Add an assistant to course
 
-	form(action="/addAssistantToCourse" method="POST")
-		legend
-		.form-group
-			label(for="assistantUser") Assistant
-			input.form-control(type="text" id="assistantUser" name="assistantUser" placeholder="Assistant ID")
-			label(for="courseSelector") Course
-			input.form-control(type="text" id="courseSelector" name="courseSelector" placeholder="Course ID / Name")
-		.form-group
+    form(action="/addAssistantToCourse" method="POST")
+        legend
+        .form-group
+            label(for="assistantUser") Assistant
+            input.form-control(type="text" id="assistantUser" name="assistantUser" placeholder="Assistant ID")
+            label(for="courseSelector") Course
+            input.form-control(type="text" id="courseSelector" name="courseSelector" placeholder="Course ID / Name")
+        .form-group
