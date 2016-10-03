@@ -137,6 +137,29 @@ var seminarService = {
         });
     },
 
+    setSeminarAssistant: function(req, res, next){
+        const userID = req.params.StudID;
+        const courseID = req.params.courseID;
+        const values = {
+            StudID: userID,
+            courseID: courseID
+        }
+
+        const query = "INSERT INTO is_assistant_for SET ?";
+
+     //   INSERT INTO `is_assistant_for` (`StudID`, `courseID`) VALUES ('ejo034', 'INFO132');
+
+        connection.query(query, values, function(err, result) {
+            if(err){
+                next(err);
+            }else{
+                console.log(result);
+                next();
+            }
+        });
+    },
+
+
     getSeminarDetails: function(req, res, next) {
         const seminarID = req.params.semGrID;
         const userID = req.user.StudID;
