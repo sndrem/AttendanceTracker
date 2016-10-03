@@ -12,7 +12,7 @@ block content
             form(action="/createNewAssistant", method="POST")
                 .form-group
                     label(for="studentID") Student ID
-                    input#studentID(type="text" name="studentID" placeholder="Student ID" required="true").form-control
+                    input#studentID(type="text" name="studentID" placeholder="Student ID" required).form-control
                 .form-group
                     label(for="firstName") First name
                     input#firstName(type="text" name="firstName" placeholder="First name").form-control
@@ -21,7 +21,7 @@ block content
                     input#lastName(type="text" name="lastName" placeholder="Last name").form-control
                 .form-group
                     label(for="email") Student email
-                    input#email(type="email" name="email" placeholder="Student email" required="true").form-control
+                    input#email(type="email" name="email" placeholder="Student email" required).form-control
                 .form-grouptest
                     label(for="password") Password
                     input#password(type="password" name="password" placeholder="A random generated password" disabled).form-control

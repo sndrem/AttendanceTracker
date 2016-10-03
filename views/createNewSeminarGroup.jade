@@ -12,10 +12,10 @@ block content
             form(action="/createNewSeminarGroup", method="POST")
                 .form-group
                     label(for="courseID") Course ID
-                    input#courseID(type="text" name="courseID" placeholder="Course ID, eg. INFO132" required="true").form-control
+                    input#courseID(type="text" name="courseID" placeholder="Course ID, eg. INFO132" required).form-control
                 .form-group
                     label(for="name") Group name
-                    input#groupName(type="text" name="name" placeholder="Group name, eg. INFO132 - Gruppe 1" required="true").form-control
+                    input#groupName(type="text" name="name" placeholder="Group name, eg. INFO132 - Gruppe 1" required).form-control
                 .form-group
                     button.btn.btn-primary#createSeminarBtn Save seminar group
 
