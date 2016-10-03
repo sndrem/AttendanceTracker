@@ -2,6 +2,7 @@ extends layout
 block navigation
     include ./partials/adminDashboardNavigation
 
+block content
     h3 Register a new student assistant
 
     .row
@@ -11,7 +12,7 @@ block navigation
             form(action="/createNewAssistant", method="POST")
                 .form-group
                     label(for="studentID") Student ID
-                    input#studentID(type="text" name="studentID" placeholder="Student ID").form-control
+                    input#studentID(type="text" name="studentID" placeholder="Student ID" required="true").form-control
                 .form-group
                     label(for="firstName") First name
                     input#firstName(type="text" name="firstName" placeholder="First name").form-control
@@ -20,13 +21,13 @@ block navigation
                     input#lastName(type="text" name="lastName" placeholder="Last name").form-control
                 .form-group
                     label(for="email") Student email
-                    input#email(type="email" name="email" placeholder="Student email").form-control
-                .form-group
+                    input#email(type="email" name="email" placeholder="Student email" required="true").form-control
+                .form-grouptest
                     label(for="password") Password
                     input#password(type="password" name="password" placeholder="A random generated password" disabled).form-control
                     a(href="#")#generateRandomPassword Generate random password
                 .form-group
-                    button.btn.btn-primary#createSeminarBtn Register assistant
+                    button.btn.btn-primary#createSeminarAssBtn Register assistant
 
 
         .col-xs-12.col-sm-12.col-md-4.col-lg-6
