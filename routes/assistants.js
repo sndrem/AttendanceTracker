@@ -15,4 +15,14 @@ router.get("/dashboard", userService.requireLogin, userService.isAssistant, func
     res.render("assistantDashboard", model);
 });
 
+
+
+router.get("/registerAttendance", userService.requireLogin, userService.isAssistant, function(req, res, next){
+    var model = {
+        title: 'Register Attendance'
+    }
+    res.render("registerAttendance", model);
+
+});
+
 module.exports = router;

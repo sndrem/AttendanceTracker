@@ -41,5 +41,13 @@ router.get("/createNewAssistant", userService.requireLogin, userService.isAdmin,
     res.render("createNewAssistant");
 });
 
+/* GET addAssistantToCourse */
+router.get("/addAssistantToCourse", userService.requireLogin, userService.isAdmin, function(req, res, next) {
+    res.render("addAssistantToCourse");
+});
+
+
+/* POST addAssistantToCourse */
+
 
 module.exports = router;
