@@ -46,4 +46,8 @@ router.get("/addAssistantToCourse", userService.requireLogin, userService.isAdmi
     res.render("addAssistantToCourse");
 });
 
+
+/* POST addAssistantToCourse */
+
+
 module.exports = router;
