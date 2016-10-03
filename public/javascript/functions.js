@@ -50,7 +50,7 @@ $(function() {
 		$("form")[0].reset();
 	}
 
-
+ 
  
 	$("#loginButton").on('click', function(e) {
 		$("legend").html("");
