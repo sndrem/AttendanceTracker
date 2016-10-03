@@ -47,6 +47,11 @@ router.post("/checkExistingUser", userService.requireLogin, userService.isAdmin,
     res.status(200).json(req.resultSet);
 });
 
+/* POST addUserAsAssistant */
+router.post("/addUserAsAssistant", userService.requireLogin, userService.isAdmin, userService.registerUserAsAssistant, function(req, res, next) {
+    res.status(200).json(req.message);
+});
+
 /* GET addAssistantToCourse */
 router.get("/addAssistantToCourse", userService.requireLogin, userService.isAdmin, function(req, res, next) {
     res.render("addAssistantToCourse");

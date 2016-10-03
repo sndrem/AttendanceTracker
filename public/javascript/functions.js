@@ -48,7 +48,32 @@ $(function() {
 
 	myApp.resetForm = function() {
 		$("form")[0].reset();
-	}
+	};
+
+    myApp.addUserAsAssistant = function(userObject) {
+        if(userObject) {
+            $.ajax({
+                url: '/admin/addUserAsAssistant',
+                type: 'POST',
+                dataType: 'JSON',
+                data: userObject,
+                async: true,
+                success: function(data) {
+                    $("#status").html(data);
+                }
+            })
+            .done(function() {
+                console.log("success");
+            })
+            .fail(function() {
+                console.log("error");
+            })
+            .always(function() {
+                console.log("complete");
+            });
+            
+        }
+    }
 
  
  
@@ -228,10 +253,35 @@ $(function() {
             });
         }
     });
-
+    
+    // Function for making a student student assistant
     $("#createSeminarAssBtn").on('click', function(e){
         e.preventDefault();
-        console.log("Hello World");
+        const studentID = $("#studentID").val();
+        const courseID = $("#courseID").val();
+        var statusMessages = [];
+
+        if(isEmpty(studentID)) {
+            statusMessages.push("Student ID cannot be empty");
+        }
+
+        // If the courseID is empty and the student id has been entered correctly
+        if(isEmpty(courseID) && statusMessages.length == 0) {
+            myApp.addUserAsAssistant({
+                studentID: studentID,
+                adminType: 'assistant'
+            });
+        } else if(!isEmpty(courseID) && statusMessages.length == 0) {
+            // If the courseID has been entered and the student id has been entered
+            myApp.addUserAsAssistant({
+                studentID: studentID,
+                courseID: courseID,
+                adminType: 'assistant'
+            });
+        } else {
+            $("#status").html(statusMessages[0]);
+        }
+
     });
 
     // This function call appends the value written in the courseID field
