@@ -50,7 +50,7 @@ $(function() {
 		$("form")[0].reset();
 	}
 
-
+ 
  
 	$("#loginButton").on('click', function(e) {
 		$("legend").html("");
@@ -172,13 +172,14 @@ $(function() {
     	if($courseTable.hasClass("hide")) {
     		$courseTable.removeClass("hide");
     		$.ajax({
-    			url: "/students/listCourses",
+    			url: "/student/listCourses",
     			type: "GET",
     			dataType: "json",
     			data: {},
     			async: true,
     			success: function(data) {
     				showCourseList(data);
+                    console.log(data);
     			}
     		})
     		.done(function() {
@@ -355,12 +356,13 @@ $(function() {
     	$table.html("");
     	for(var i = 0; i < data.length; i++) {
     		var course = data[i];
-    		const html = "<tr>" +
+    		$table.append("<tr>" +
+                        + "<td>" + "</td>"
                         + "<td>" + course.courseID + "</td>"
                         + "<td>" + course.name + "</td>"
                         + "<td>" + course.semester + "</td>"
-                        + "<tr>";
-            $table.append(html);
+                        + "<td>" + course.attendance + " %" + "</td>"
+                        + "</tr>");
     	}
     }
 

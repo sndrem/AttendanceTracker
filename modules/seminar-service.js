@@ -170,13 +170,11 @@ var seminarService = {
 
         const query = "INSERT INTO is_assistant_for SET ?";
 
-     //   INSERT INTO `is_assistant_for` (`StudID`, `courseID`) VALUES ('ejo034', 'INFO132');
-
         connection.query(query, values, function(err, result) {
             if(err){
                 next(err);
             }else{
-                console.log(result);
+                req.setSeminarAssistant = result;
                 next();
             }
         });
