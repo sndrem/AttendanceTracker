@@ -287,7 +287,8 @@ $(function() {
     
     $("#courseSelection").on('change', function(e) {
         e.preventDefault();
-        const courseID = $("#courseSelection").val();
+        const $select = $("#courseSelection");
+        const courseID = $select.val();
         $("section.seminars").html("");
         $.ajax({
             url: '/assistant/getSeminarGroupsFromCourse',
@@ -298,7 +299,12 @@ $(function() {
             },
             async: true,
             success: function(data) {
-                showSeminarGroupCards(data);
+                if(data.length > 0) {
+                    showSeminarGroupCards(data);    
+                } else {
+                    $("section.seminars").html("<p>There are no seminar groups created for " + $("#courseSelection option:selected").text() + " </p>");
+                }
+                
             }
         })
         .done(function() {

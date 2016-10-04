@@ -31,4 +31,12 @@ router.post("/getSeminarGroupsFromCourse", userService.requireLogin, userService
     res.status(200).json(req.resultSet);
 });
 
+/* GET createNewSeminarGroup view */
+router.get("/createNewSeminarGroup", userService.requireLogin, userService.isAssistant, seminarService.getAllSeminarGroups, function(req, res, next) {
+    const model = {
+        seminarGroups: req.seminarGroups
+    }
+    res.render("createNewSeminarGroup", model);
+});
+
 module.exports = router;
