@@ -27,4 +27,22 @@ body {
 .container {
   margin-bottom: 16%; }
 
+#courseTable thead {
+  display: table;
+  table-layout: fixed;
+  width: 100%; }
+
+#courseTable tbody {
+  display: block;
+  overflow-y: scroll;
+  height: 180px; }
+
+#courseTable tbody tr {
+  display: table;
+  table-layout: fixed;
+  width: 100%; }
+
+#courseTable tbody tr th, td {
+  width: auto; }
+
 /*# sourceMappingURL=style.css.map */
