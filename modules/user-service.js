@@ -43,11 +43,13 @@ var userService = {
 
     // Adds a user to the admin table as an assistant
     registerUserAsAssistant: function(req, res, next) {
+        console.log(req.body);
         const adminID = req.body.studentID;
         const adminType = req.body.adminType;
         var query = "INSERT INTO admins (id, adminType) VALUES (?, ?)";
         connection.query(query, [adminID, adminType], function(err, result) {
             if(err) {
+                console.log(err);
                 req.message = "User with ID: " + adminID + " is already an assistant";
                 next();
             } else {
@@ -88,6 +90,7 @@ var userService = {
                     + "WHERE id = ?";
         connection.query(query, [studID], function(err, result) {
             if(err) {
+                console.log("Error", err);
                 next(err);
             } else {
                 // If no results, we know that the user is not 

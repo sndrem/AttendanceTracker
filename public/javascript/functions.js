@@ -93,7 +93,7 @@ $(function() {
 		}
 
 		if(statusMessages.length == 0) {
-			myApp.login(email, password);	
+			myApp.login(email, password);
 		} else {
 			var $legend = $("legend");
 			$legend.append("<ul></ul>");
@@ -269,14 +269,14 @@ $(function() {
         if(isEmpty(courseID) && statusMessages.length == 0) {
             myApp.addUserAsAssistant({
                 studentID: studentID,
-                adminType: 'assistant'
+                adminType: 'assistent'
             });
         } else if(!isEmpty(courseID) && statusMessages.length == 0) {
             // If the courseID has been entered and the student id has been entered
             myApp.addUserAsAssistant({
                 studentID: studentID,
                 courseID: courseID,
-                adminType: 'assistant'
+                adminType: 'assistent'
             });
         } else {
             $("#status").html(statusMessages[0]);
