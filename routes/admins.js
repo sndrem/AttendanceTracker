@@ -7,7 +7,7 @@ var userService = require("../modules/user-service");
 var seminarSchedule = require("../modules/seminar-schedule");
 
 /* GET Dashboard page */
-router.get("/dashboard", userService.requireLogin, function(req, res, next) {
+router.get("/dashboard", userService.requireLogin, userService.isAdmin, function(req, res, next) {
     const name = req.session.user.fName + " " + req.session.user.lName;
     var model = {
         title: 'Admin dashboard',

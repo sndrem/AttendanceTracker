@@ -7,8 +7,8 @@ block content
     if user.adminType == null
         h4 Your seminars
     else
-        h4 Your seminargroups
-        p Admintype: #{user.adminType}
+        include ./partials/dashboardNavElements
+
     a(href="#")#searchForGroup Search for Groups
     table#seminarTable.table-hover.table.table-responsive.hide
         thead
@@ -20,7 +20,7 @@ block content
         for seminar in seminars
             .col-xs-12.col-sm-12.col-md-6.col-lg-4
                 .thumbnail
-                    a(href="/seminarDetails/#{seminar.semGrID}")
+                    a(href="/student/seminarDetails/#{seminar.semGrID}")
                         h4 #{seminar.name}
                     ul
                         li #{seminar.courseID}

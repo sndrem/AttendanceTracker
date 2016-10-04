@@ -58,8 +58,6 @@ var userService = {
                 next();
             }
         });
-       
-        
     },
 
     authenticate: function(req, res, next) {
@@ -102,7 +100,7 @@ var userService = {
                     // If result, we know store the type of admin for the user
                     req.session.user.adminType = result[0].adminType;
                     const adminType = req.session.user.adminType;
-                    if(adminType === 'assistant') {
+                    if(adminType === 'assistent') {
                         req.redirect_url = '/assistant/dashboard';
                     } else if(adminType === 'master') {
                         console.log("We found a master");
@@ -126,7 +124,7 @@ var userService = {
 
     isAssistant: function(req, res, next) {
         if(req.session && req.session.user) {
-            if(req.session.user.adminType === 'assistant') {
+            if(req.session.user.adminType === 'assistent') {
                 next();
             } else {
                 res.redirect("/");
