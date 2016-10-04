@@ -4,6 +4,7 @@ var connection = require('../modules/connection');
 var cookieParser = require('cookie-parser');
 var seminarService = require("../modules/seminar-service");
 var userService = require("../modules/user-service");
+var courseService = require("../modules/course-service");
 var seminarSchedule = require("../modules/seminar-schedule");
 
 
@@ -16,13 +17,19 @@ router.get("/dashboard", userService.requireLogin, userService.isAssistant, func
 });
 
 
-
-router.get("/registerAttendance", userService.requireLogin, userService.isAssistant, function(req, res, next){
+/* GET registerAttendance */
+router.get("/registerAttendance", userService.requireLogin, userService.isAssistant, courseService.getCoursesForAssistant, function(req, res, next){
+    console.log("Result set", req.resultSet);
     var model = {
-        title: 'Register Attendance'
+        title: 'Register Attendance',
+        courses: req.resultSet
     }
     res.render("registerAttendance", model);
+});
 
+/* POST getSeminarsFromCourse */
+router.post("/getSeminarGroupsFromCourse", userService.requireLogin, userService.isAssistant, courseService.getSeminarGroupsFromCourse, function(req, res, next) {
+    res.status(200).json(req.resultSet);
 });
 
 module.exports = router;

@@ -71,12 +71,9 @@ $(function() {
             .always(function() {
                 console.log("complete");
             });
-            
         }
     }
 
- 
- 
 	$("#loginButton").on('click', function(e) {
 		$("legend").html("");
 		e.preventDefault();
@@ -281,8 +278,47 @@ $(function() {
         } else {
             $("#status").html(statusMessages[0]);
         }
-
     });
+
+    $("#getCourseSeminarGroupsBtn").on('click', function(e) {
+        e.preventDefault();
+        const courseID = $("#courseSelection").val();
+        $.ajax({
+            url: '/assistant/getSeminarGroupsFromCourse',
+            type: 'POST',
+            dataType: 'JSON',
+            data: {
+                courseID: courseID
+            },
+            async: true,
+            success: function(data) {
+                console.log(data);
+                showSeminarGroupCards(data);
+            }
+        })
+        .done(function() {
+            console.log("success");
+        })
+        .fail(function() {
+            console.log("error");
+        })
+        .always(function() {
+            console.log("complete");
+        });
+    });
+
+    // Function to show thumbnail cards for some data
+    function showSeminarGroupCards(data) {
+        if(data) {
+            var $seminarList = $("section.seminars ul");
+            $seminarList.html("");
+            for(var i = 0; i < data.length; i++) {
+                var course = data[i];
+                console.log(course.name);
+                $seminarList.append("<li>" + course.name + "</li>");
+            }
+        }
+    }
 
     // This function call appends the value written in the courseID field
     // to the groupName-field used when creating a new seminargroup
