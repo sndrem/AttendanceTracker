@@ -2,6 +2,10 @@
 
 $(function() {
 	var myApp = {};
+    const ADMIN_TYPES = {
+        master: 'master', 
+        assistent: 'assistent'
+    }
 
     
 
@@ -266,23 +270,25 @@ $(function() {
         if(isEmpty(courseID) && statusMessages.length == 0) {
             myApp.addUserAsAssistant({
                 studentID: studentID,
-                adminType: 'assistent'
+                adminType: ADMIN_TYPES.assistent
             });
         } else if(!isEmpty(courseID) && statusMessages.length == 0) {
             // If the courseID has been entered and the student id has been entered
             myApp.addUserAsAssistant({
                 studentID: studentID,
                 courseID: courseID,
-                adminType: 'assistent'
+                adminType: ADMIN_TYPES.assistent
             });
         } else {
             $("#status").html(statusMessages[0]);
         }
     });
 
-    $("#getCourseSeminarGroupsBtn").on('click', function(e) {
+    
+    $("#courseSelection").on('change', function(e) {
         e.preventDefault();
         const courseID = $("#courseSelection").val();
+        $("section.seminars").html("");
         $.ajax({
             url: '/assistant/getSeminarGroupsFromCourse',
             type: 'POST',
@@ -292,7 +298,6 @@ $(function() {
             },
             async: true,
             success: function(data) {
-                console.log(data);
                 showSeminarGroupCards(data);
             }
         })
@@ -307,16 +312,23 @@ $(function() {
         });
     });
 
+    // Trigger change at page load so the chosen element is fetching data at page load
+    $("#courseSelection").trigger('change');
+
     // Function to show thumbnail cards for some data
     function showSeminarGroupCards(data) {
         if(data) {
-            var $seminarList = $("section.seminars ul");
-            $seminarList.html("");
-            for(var i = 0; i < data.length; i++) {
-                var course = data[i];
-                console.log(course.name);
-                $seminarList.append("<li>" + course.name + "</li>");
-            }
+            var $seminar = $("section.seminars");
+            $seminar.html("");
+            $.each(data, function(index, val) {
+                 /* iterate through array or object */
+                  const html = "<div class=\"col-xs-12 col-sm-12 col-md-6 col-lg-4\">"
+                             +      "<div class=\"thumbnail\">"
+                             +          "<a href=\"/assistant/takeAttendance/" + val.semGrID + "\"><h4>" + val.name + "</h4></a>"    
+                             +      "</div>"
+                             + "</div>";
+                  $seminar.append(html);
+            });
         }
     }
 

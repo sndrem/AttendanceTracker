@@ -19,7 +19,6 @@ router.get("/dashboard", userService.requireLogin, userService.isAssistant, func
 
 /* GET registerAttendance */
 router.get("/registerAttendance", userService.requireLogin, userService.isAssistant, courseService.getCoursesForAssistant, function(req, res, next){
-    console.log("Result set", req.resultSet);
     var model = {
         title: 'Register Attendance',
         courses: req.resultSet

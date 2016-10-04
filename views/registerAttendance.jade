@@ -6,26 +6,15 @@ block content
     h3 #{title}
 
     p Select the course you want to register attendance for
-
+    
     section.row
-        form(action="/assistant/getSeminarGroupsFromCourse" method="GET")
-            .form-group
-                select#courseSelection.form-control
-                    for course in courses
-                        option(value="#{course.courseID}") #{course.name}
-            .form-group
-                button#getCourseSeminarGroupsBtn.btn.btn-primary Get seminar groups
+        .col-xs-12
+            form(action="/assistant/getSeminarGroupsFromCourse" method="GET")
+                .form-group
+                    select#courseSelection.form-control
+                        for course in courses
+                            option(value="#{course.courseID}") #{course.name}
+                .form-group
+                    button#getCourseSeminarGroupsBtn.btn.btn-primary Get seminar groups
 
     section.seminars.row
-        ul
-        //- for seminar in seminars
-        //-     .col-xs-12.col-sm-12.col-md-6.col-lg-4
-        //-         .thumbnail
-        //-             a(href="/student/seminarDetails/#{seminar.semGrID}")
-        //-                 h4 #{seminar.name}
-        //-             ul
-        //-                 li #{seminar.courseID}
-        //-                 li Name: #{seminar.name}
-        //-             p
-        //-                 a(href="/student/removeSeminar/#{seminar.semGrID}").btn.btn-danger Remove Seminar
-
