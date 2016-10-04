@@ -19,7 +19,6 @@ router.get("/dashboard", userService.requireLogin, userService.isAssistant, func
 
 /* GET registerAttendance */
 router.get("/registerAttendance", userService.requireLogin, userService.isAssistant, courseService.getCoursesForAssistant, function(req, res, next){
-    console.log("Result set", req.resultSet);
     var model = {
         title: 'Register Attendance',
         courses: req.resultSet
@@ -30,6 +29,14 @@ router.get("/registerAttendance", userService.requireLogin, userService.isAssist
 /* POST getSeminarsFromCourse */
 router.post("/getSeminarGroupsFromCourse", userService.requireLogin, userService.isAssistant, courseService.getSeminarGroupsFromCourse, function(req, res, next) {
     res.status(200).json(req.resultSet);
+});
+
+/* GET createNewSeminarGroup view */
+router.get("/createNewSeminarGroup", userService.requireLogin, userService.isAssistant, seminarService.getAllSeminarGroups, function(req, res, next) {
+    const model = {
+        seminarGroups: req.seminarGroups
+    }
+    res.render("createNewSeminarGroup", model);
 });
 
 module.exports = router;
