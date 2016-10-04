@@ -16,6 +16,13 @@ router.get("/dashboard", userService.requireLogin, userService.isAssistant, func
     res.render("assistantDashboard", model);
 });
 
+/* GET createNewSeminarGroup view */
+router.get("/createNewSeminarGroup", userService.requireLogin, userService.isAssistant, seminarService.getAllSeminarGroups, function(req, res, next) {
+    const model = {
+        seminarGroups: req.seminarGroups
+    }
+    res.render("createNewSeminarGroup", model);
+});
 
 /* GET registerAttendance */
 router.get("/registerAttendance", userService.requireLogin, userService.isAssistant, courseService.getCoursesForAssistant, function(req, res, next){
@@ -31,12 +38,16 @@ router.post("/getSeminarGroupsFromCourse", userService.requireLogin, userService
     res.status(200).json(req.resultSet);
 });
 
-/* GET createNewSeminarGroup view */
-router.get("/createNewSeminarGroup", userService.requireLogin, userService.isAssistant, seminarService.getAllSeminarGroups, function(req, res, next) {
-    const model = {
-        seminarGroups: req.seminarGroups
+/* POST createNewSeminarGroup */
+router.post("/createNewSeminarGroup", userService.requireLogin, userService.isAssistant, seminarService.createSeminarGroup, function(req, res, next) {
+    console.log("Should create a new semianr group");
+    console.log(req.statusMessages);
+    console.log(req.queryResult);
+    if(req.statusMessages && res.statusMessages.length > 0) {
+        res.status(400).json(req.statusMessages);
+    } else {
+        res. status(200).json(req.queryResult);
     }
-    res.render("createNewSeminarGroup", model);
 });
 
 module.exports = router;

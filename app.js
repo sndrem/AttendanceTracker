@@ -13,6 +13,7 @@ var routes = require('./routes/index');
 var students = require('./routes/students');
 var assistants = require('./routes/assistants');
 var admins = require('./routes/admins');
+var adminsAndAssistants = require('./routes/adminsAndAssistants');
 
 var app = express();
 
@@ -37,6 +38,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use("/student", express.static("public"));
 app.use("/assistant", express.static("public"));
 app.use("/admin", express.static("public"));
+app.use("/common", express.static("public"));
 app.use("/student/seminarDetails/:courseKey/:seminarKey", express.static("public"));
 app.use("/student/seminarDetails/:courseKey", express.static("public"));
 app.use(session({
@@ -88,6 +90,7 @@ app.use('/', routes);
 app.use('/student', students);
 app.use('/assistant', assistants);
 app.use('/admin', admins);
+app.use('/common', adminsAndAssistants);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

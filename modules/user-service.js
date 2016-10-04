@@ -132,6 +132,16 @@ var userService = {
         }
     },
 
+    isAdminOrAssistant: function(req, res, next) {
+        if(req.session && req.session.user) {
+            if(req.session.user.adminType === 'master' || req.session.user.adminType === 'assistent') {
+                next();
+            } else {
+                res.redirect("/");
+            }
+        }
+    },
+
     requireLogin: function(req, res, next) {
         if(!req.user) {
             res.redirect("/login");

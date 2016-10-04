@@ -243,7 +243,7 @@ $(function() {
                 $status.append("<li class=\"bg-danger\">" + statusMessages[i] + "</li>");
             }
         } else {
-            $.post('/admin/createNewSeminarGroup',
+            $.post('/common/createNewSeminarGroup',
             {
                 courseID: courseID,
                 groupName: groupName
