@@ -304,7 +304,6 @@ $(function() {
                 } else {
                     $("section.seminars").html("<p>There are no seminar groups created for " + $("#courseSelection option:selected").text() + " </p>");
                 }
-                
             }
         })
         .done(function() {
