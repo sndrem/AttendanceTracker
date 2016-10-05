@@ -5,6 +5,7 @@ var cookieParser = require('cookie-parser');
 var seminarService = require("../modules/seminar-service");
 var userService = require("../modules/user-service");
 
+
 connection.connect();
 
 

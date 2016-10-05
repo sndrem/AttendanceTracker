@@ -7,6 +7,8 @@ var cookieParser = require('cookie-parser');
 var seminarService = require("../modules/seminar-service");
 var userService = require("../modules/user-service");
 
+
+
 /* GET createNewSeminarGroup view */
 router.get("/createNewSeminarGroup", userService.requireLogin, userService.isAdminOrAssistant, seminarService.getAllSeminarGroups, function(req, res, next) {
     const model = {
