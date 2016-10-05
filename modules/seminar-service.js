@@ -50,6 +50,22 @@ var seminarService = {
     },
 
     /*
+    Retrieves all seminar groups for a given course id
+    */
+    getAllSeminarGroupsFromCourseID: function(req, res, next) {
+        const courseID = req.body.courseID;
+        const query = "SELECT * FROM seminargroup WHERE courseID = ?";
+        connection.query(query, [courseID], function(err, result) {
+            if(err) {
+                next(err);
+            } else {
+                req.resultSet = result;
+                next();
+            }
+        });
+    },
+
+    /*
     Creates a new seminar group
      */
     createSeminarGroup: function(req, res, next) {
