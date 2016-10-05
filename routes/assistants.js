@@ -5,7 +5,6 @@ var cookieParser = require('cookie-parser');
 var seminarService = require("../modules/seminar-service");
 var userService = require("../modules/user-service");
 var courseService = require("../modules/course-service");
-var seminarSchedule = require("../modules/seminar-schedule");
 
 
 /* GET Dashboard page */
