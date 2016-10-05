@@ -1,4 +1,8 @@
 ul.nav.nav-tabs
-    if adminType == assistent
+    if user.adminType === 'assistent'
         li(role="presentation"): a(href="/student/dashboard") Your student dashboard
         li(role="presentation"): a(href="/assistant/dashboard") Your assistant dashboard
+    else if user.adminType === 'master'
+        li(role="presentation"): a(href="/admin/dashboard") Back to dashboard
+    else 
+        li(role="presentation"): a(href="/student/dashboard") Back to dashboard

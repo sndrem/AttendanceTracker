@@ -12,10 +12,27 @@ block navigation
                 .collapse.navbar-collapse#navbar-collapse
                     ul.nav.navbar-nav.navbar-right
                         li
-                            a(href="/student/dashboard")
-                                i.material-icons &#xE851;
-                                | Dashboard
-                        li
-                            a(href="/login")
-                                i.material-icons &#xE88A 
-                                | Log in
+                            if user != null
+                                if user.adminType === 'master'
+                                    a(href="/admin/dashboard")
+                                        i.material-icons &#xE851;
+                                        | Dashboard
+                                else if user.adminType === 'assistent'
+                                    a(href="/assistant/dashboard")
+                                        i.material-icons &#xE851;
+                                        | Dashboard
+                                else 
+                                    a(href="/student/dashboard")
+                                        i.material-icons &#xE851;
+                                        | Dashboard
+
+                                li
+                                    a(href="/logout")
+                                        i.material-icons &#xE88A 
+                                        | Log out
+
+                            else
+                                li
+                                    a(href="/login")
+                                        i.material-icons &#xE88A 
+                                        | Log in
