@@ -472,10 +472,9 @@ $(function() {
     	$table.html("");
     	for(var i = 0; i < data.length; i++) {
     		var course = data[i];
-    		$table.append("<tr>" +
-                        + "<td>" + "</td>"
+    		$table.append("<tr>"
                         + "<td class='courseId'>" + course.courseID + "</td>"
-                        + "<td>" + course.name + "</td>"
+                        + "<td data-courseid=\"" + course.courseID + "\">" + course.name + "</td>"
                         + "<td>" + course.semester + "</td>"
                         + "<td>" + course.attendance + " %" + "</td>"
                         + "</tr>");
