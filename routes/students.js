@@ -17,8 +17,8 @@ router.get("/dashboard", userService.requireLogin, seminarService.getUserSeminar
 });
 
 /* GET list all seminars */
-router.get("/listSeminars", userService.requireLogin, seminarService.getAllSeminarGroups, function(req, res, next) {
-    res.status(200).send(req.seminarGroups);
+router.post("/listSeminars", userService.requireLogin, seminarService.getAllSeminarGroupsFromCourseID, function(req, res, next) {
+    res.status(200).send(req.resultSet);
 });
 
 /* GET list all courses */
