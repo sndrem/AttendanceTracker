@@ -188,11 +188,12 @@ var seminarService = {
                     +   'JOIN `attends_seminar` '
                     +   'ON seminar.`semID` = `attends_seminar`.`semID`'
                     +   'JOIN `person`'
-                    +   'ON person.`StudID` = ? AND seminar.`semGrID` = ? '
+                    +   'ON person.`StudID` = `attends_seminar`.`StudID` AND seminar.`semGrID` = ? '
                     +   'JOIN seminargroup '
                     +   'ON seminargroup.`semGrID` = seminar.`semGrID` '
+                    +   'WHERE `person`.`StudID`= ?'
                     +   'ORDER BY seminar.`date`';
-        connection.query(query, [userID, seminarID], function(err, result) {
+        connection.query(query, [seminarID, userID], function(err, result) {
             if(err) {
                 next(err);
             } else {
