@@ -32,10 +32,11 @@ var userService = {
         var insertQuery = "INSERT INTO person SET ?";
         connection.query(insertQuery, values, function(err, result){
             if(err) {
-                res.message = err;
-                next();
+                console.log(err);
+                res.status(400).json(err);
             } else {
-                res.message = "User created";
+                console.log(result);
+                req.resultSet = result;
                 next();
             }
         });

@@ -25,7 +25,11 @@ $(function() {
 
     myApp.register = function(firstName, lastName, studentID, email, password, confirmPassword) {
         // TODO Post request to server for registration
-        $.post('/register', {
+        $.ajax({
+            url: '/register',
+            type: 'POST',
+            dataType: 'JSON',
+            data: {
                 firstName: firstName,
                 lastName: lastName,
                 studentID: studentID,
@@ -33,17 +37,20 @@ $(function() {
                 password: password,
                 confirmPassword: confirmPassword
             },
-            function(data, textStatus, xhr) {
-                /*optional stuff to do after success */
-                if(textStatus === 'success') {
-                    document.location.href = "/login";
-                } else {
-                    console.log(data.message);
-                    $("#statusMessage").html(data.message);
-                    myApp.resetForm();    
-                }
-                
-            });
+            success: function(data) {
+                console.log(data);
+                document.location.href = "/login";
+            }
+        })
+        .done(function() {
+            console.log("success");
+        })
+        .fail(function() {
+            $("#statusMessage").html("<p class='bg-warning'>There is already a user with that username or mail address</p>")
+        })
+        .always(function() {
+            console.log("complete");
+        });
     };
 
     myApp.isValidEmail = function(email) {
@@ -462,12 +469,12 @@ $(function() {
         console.log(data);
         for (var i = 0; i < data.length; i++) {
             var course = data[i];
-            $("[data-courseid="+course.courseID+"]").after("<tr class=semHead"+course.courseID+">"+"<th></th><th></th>"+"<th>Seminar Group</th>"+"<th>Registrer</th></tr>"+"<tr class=semInfo>" +
-                "<td>"  + "</td>" +  "<td></td>"+
+            $("[data-courseid=" + course.courseID + "]").after("<tr class=semHead" + course.courseID + ">" + "<th></th><th></th>" + "<th>Seminar Group</th>" + "<th>Registrer</th></tr>" + "<tr class=semInfo>" +
+                "<td>" + "</td>" + "<td></td>" +
                 "<td>" + course.name + "</td>" +
                 "<td><a data-courseid=\"" + course.courseID + "\" data-seminarkey=\"" + course.semGrID + "\" class=\"registerForSeminarBtn\" href=\"#\">Sign Up</a></td>" +
-               "</tr>").one();
-            $(".semHead"+course.courseID+">:gt(3)").remove();
+                "</tr>").one();
+            $(".semHead" + course.courseID + ">:gt(3)").remove();
             $(".semInfo tr").remove();
         }
     }
@@ -488,35 +495,35 @@ $(function() {
     }
 
     function fetchSeminarGroups() {
-        $('.fetchSeminarGroups').one("click" , function(e) {
-        e.preventDefault();
-        console.log("click");
-        var courseID = $(this).data("courseid");
-        console.log(courseID);
-        $.ajax({
-                url: '/student/listSeminars',
-                type: 'POST',
-                dataType: 'JSON',
-                data: {
-                    courseID: courseID
-                },
-                async: true,
-                success: function(data) {
-                    console.log(data);
-                    showSeminarList(data);
-                    addClickEventForSeminarRegistration();
-                }
-            })
-            .done(function() {
-                console.log("success");
-            })
-            .fail(function() {
-                console.log("error");
-            })
-            .always(function() {
-                console.log("complete");
+        $('.fetchSeminarGroups').one("click", function(e) {
+            e.preventDefault();
+            console.log("click");
+            var courseID = $(this).data("courseid");
+            console.log(courseID);
+            $.ajax({
+                    url: '/student/listSeminars',
+                    type: 'POST',
+                    dataType: 'JSON',
+                    data: {
+                        courseID: courseID
+                    },
+                    async: true,
+                    success: function(data) {
+                        console.log(data);
+                        showSeminarList(data);
+                        addClickEventForSeminarRegistration();
+                    }
+                })
+                .done(function() {
+                    console.log("success");
+                })
+                .fail(function() {
+                    console.log("error");
+                })
+                .always(function() {
+                    console.log("complete");
 
-            });
+                });
         });
     }
 

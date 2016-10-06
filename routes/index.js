@@ -38,13 +38,7 @@ router.get("/about", function(req, res, next) {
 
 /* POST registration page */
 router.post('/register', userService.registerUser, function(req, res, next) {
-    var message = {
-        'sqlMessage': JSON.stringify(res.message),
-        'message': res.message
-    }
-    console.log(message);
-    res.status(200).json(message);
-
+    res.status(200).json(req.resultSet);
 });
 
 /* POST login page */
