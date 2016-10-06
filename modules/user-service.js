@@ -1,4 +1,5 @@
 var md5 = require('md5');
+var crypto = require('crypto');
 var connection = require("../modules/connection");
 var mysql = require('mysql');
 var salt = "85478tug9efunc78ryw378e983wud";
@@ -19,7 +20,7 @@ var userService = {
         var confirmPassword = req.body.confirmPassword;
         // TODO - Sjekke email og passord
 
-        password = md5(password.trim() + salt.trim());
+        password = crypto.createHash('md5').update(password.trim() + salt.trim()).digest('hex');
         var values = {
             StudID: studentID,
             fName: firstName,
@@ -72,6 +73,14 @@ var userService = {
                // TODO
                // Må sjekke her om passordet som brukeren skriver inn + salt i md5-funksjonen
                // er lik passordet som er lagret i databasen
+               var password1 = crypto.createHash('md5').update(password.trim() + result[0].salt.trim()).digest('hex');
+                console.log(password1);
+                console.log(result[0].password);
+               if(password1 === result[0].password) {
+                console.log("Passord er like");
+               } else {
+                console.log("Passord er ikke like");
+               }
                 req.message = "User found. Should procede to dashboard...";
                 req.session.user = result[0];
                 next();
