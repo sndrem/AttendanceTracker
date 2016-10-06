@@ -6,7 +6,8 @@ var connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     password: '',
-    database: 'atdb'
+    database: 'atdb',
+    charset: 'utf8'
 });
 
 var userService = {
@@ -18,15 +19,16 @@ var userService = {
         var password = req.body.email;
         var confirmPassword = req.body.confirmPassword;
         // TODO - Sjekke email og passord
-        var salt = crypto.randomBytes(32).toString('hex');
+        var salt = crypto.randomBytes(16).toString('hex');
         var hashedPassword = crypto.createHash('sha256').update(salt + password, 'utf8').digest('hex');
+        console.log("Hashed pwd: ", hashedPassword);
         var values = {
             StudID: studentID,
             fName: firstName,
             lName: lastName,
             eMail: email,
-            password: hashedPassword,
-            salt: salt
+            password: hashedPassword.toString(),
+            salt: salt.toString()
         }
 
         var insertQuery = "INSERT INTO person SET ?";
@@ -73,7 +75,7 @@ var userService = {
                // TODO
                // Må sjekke her om passordet som brukeren skriver inn + salt i md5-funksjonen
                // er lik passordet som er lagret i databasen
-               var hashedPassword = crypto.createHash('sha256').update(result[0].salt + password, 'utf8').digest('hex');
+               var hashedPassword = crypto.createHash('sha256').update(result[0].salt.toString() + password.toString(), 'utf8').digest('hex');
                console.log("Hashet passord nå: ", hashedPassword);
                console.log("PW fra DB: " , result[0].password);
                if(hashedPassword === result[0].password) {
