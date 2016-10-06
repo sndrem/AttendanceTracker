@@ -106,7 +106,7 @@ var seminarService = {
     Retrieves all courses
      */
     getAllCourses: function(req, res, next) {
-        const query = "SELECT * FROM course";
+        const query = "SELECT * FROM course ORDER BY courseID";
         connection.query(query, function(err, result) {
             if(err) {
                 next(err);
