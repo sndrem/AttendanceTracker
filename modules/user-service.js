@@ -18,8 +18,9 @@ var userService = {
         var password = req.body.email;
         var confirmPassword = req.body.confirmPassword;
         // TODO - Sjekke email og passord
-        var salt = crypto.randomBytes(16).toString('hex');
-        var hashedPassword = crypto.createHash('md5').update(salt + password, 'utf8').digest('hex');
+        var salt = crypto.randomBytes(32).toString('hex');
+        console.log("Register salt: ", salt);
+        var hashedPassword = crypto.createHash('sha256').update(salt + password, 'utf8').digest('hex');
         var values = {
             StudID: studentID,
             fName: firstName,
@@ -72,10 +73,10 @@ var userService = {
                // TODO
                // Må sjekke her om passordet som brukeren skriver inn + salt i md5-funksjonen
                // er lik passordet som er lagret i databasen
-               var password1 = crypto.createHash('md5').update(result[0].salt + password, 'utf8').digest('hex');
-               console.log("Hashet passord nå: ", password1);
-               console.log("PW fra DB: " , result[0].password);
-               if(password1 === result[0].password) {
+               var hashedPassword = crypto.createHash('sha256').update(result[0].salt + password, 'utf8').digest('hex');
+               console.log("Hashet passord nå: ", hashedPassword.length);
+               console.log("PW fra DB: " , result[0].password.length);
+               if(String(hashedPassword) === String(result[0].password)) {
                 console.log("Passord er like");
                } else {
                 console.log("Passord er ikke like");
