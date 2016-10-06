@@ -35,9 +35,14 @@ $(function() {
             },
             function(data, textStatus, xhr) {
                 /*optional stuff to do after success */
-                console.log(data.message);
-                $("#statusMessage").html(data.message);
-                myApp.resetForm();
+                if(textStatus === 'success') {
+                    document.location.href = "/login";
+                } else {
+                    console.log(data.message);
+                    $("#statusMessage").html(data.message);
+                    myApp.resetForm();    
+                }
+                
             });
     };
 
