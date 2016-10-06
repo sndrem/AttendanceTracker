@@ -72,10 +72,10 @@ var userService = {
                // TODO
                // Må sjekke her om passordet som brukeren skriver inn + salt i md5-funksjonen
                // er lik passordet som er lagret i databasen
-               var password1 = crypto.createHash('md5').update(result[0].salt + password, 'utf8').digest('hex');
-               console.log("Hashet passord nå: ", password1);
+               var hashedPassword = crypto.createHash('md5').update(result[0].salt + password, 'utf8').digest('hex');
+               console.log("Hashet passord nå: ", hashedPassword);
                console.log("PW fra DB: " , result[0].password);
-               if(password1 === result[0].password) {
+               if(hashedPassword === result[0].password) {
                 console.log("Passord er like");
                } else {
                 console.log("Passord er ikke like");
