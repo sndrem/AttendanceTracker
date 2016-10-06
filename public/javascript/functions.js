@@ -454,13 +454,16 @@ $(function() {
     function showSeminarList(data) {
         var $table = $("#courseTable tbody");
         //$table.html("");
+        console.log(data);
         for (var i = 0; i < data.length; i++) {
             var course = data[i];
-            $table.append("<tr>" +
-                "<td>" + course.courseID + "</td>" +
+            $("[data-courseid="+course.courseID+"]").after("<tr class='semHead'>"+"<th></th><th></th>"+"<th>Seminar Group</th>"+"<th>Registrer</th></tr>"+"<tr class='semInfo'>" +
+                "<td>"  + "</td>" +  "<td></td>"+
                 "<td>" + course.name + "</td>" +
                 "<td><a data-courseid=\"" + course.courseID + "\" data-seminarkey=\"" + course.semGrID + "\" class=\"registerForSeminarBtn\" href=\"#\">Sign Up</a></td>" +
-                "</tr>");
+               "</tr>").one();
+            $(".semHead>:gt(3)").remove();
+            $(".semInfo tr").remove();
         }
     }
 
@@ -476,13 +479,14 @@ $(function() {
                 "<td>" + course.attendance + " %" + "</td>" +
                 "</tr>");
         }
+
     }
 
     function fetchSeminarGroups() {
-        $('.fetchSeminarGroups td').one("click" , function(e) {
+        $('.fetchSeminarGroups').one("click" , function(e) {
         e.preventDefault();
         console.log("click");
-        var courseID = $(this).parent().data("courseid");
+        var courseID = $(this).data("courseid");
         console.log(courseID);
         $.ajax({
                 url: '/student/listSeminars',
