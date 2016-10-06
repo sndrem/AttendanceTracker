@@ -2,7 +2,6 @@ var md5 = require('md5');
 var crypto = require('crypto');
 var connection = require("../modules/connection");
 var mysql = require('mysql');
-var salt = "85478tug9efunc78ryw378e983wud";
 var connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
@@ -19,14 +18,14 @@ var userService = {
         var password = req.body.email;
         var confirmPassword = req.body.confirmPassword;
         // TODO - Sjekke email og passord
-
-        password = crypto.createHash('md5').update(password.trim() + salt.trim()).digest('hex');
+        var salt = crypto.randomBytes(16).toString('hex');
+        var hashedPassword = crypto.createHash('md5').update(salt + password, 'utf8').digest('hex');
         var values = {
             StudID: studentID,
             fName: firstName,
             lName: lastName,
             eMail: email,
-            password: password,
+            password: hashedPassword,
             salt: salt
         }
 
@@ -73,9 +72,9 @@ var userService = {
                // TODO
                // Må sjekke her om passordet som brukeren skriver inn + salt i md5-funksjonen
                // er lik passordet som er lagret i databasen
-               var password1 = crypto.createHash('md5').update(password.trim() + result[0].salt.trim()).digest('hex');
-                console.log(password1);
-                console.log(result[0].password);
+               var password1 = crypto.createHash('md5').update(result[0].salt + password, 'utf8').digest('hex');
+               console.log("Hashet passord nå: ", password1);
+               console.log("PW fra DB: " , result[0].password);
                if(password1 === result[0].password) {
                 console.log("Passord er like");
                } else {
