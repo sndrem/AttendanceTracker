@@ -55,7 +55,7 @@ var seminarService = {
     getAllSeminarGroupsFromCourseID: function(req, res, next) {
         const courseID = req.body.courseID;
         console.log(courseID);
-        const query = "SELECT * FROM seminargroup WHERE courseID = ?";
+        const query = "SELECT * FROM seminargroup WHERE courseID = ? ORDER BY `seminargroup`.`name` DESC";
         connection.query(query, [courseID], function(err, result) {
             if(err) {
                 next(err);

@@ -457,12 +457,12 @@ $(function() {
         console.log(data);
         for (var i = 0; i < data.length; i++) {
             var course = data[i];
-            $("[data-courseid="+course.courseID+"]").after("<tr class='semHead'>"+"<th></th><th></th>"+"<th>Seminar Group</th>"+"<th>Registrer</th></tr>"+"<tr class='semInfo'>" +
+            $("[data-courseid="+course.courseID+"]").after("<tr class=semHead"+course.courseID+">"+"<th></th><th></th>"+"<th>Seminar Group</th>"+"<th>Registrer</th></tr>"+"<tr class=semInfo>" +
                 "<td>"  + "</td>" +  "<td></td>"+
                 "<td>" + course.name + "</td>" +
                 "<td><a data-courseid=\"" + course.courseID + "\" data-seminarkey=\"" + course.semGrID + "\" class=\"registerForSeminarBtn\" href=\"#\">Sign Up</a></td>" +
                "</tr>").one();
-            $(".semHead>:gt(3)").remove();
+            $(".semHead"+course.courseID+">:gt(3)").remove();
             $(".semInfo tr").remove();
         }
     }
