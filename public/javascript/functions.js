@@ -352,7 +352,7 @@ $(function() {
             $.each(data, function(index, val) {
                 /* iterate through array or object */
                 const html = "<div class=\"col-xs-12 col-sm-12 col-md-6 col-lg-4\">" +
-                    "<div class=\"thumbnail\">" +
+                    "<div class=\"thumbnail\" data-groupid='"+ val.semGrID +"'>" +
                     "<a href=\"/assistant/takeAttendance/" + val.semGrID + "\"><h4>" + val.name + "</h4></a>" +
                     "</div>" +
                     "</div>";
@@ -482,10 +482,13 @@ $(function() {
         console.log(data);
         for (var i = 0; i < data.length; i++) {
             var course = data[i];
-            $("[data-courseid=" + course.courseID + "]").after("<tr class=semHead" + course.courseID + ">" + "<th></th><th></th>" + "<th>Seminar Group</th>" + "<th>Registrer</th></tr>" + "<tr class=semInfo>" +
+            $("[data-courseid=" + course.courseID + "]").after("<tr class=semHead" + course.courseID + ">" +
+             "<th></th><th></th>" + "<th>Seminar Group</th>" + "<th>Registrer</th></tr>" + 
+             "<tr class=semInfo>" +
                 "<td>" + "</td>" + "<td></td>" +
                 "<td>" + course.name + "</td>" +
-                "<td><a data-courseid=\"" + course.courseID + "\" data-seminarkey=\"" + course.semGrID + "\" class=\"registerForSeminarBtn\" href=\"#\">Sign Up</a></td>" +
+                "<td><a data-courseid=\"" + course.courseID + "\" data-seminarkey=\"" + course.semGrID 
+                + "\" class=\"registerForSeminarBtn\" href=\"#\">Sign Up</a></td>" +
                 "</tr>").one();
             $(".semHead" + course.courseID + ">:gt(3)").remove();
             $(".semInfo tr").remove();
