@@ -1,4 +1,3 @@
-var md5 = require('md5');
 var mysql = require('mysql');
 var connectObject = {};
 var connection = mysql.createConnection({

@@ -1,4 +1,3 @@
-var md5 = require('md5');
 var crypto = require('crypto');
 var connection = require("../modules/connection");
 var mysql = require('mysql');
