@@ -486,6 +486,7 @@ $(function() {
             var course = data[i];
 
 
+
             $("[data-courseid=" + course.courseID + "]").after("<tr class=semHead" + course.courseID + ">" +
              "<th></th><th></th>" + "<th>Seminar Group</th>" + "<th>Registrer</th></tr>" + 
              "<tr class=semInfo>" +
@@ -499,6 +500,7 @@ $(function() {
         }
     }
 
+    
     function showCourseList(data) {
         var $table = $("#courseTable tbody");
         $table.html("");

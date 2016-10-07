@@ -50,13 +50,15 @@ var seminarService = {
     },
 
     /*
-    Retrieves all seminar groups for a given course id
+    Retrieves all seminar groups for a given course id AND where the user is not signed on. 
     */
     getAllSeminarGroupsFromCourseID: function(req, res, next) {
         const courseID = req.body.courseID;
         console.log(courseID);
-        const query = "SELECT * FROM seminargroup WHERE courseID = ? ORDER BY `seminargroup`.`name` DESC";
-        connection.query(query, [courseID], function(err, result) {
+        const query = "SELECT * FROM seminargroup WHERE courseID = ? AND `semGrID` NOT IN ("+
+            " SELECT `semGrID` FROM `is_in_seminar_group` WHERE `StudID` = ? )"+
+            " ORDER BY `seminargroup`.`name` DESC";
+        connection.query(query, [courseID, req.session.user.StudID], function(err, result) {
             if(err) {
                 next(err);
                 console.log(err);
