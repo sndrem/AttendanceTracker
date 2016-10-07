@@ -12,14 +12,18 @@ var connection = mysql.createConnection({
 
 var userService = {
     registerUser: function(req, res, next) {
+        console.log("Register user");
         var firstName = req.body.firstName;
         var lastName = req.body.lastName;
         var studentID = req.body.studentID;
         var email = req.body.email;
-        var password = req.body.email;
+        var password = req.body.password;
+        console.log("Password from registration ", password);
         var confirmPassword = req.body.confirmPassword;
+        console.log("Confirm password from registration ", confirmPassword);
         // TODO - Sjekke email og passord
         var salt = crypto.randomBytes(32).toString('hex');
+        console.log("Generating random salt ", salt);
         var hashedPassword = crypto.createHash('sha256').update(salt + password, 'utf8').digest('hex');
         console.log("Hashed pwd: ", hashedPassword);
         var values = {
@@ -30,6 +34,8 @@ var userService = {
             password: hashedPassword,
             salt: salt
         }
+
+        console.log("Object to be stored in database: " , values);
 
         var insertQuery = "INSERT INTO person SET ?";
         connection.query(insertQuery, values, function(err, result){
@@ -66,6 +72,7 @@ var userService = {
     authenticate: function(req, res, next) {
         var email = req.body.email;
         var password = req.body.password;
+        console.log("Passord fra bruker ved login: " + password);
 
         var getUserQuery = "SELECT * FROM person WHERE eMail = ? LIMIT 1";
         connection.query(getUserQuery, [email], function(err, result){
@@ -75,7 +82,7 @@ var userService = {
                // TODO
                // Må sjekke her om passordet som brukeren skriver inn + salt i md5-funksjonen
                // er lik passordet som er lagret i databasen
-               var hashedPassword = crypto.createHash('sha256').update(result[0].salt.toString() + password.toString(), 'utf8').digest('hex');
+               var hashedPassword = crypto.createHash('sha256').update(result[0].salt + password, 'utf8').digest('hex');
                console.log("Hashet passord nå: ", hashedPassword);
                console.log("PW fra DB: " , result[0].password);
                if(hashedPassword === result[0].password) {
