@@ -130,7 +130,7 @@ $(function() {
         e.preventDefault();
         var firstName = $("#firstName").val();
         var lastName = $("#lastName").val();
-        var studentID = $("#studentID").val();
+        var studentID = $("#studentRegID").val();
         var email = $("#email").val();
         var password = $("#password").val();
         var confirmPassword = $("#confirmPassword").val();
@@ -389,10 +389,16 @@ $(function() {
                     success: function(data) {
                         console.log(data);
                         if (data) {
-                            colorMarkElement($this, '#91C368');
-                            unhideformFields();
-                            populateRegistrationFields(data);
+                            if(data.length > 1) {
+                                // showWarningMessage
+                                populateDropdown(data);
+                            } else {
+                                colorMarkElement($this, '#91C368');
+                                unhideformFields();
+                                populateRegistrationFields(data);
+                            }
                         } else {
+                            hideFormFields();
                             colorMarkElement($this, '#FC4F4F');
                         }
                     }
@@ -406,8 +412,17 @@ $(function() {
                 .always(function() {
                     console.log("complete");
                 });
+        } else {
+            hideFormFields();
         }
     });
+
+    function populateDropdown(data) {
+        console.log("Should populate dropdown");
+        $("form select").html("");
+        $("form .form-group:first-child").html("<select></select>");
+        $("form select").html('<option value="hey">Hola</option>');
+    }
 
     //sort the table on text input for courses
     $("#inputCourse").keyup(function() {
@@ -428,6 +443,13 @@ $(function() {
             $(val).removeClass('hide');
         });
     }
+
+    function hideFormFields() {
+        $("#firstName").parent().addClass('hide');
+        $("#lastName").parent().addClass('hide');
+        $("#email").parent().addClass('hide');
+    }
+
 
     function populateRegistrationFields(data) {
         var $firstName = $("#firstName");

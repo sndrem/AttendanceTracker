@@ -12,11 +12,8 @@ block content
             p You can connect the student assistant to a course right away, or do it later at the #[a(href="/admin/addAssistantToCourse") page for adding an assistant to courses].
             form(action="/admin/createNewAssistant", method="POST")
                 .form-group
-                    label(for="studentID") Student ID
-                    input#studentID(type="text" name="studentID" placeholder="Student ID" required).form-control
-                .form-group
-                    label(for="courseID") Course ID
-                    input#courseID(type="text" name="courseID" placeholder="Course ID eg. INFO132" required disabled).form-control
+                    label(for="studentID") Student ID or name
+                    input#studentID(type="text" name="studentID" placeholder="Student ID or name" required).form-control
                 .form-group.hide
                     label(for="firstName") First name
                     input#firstName(type="text" name="firstName" placeholder="First name").form-control

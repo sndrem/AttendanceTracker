@@ -52,7 +52,7 @@ var seminarService = {
     /*
     Retrieves all seminar groups for a given course id AND where the user is not signed on. 
     */
-    getAllSeminarGroupsFromCourseID: function(req, res, next) {
+    getAllSeminarGroupsFromCourseIDExcludingUserID: function(req, res, next) {
         const courseID = req.body.courseID;
         console.log(courseID);
         const query = "SELECT * FROM seminargroup WHERE courseID = ? AND `semGrID` NOT IN ("+

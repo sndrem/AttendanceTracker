@@ -214,12 +214,20 @@ var userService = {
 
     checkExistingUser: function(req, res, next) {
         const studentID = req.body.studentID;
-        const query = "SELECT fName, lName, eMail FROM PERSON WHERE StudID = ? LIMIT 1";
-        connection.query(query, [studentID], function(err, result) {
+        const query = "SELECT fName, lName, eMail FROM PERSON WHERE StudID = ? OR fName like ? OR lName like ?";
+        connection.query(query, [studentID, studentID + "%", studentID + "%"], function(err, result) {
             if(err) {
+                console.log(err);
                 next(err);
             } else {
-                req.resultSet = result[0];
+                if(result.length == 1) {
+                    req.resultSet = result[0];
+                } else if (result.length > 1) {
+                    req.resultSet = result;
+                }
+                  else {
+                    req.resultSet = null;
+                }
                 next();
             }
         });
