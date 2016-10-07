@@ -24,18 +24,32 @@ var userService = {
 
         if(utilities.isEmpty(firstName)) {
             res.status(400).json("Please provide a first name");
+            return;
         }
 
         if(utilities.isEmpty(studentID)) {
             res.status(400).json("Please provide a student ID");
+            return;
         }
 
         if(utilities.isEmpty(password)) {
             res.status(400).json("Password cannot be empty");
+            return;
+        }
+
+        if(utilities.isEmpty(confirmPassword)) {
+            res.status(400).json("Confirm password cannot be empty");
+            return;
         }
 
         if(utilities.isEmpty(email) || !utilities.isValidEmail(email)) {
             res.status(400).json("Please provide a valid email");
+            return;
+        }
+
+        if(password !== confirmPassword) {
+            res.status(400).json("Your passwords do not match");
+            return;
         }
 
 
