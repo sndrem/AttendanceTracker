@@ -19,7 +19,7 @@ var userService = {
         var password = req.body.email;
         var confirmPassword = req.body.confirmPassword;
         // TODO - Sjekke email og passord
-        var salt = crypto.randomBytes(16).toString('hex');
+        var salt = crypto.randomBytes(32).toString('hex');
         var hashedPassword = crypto.createHash('sha256').update(salt + password, 'utf8').digest('hex');
         console.log("Hashed pwd: ", hashedPassword);
         var values = {
@@ -27,8 +27,8 @@ var userService = {
             fName: firstName,
             lName: lastName,
             eMail: email,
-            password: hashedPassword.toString(),
-            salt: salt.toString()
+            password: hashedPassword,
+            salt: salt
         }
 
         var insertQuery = "INSERT INTO person SET ?";
