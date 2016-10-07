@@ -10,16 +10,40 @@ $(function() {
     myApp.login = function(email, password) {
         // TODO Post request to server
         // Server should log in
-        $.post('/login', {
-            email: email,
-            password: password
-        }, function(data, textStatus, xhr) {
-            /*optional stuff to do after success */
-            console.log(data.redirect_url);
-            if (textStatus === 'success') {
+        $.ajax({
+            url: '/login',
+            type: 'POST',
+            dataType: 'JSON',
+            data: {
+                email: email,
+                password: password
+            },
+            success: function(data) {
                 document.location.href = data.redirect_url;
             }
+        })
+        .done(function() {
+            console.log("success");
+        })
+        .fail(function(data) {
+            console.log("error");
+            console.log(data);
+            $("legend").html("<span class='bg-danger'>" + data.responseJSON + "</span>");
+        })
+        .always(function() {
+            console.log("complete");
         });
+        
+        // $.post('/login', {
+        //     email: email,
+        //     password: password
+        // }, function(data, textStatus, xhr) {
+        //     /*optional stuff to do after success */
+        //     console.log(data.redirect_url);
+        //     if (textStatus === 'success') {
+        //         document.location.href = data.redirect_url;
+        //     }
+        // });
     };
 
 

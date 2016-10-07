@@ -87,14 +87,15 @@ var userService = {
                console.log("PW fra DB: " , result[0].password);
                if(hashedPassword === result[0].password) {
                 console.log("Passord er like");
-               } else {
-                console.log("Passord er ikke like");
-               }
                 req.message = "User found. Should procede to dashboard...";
                 req.session.user = result[0];
                 next();
+               } else {
+                res.status(400).json("Username or password is incorrect");
+                next();
+               }
             } else {
-                req.message = "No users found with email: " + email;
+                res.status(400).json("No users found with email: " + email);
                 next();
             }
         });
@@ -121,7 +122,6 @@ var userService = {
                     if(adminType === 'assistent') {
                         req.redirect_url = '/assistant/dashboard';
                     } else if(adminType === 'master') {
-                        console.log("We found a master");
                         req.redirect_url = '/admin/dashboard';
                     }
                 }
