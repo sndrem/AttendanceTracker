@@ -2,6 +2,7 @@ var md5 = require('md5');
 var crypto = require('crypto');
 var connection = require("../modules/connection");
 var mysql = require('mysql');
+var utilities = require("../modules/utilities");
 var connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
@@ -21,7 +22,24 @@ var userService = {
         console.log("Password from registration ", password);
         var confirmPassword = req.body.confirmPassword;
         console.log("Confirm password from registration ", confirmPassword);
-        // TODO - Sjekke email og passord
+
+        if(utilities.isEmpty(firstName)) {
+            res.status(400).json("Please provide a first name");
+        }
+
+        if(utilities.isEmpty(studentID)) {
+            res.status(400).json("Please provide a student ID");
+        }
+
+        if(utilities.isEmpty(password)) {
+            res.status(400).json("Password cannot be empty");
+        }
+
+        if(utilities.isEmpty(email) || !utilities.isValidEmail(email)) {
+            res.status(400).json("Please provide a valid email");
+        }
+
+
         var salt = crypto.randomBytes(32).toString('hex');
         console.log("Generating random salt ", salt);
         var hashedPassword = crypto.createHash('sha256').update(salt + password, 'utf8').digest('hex');

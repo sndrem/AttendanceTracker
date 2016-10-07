@@ -21,11 +21,6 @@ router.get("/createNewAssistant", userService.requireLogin, userService.isAdmin,
     res.render("createNewAssistant");
 });
 
-/* POST checkExistingUser */
-router.post("/checkExistingUser", userService.requireLogin, userService.isAdmin, userService.checkExistingUser, function(req, res, next) {
-    // TODO Return data to client
-    res.status(200).json(req.resultSet);
-});
 
 /* POST addUserAsAssistant */
 router.post("/addUserAsAssistant", userService.requireLogin, userService.isAdmin, userService.registerUserAsAssistant, function(req, res, next) {

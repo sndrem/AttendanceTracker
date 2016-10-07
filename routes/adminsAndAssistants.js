@@ -29,5 +29,11 @@ router.post("/createNewSeminarGroup", userService.requireLogin, userService.isAd
     }
 });
 
+/* POST checkExistingUser */
+router.post("/checkExistingUser", userService.requireLogin, userService.isAdminOrAssistant, userService.checkExistingUser, function(req, res, next) {
+    // TODO Return data to client
+    res.status(200).json(req.resultSet);
+});
+
 
 module.exports = router;

@@ -33,17 +33,6 @@ $(function() {
         .always(function() {
             console.log("complete");
         });
-        
-        // $.post('/login', {
-        //     email: email,
-        //     password: password
-        // }, function(data, textStatus, xhr) {
-        //     /*optional stuff to do after success */
-        //     console.log(data.redirect_url);
-        //     if (textStatus === 'success') {
-        //         document.location.href = data.redirect_url;
-        //     }
-        // });
     };
 
 
@@ -74,7 +63,7 @@ $(function() {
         })
         .always(function() {
             console.log("complete");
-        });
+        });f
     };
 
     myApp.isValidEmail = function(email) {
@@ -391,7 +380,7 @@ $(function() {
             var studentID = $this.val();
             // TODO Call database to check if student assistant exists
             $.ajax({
-                    url: '/admin/checkExistingUser',
+                    url: '/common/checkExistingUser',
                     type: 'POST',
                     dataType: 'JSON',
                     data: {
