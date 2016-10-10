@@ -214,7 +214,7 @@ var userService = {
 
     checkExistingUser: function(req, res, next) {
         const studentID = req.body.studentID;
-        const query = "SELECT fName, lName, eMail FROM PERSON WHERE StudID = ? OR fName like ? OR lName like ?";
+        const query = "SELECT fName, lName, eMail, StudID FROM PERSON WHERE StudID = ? OR fName like ? OR lName like ?";
         connection.query(query, [studentID, studentID + "%", studentID + "%"], function(err, result) {
             if(err) {
                 console.log(err);

@@ -282,7 +282,6 @@ $(function() {
     $("#createSeminarAssBtn").on('click', function(e) {
         e.preventDefault();
         const studentID = $("#studentID").val();
-        const courseID = $("#courseID").val();
         var statusMessages = [];
 
         if (isEmpty(studentID)) {
@@ -290,16 +289,9 @@ $(function() {
         }
 
         // If the courseID is empty and the student id has been entered correctly
-        if (isEmpty(courseID) && statusMessages.length == 0) {
+        if (statusMessages.length == 0) {
             myApp.addUserAsAssistant({
                 studentID: studentID,
-                adminType: ADMIN_TYPES.assistent
-            });
-        } else if (!isEmpty(courseID) && statusMessages.length == 0) {
-            // If the courseID has been entered and the student id has been entered
-            myApp.addUserAsAssistant({
-                studentID: studentID,
-                courseID: courseID,
                 adminType: ADMIN_TYPES.assistent
             });
         } else {
@@ -370,13 +362,12 @@ $(function() {
 
     // This function call is called when an admin enters the student id when 
     // registering a student assistant
-    $("#studentID").keyup(function(e) {
+    $("#studentID").on("keyup change", function(e) {
         /* Act on the event */
         var $this = $(this);
         colorMarkElement($this, '#fff');
         // Vi sjekker ikke brukere dersom de har en studentid under 5 karakterer lang.
-        if ($this.val().length > 5) {
-            console.log($(this).val());
+        if ($this.val().length >= 1) {
             var studentID = $this.val();
             // TODO Call database to check if student assistant exists
             $.ajax({
@@ -396,6 +387,8 @@ $(function() {
                                 colorMarkElement($this, '#91C368');
                                 unhideformFields();
                                 populateRegistrationFields(data);
+                                $(".multipleNameSelect").addClass('hide');
+                                $("#createSeminarAssBtn").prop('disabled', false);
                             }
                         } else {
                             hideFormFields();
@@ -414,15 +407,35 @@ $(function() {
                 });
         } else {
             hideFormFields();
+            $(".multipleNameSelect").addClass('hide');
         }
     });
 
+    $("#resetForm").on('click', function(event) {
+        event.preventDefault();
+        myApp.resetForm();
+        hideFormFields();
+        colorMarkElement($("#studentID"), '#FFF');
+    })
+
     function populateDropdown(data) {
         console.log("Should populate dropdown");
-        $("form select").html("");
-        $("form .form-group:first-child").html("<select></select>");
-        $("form select").html('<option value="hey">Hola</option>');
+        var $selectDiv = $(".multipleNameSelect");
+        var $select = $("#multipleNameSelect");
+        $selectDiv.removeClass('hide');
+        $select.html("");
+        for(var i = 0; i < data.length; i++) {
+            $select.append("<option value=\"" + data[i].StudID + "\">" + data[i].fName + " " + data[i].lName + "</option>");
+        }
     }
+
+    $("#multipleNameSelect").on('blur change', function(event) {
+        event.preventDefault();
+        var value = $(this).val();
+        var $studentID = $("#studentID");
+        $studentID.val(value);
+        $studentID.trigger('change');
+    });
 
     //sort the table on text input for courses
     $("#inputCourse").keyup(function() {
@@ -504,10 +517,7 @@ $(function() {
         console.log(data);
         for (var i = 0; i < data.length; i++) {
 
-
             var course = data[i];
-
-
 
             $("[data-courseid=" + course.courseID + "]").after("<tr class=semHead" + course.courseID + ">" +
              "<th></th><th></th>" + "<th>Seminar Group</th>" + "<th>Registrer</th></tr>" + 

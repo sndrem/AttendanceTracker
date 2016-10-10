@@ -12,6 +12,9 @@ block content
                 .form-group
                     label(for="studentID") Student ID or name
                     input#studentID(type="text" name="studentID" placeholder="Student ID or name" required).form-control
+                .form-group.multipleNameSelect.hide
+                    label(for="studentName") There are one or more students with the same name, choose the correct one
+                    select#multipleNameSelect(name="multipleNameSelect").form-control
                 .form-group.hide
                     label(for="firstName") First name
                     input#firstName(type="text" name="firstName" placeholder="First name").form-control
@@ -22,7 +25,9 @@ block content
                     label(for="email") Student email
                     input#email(type="email" name="email" placeholder="Student email" required).form-control
                 .form-group
-                    button.btn.btn-primary#createSeminarAssBtn Register assistant
+                    button(disabled).btn.btn-primary#createSeminarAssBtn Register assistant
+                .form-grouo
+                    button.btn.btn-warning#resetForm Clear form
 
 
         .col-xs-12.col-sm-12.col-md-4.col-lg-6
