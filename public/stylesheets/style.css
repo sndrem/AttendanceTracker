@@ -41,6 +41,9 @@ body {
   display: table;
   table-layout: fixed;
   width: 100%; }
+  #courseTable tbody tr:hover {
+    cursor: pointer;
+    background: lightblue; }
 
 #courseTable tbody tr th, td {
   width: auto; }
