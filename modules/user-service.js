@@ -12,15 +12,12 @@ var connection = mysql.createConnection({
 
 var userService = {
     registerUser: function(req, res, next) {
-        console.log("Register user");
         var firstName = req.body.firstName;
         var lastName = req.body.lastName;
         var studentID = req.body.studentID;
         var email = req.body.email;
         var password = req.body.password;
-        console.log("Password from registration ", password);
         var confirmPassword = req.body.confirmPassword;
-        console.log("Confirm password from registration ", confirmPassword);
 
         if(utilities.isEmpty(firstName)) {
             res.status(400).json("Please provide a first name");
@@ -54,9 +51,7 @@ var userService = {
 
 
         var salt = crypto.randomBytes(32).toString('hex');
-        console.log("Generating random salt ", salt);
         var hashedPassword = crypto.createHash('sha256').update(salt + password, 'utf8').digest('hex');
-        console.log("Hashed pwd: ", hashedPassword);
         var values = {
             StudID: studentID,
             fName: firstName,
@@ -66,15 +61,12 @@ var userService = {
             salt: salt
         }
 
-        console.log("Object to be stored in database: " , values);
 
         var insertQuery = "INSERT INTO person SET ?";
         connection.query(insertQuery, values, function(err, result){
             if(err) {
-                console.log(err);
                 res.status(400).json(err);
             } else {
-                console.log(result);
                 req.resultSet = result;
                 next();
             }
@@ -83,17 +75,14 @@ var userService = {
 
     // Adds a user to the admin table as an assistant
     registerUserAsAssistant: function(req, res, next) {
-        console.log(req.body);
         const adminID = req.body.studentID;
         const adminType = req.body.adminType;
         var query = "INSERT INTO admins (id, adminType) VALUES (?, ?)";
         connection.query(query, [adminID, adminType], function(err, result) {
             if(err) {
-                console.log(err);
                 req.message = "User with ID: " + adminID + " is already an assistant";
                 next();
             } else {
-                console.log(result);
                 req.message = "User with ID: " + adminID + " is now an assistant";
                 next();
             }
@@ -103,7 +92,6 @@ var userService = {
     authenticate: function(req, res, next) {
         var email = req.body.email;
         var password = req.body.password;
-        console.log("Passord fra bruker ved login: " + password);
 
         var getUserQuery = "SELECT * FROM person WHERE eMail = ? LIMIT 1";
         connection.query(getUserQuery, [email], function(err, result){
@@ -114,10 +102,7 @@ var userService = {
                // Må sjekke her om passordet som brukeren skriver inn + salt i md5-funksjonen
                // er lik passordet som er lagret i databasen
                var hashedPassword = crypto.createHash('sha256').update(result[0].salt + password, 'utf8').digest('hex');
-               console.log("Hashet passord nå: ", hashedPassword);
-               console.log("PW fra DB: " , result[0].password);
                if(hashedPassword === result[0].password) {
-                console.log("Passord er like");
                 req.message = "User found. Should procede to dashboard...";
                 req.session.user = result[0];
                 next();
@@ -138,7 +123,6 @@ var userService = {
                     + "WHERE id = ?";
         connection.query(query, [studID], function(err, result) {
             if(err) {
-                console.log("Error", err);
                 next(err);
             } else {
                 // If no results, we know that the user is not 
@@ -217,7 +201,6 @@ var userService = {
         const query = "SELECT fName, lName, eMail, StudID FROM PERSON WHERE StudID = ? OR fName like ? OR lName like ?";
         connection.query(query, [studentID, studentID + "%", studentID + "%"], function(err, result) {
             if(err) {
-                console.log(err);
                 next(err);
             } else {
                 if(result.length == 1) {
@@ -228,6 +211,22 @@ var userService = {
                   else {
                     req.resultSet = null;
                 }
+                next();
+            }
+        });
+    },
+
+    getAllAssistants: function(req, res, next) {
+        const query = "SELECT fName, lName, StudID "
+                    + "FROM person "
+                    + "JOIN admins "
+                    + "ON person.`StudID` = admins.`id` "
+                    + "WHERE adminType = 'assistent' ";
+        connection.query(query, function(err, result) {
+            if(err) {
+                next(err);
+            } else {
+                req.assistants = result;
                 next();
             }
         });

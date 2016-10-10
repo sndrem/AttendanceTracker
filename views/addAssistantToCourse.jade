@@ -1,6 +1,4 @@
 extends layout
-block navigation
-    include ./partials/adminDashboardNavigation
 
 block content
     h2 Add an assistant to course
@@ -9,7 +7,14 @@ block content
         legend
         .form-group
             label(for="assistantUser") Assistant
-            input.form-control(type="text" id="assistantUser" name="assistantUser" placeholder="Assistant ID")
+            select#studentAssistant(name="studentAssistant").form-control
+                for assistant in model.assistants
+                    option(value="#{assistant.StudID}") #{assistant.fName} #{assistant.lName}
+        .form-group            
             label(for="courseSelector") Course
-            input.form-control(type="text" id="courseSelector" name="courseSelector" placeholder="Course ID / Name")
+            select#courseSelection(name="courseSelection").form-control
+                for course in model.courses
+                    option(value="#{course.courseID}") #{course.courseID} - #{course.name}
+
         .form-group
+            button.btn.btn-primary#addAssistantToCourseBtn Add assistant to course

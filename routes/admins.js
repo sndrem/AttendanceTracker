@@ -4,6 +4,7 @@ var connection = require('../modules/connection');
 var cookieParser = require('cookie-parser');
 var seminarService = require("../modules/seminar-service");
 var userService = require("../modules/user-service");
+var courseService = require('../modules/course-service');
 
 /* GET Dashboard page */
 router.get("/dashboard", userService.requireLogin, userService.isAdmin, function(req, res, next) {
@@ -28,8 +29,12 @@ router.post("/addUserAsAssistant", userService.requireLogin, userService.isAdmin
 });
 
 /* GET addAssistantToCourse */
-router.get("/addAssistantToCourse", userService.requireLogin, userService.isAdmin, function(req, res, next) {
-    res.render("addAssistantToCourse");
+router.get("/addAssistantToCourse", userService.requireLogin, userService.isAdmin, userService.getAllAssistants, courseService.getAllCourses, function(req, res, next) {
+    var model = {
+        "courses": req.courses,
+        "assistants": req.assistants
+    }
+    res.render("addAssistantToCourse", {"model": model});
 });
 
 

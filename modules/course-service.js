@@ -50,6 +50,18 @@ var courseService ={
             req.resultSet = "No course ID chosen";
             next();
         }
+    },
+
+    getAllCourses: function(req, res, next) {
+        const query = "SELECT courseID, name FROM course";
+        connection.query(query, function(err, result) {
+            if(err) {
+                next(err);
+            } else {
+                req.courses = result;
+                next();
+            }
+        });
     }
 }
 

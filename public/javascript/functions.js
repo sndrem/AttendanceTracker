@@ -411,6 +411,11 @@ $(function() {
         }
     });
 
+    $("#assistantUser").on('keyup change', function(e) {
+        e.preventDefault();
+        var $this = $(this);
+    });
+
     $("#resetForm").on('click', function(event) {
         event.preventDefault();
         myApp.resetForm();
@@ -468,10 +473,13 @@ $(function() {
         var $firstName = $("#firstName");
         var $lastName = $("#lastName");
         var $email = $("#email");
+        var $studentID = $("#studentID");
         console.log(data.fName);
+        $studentID.val(data.StudID);
         $firstName.val(data.fName).prop('disabled', true);
         $lastName.val(data.lName).prop('disabled', true);
         $email.val(data.eMail).prop('disabled', true);
+
     }
 
     // Function to mark a element as green
