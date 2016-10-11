@@ -1,0 +1,30 @@
+extends layout
+
+block content
+    h2 Create a new course
+
+    form(action="/admin/createNewCourse" method="POST")
+        legend
+        .form-group
+            label(for="courseID") Course ID
+            input(type="text" name="courseID" placeholder="Course ID eg. INFO100" required).form-control
+
+        .form-group
+            label(for="courseName") Course name
+            input(type="text" name="courseName" placeholder="Course name eg. Examen facultatum - Grunnkurs i informasjonsvitskap" required).form-control
+
+        .form-group
+            label(for="semester") Semester
+            input(type="text" name="courseSemester" placeholder="Semester for the course eg. Vår, Høst eller vår og høst" required).form-control
+
+        .form-group
+            label(for="attendancePercentage") Attendance in percent (%)
+            select#attendancePercentage(name="attendancePercentage").form-control
+                - for (var i = 0; i < 101; i++)
+                    - if(i == 80)
+                        option(value="#{i}" selected) #{i}
+                    - else
+                        option(value="#{i}") #{i}
+
+        .form-group
+            button.btn.btn-primary#createCourseBtn Create new course

@@ -55,5 +55,10 @@ router.post("/addAssistantToCourse", userService.requireLogin, userService.isAdm
     res.status(200).json(req.resultSet);
 });
 
+/* GET createNewCourse */
+router.get("/createCourse", userService.requireLogin, userService.isAdmin, function(req, res, next) {
+    res.render("createCourse");
+});
+
 
 module.exports = router;
