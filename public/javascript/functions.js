@@ -404,14 +404,29 @@ $(function() {
                 $status.append("<li class=\"bg-danger\">" + statusMessages[i] + "</li>");
             }
         } else {
-            $.post('/common/createNewSeminarGroup', {
-                courseID: courseID,
-                groupName: groupName
-            }, function(data, textStatus, xhr) {
-                if (textStatus === 'success') {
-                    $("#status").html(groupName + " created");
-                }
-            });
+            $.ajax({
+                    url: '/common/createNewSeminarGroup',
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        courseID: courseID,
+                        groupName: groupName},
+                    async: true,
+                    success: function(data) {
+                        console.log(data);
+                         $("#status").append(data);
+                         document.reload();
+                    }
+                })
+                .done(function() {
+                    console.log("success");
+                })
+                .fail(function() {
+                    console.log("error");
+                })
+                .always(function() {
+                    console.log("complete");
+                })
         }
     });
 

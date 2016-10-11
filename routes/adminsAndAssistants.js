@@ -19,16 +19,7 @@ router.get("/createNewSeminarGroup", userService.requireLogin, userService.isAdm
 });
 
 /* POST createNewSeminarGroup */
-router.post("/createNewSeminarGroup", userService.requireLogin, userService.isAdminOrAssistant, seminarService.createSeminarGroup, function(req, res, next) {
-    console.log("Should create a new semianr group");
-    console.log(req.statusMessages);
-    console.log(req.queryResult);
-    if(req.statusMessages && res.statusMessages.length > 0) {
-        res.status(400).json(req.statusMessages);
-    } else {
-        res. status(200).json(req.queryResult);
-    }
-});
+router.post("/createNewSeminarGroup", userService.requireLogin, userService.isAdminOrAssistant, seminarService.checkIfGroupExists, seminarService.createSeminarGroup);
 
 /* POST checkExistingUser */
 router.post("/checkExistingUser", userService.requireLogin, userService.isAdminOrAssistant, userService.checkExistingUser, function(req, res, next) {

@@ -78,7 +78,7 @@ var seminarService = {
         const groupName = req.body.groupName;
         const query = "INSERT INTO seminargroup (courseID, name) "
                     + "VALUES (?, ?);";
-        const query2 = "SELECT * FROM seminargroup WHERE name = ? AND courseID = ?";
+        
         
         var statusMessages = [];
         if(courseID === '') {
@@ -91,44 +91,41 @@ var seminarService = {
 
         if(statusMessages.length == 0) {
             //kjører query2 som sjekker om det finnes en gruppe med likt navn og courseID
-            connection.query(query2, [groupName, courseID],function(err,result){
-                if(err){
-                    console.log("ERROR:",err);
+            connection.query(query, [courseID, groupName], function(err, result) {
+                if(err) {
+                    console.log("Error", err);
                     next(err);
-                }else{
-                    console.log("RESULT", result);
-                    
-                    //hvis resultatet er tomt, altså det ikke finnes et fag fra før, kjør koden under
-                    if(result[0] == null){
-                        console.log("DOES NOT EXIST");
-                        //originale query. legger til den nye gruppen
-                        connection.query(query, [courseID, groupName], function(err, result) {
-                            if(err) {
-                                console.log("Error", err);
-                                next(err);
-                            } else {
-                                console.log("Result", result);
-                                req.queryResult = result;
-                                next();
-                            }
-                        });
-                    }else{
-                        console.log("DOES EXISTS");
-                        //DO SOMETHING HERE
-                        next();    
-                    }
-
-                    
+                } else {
+                    console.log("Result", result);
+                    req.queryResult = result;
+                    res.status(200).json(groupName + " was created");
                 }
             });
-               
         } else {
             req.statusMessages = statusMessages;
             next();
         }
     },
 
-   
+    checkIfGroupExists: function(req,res,next){
+        const courseID = req.body.courseID;
+        const groupName = req.body.groupName;
+        const query = "SELECT * FROM seminargroup WHERE name = ? AND courseID = ?";
+        
+        connection.query(query, [groupName, courseID],function(err,result){
+                if(err){
+                    console.log("ERROR:",err);
+                    next(err);
+                }else{
+                    console.log("RESULT", result);
+                    if(result.length == 0){
+                        next();
+                    }else{
+                        res.status(200).json("The group allready exists");
+                    }     
+                }
+        });
+    },   
 
     /*
     Retrieves all courses
