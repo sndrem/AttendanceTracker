@@ -1,0 +1,22 @@
+extends layout
+
+block content
+    h2 Remove assistant from course
+    p Select the assistant you want to remove from a course. When an assistant is chosen, a list of the courses associated will be present.
+    form(action="/admin/removeAssistantFromCourse" method="POST")
+        legend#removeAssistantStatus
+        label(for="assistantUser") Assistant
+        .form-group
+            select#studentAssistant(name="studentAssistant").form-control
+                for assistant in model.assistants
+                    option(value="#{assistant.StudID}") #{assistant.fName} #{assistant.lName}
+        .form-group
+            button.btn.btn-success#fetchCoursesForAssistant Fetch courses for assistant
+
+        table.table.table-hover.hide
+            thead
+                tr
+                    th Course ID
+                    th Course name
+                    th Remove?
+            tbody

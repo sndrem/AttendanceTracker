@@ -33,6 +33,22 @@ var courseService ={
         });
     },
 
+    getAllCoursesForAssistant: function(req, res, next) {
+        const userID = req.body.userID;
+        const query = "SELECT `is_assistant_for`.`courseID`, course.`name` FROM `is_assistant_for` "
+                    + "JOIN course "
+                    + "ON `is_assistant_for`.`courseID` = course.`courseID` "
+                    + "WHERE StudID = ? ";
+        connection.query(query, [userID], function(err, result) {
+            if(err) {
+                next(err);
+            } else {
+                req.resultSet = result;
+                next();
+            }
+        });
+    },
+
     getSeminarGroupsFromCourse: function(req, res, next) {
         const courseID = req.body.courseID;
         const query = "SELECT * FROM seminargroup "
@@ -59,6 +75,21 @@ var courseService ={
                 next(err);
             } else {
                 req.courses = result;
+                next();
+            }
+        });
+    },
+
+    removeAssistantFromCourse: function(req, res, next) {
+        const userID = req.body.userID;
+        const courseID = req.body.courseID;
+        const query = "DELETE FROM is_assistant_for "
+                    + "WHERE StudID = ? AND courseID = ?";
+        connection.query(query, [userID, courseID], function(err, result) {
+            if(err) {
+                next(err);
+            } else {
+                req.resultSet = result;
                 next();
             }
         });

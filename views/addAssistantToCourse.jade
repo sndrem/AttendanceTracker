@@ -4,7 +4,7 @@ block content
     h2 Add an assistant to a course
 
     form(action="/admin/addAssistantToCourse" method="POST")
-        legend #{message}
+        legend#addAssistantStatus
         .form-group
             label(for="assistantUser") Assistant
             select#studentAssistant(name="studentAssistant").form-control

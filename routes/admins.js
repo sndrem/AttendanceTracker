@@ -37,6 +37,19 @@ router.get("/addAssistantToCourse", userService.requireLogin, userService.isAdmi
     res.render("addAssistantToCourse", {"model": model});
 });
 
+/*GET removeAssistantFromCourse */
+router.get("/removeAssistantFromCourse", userService.requireLogin, userService.isAdmin, userService.getAllAssistants, function(req, res, next) {
+    var model = {
+        "assistants": req.assistants
+    }
+    res.render("removeAssistantFromCourse", {"model": model});
+});
+
+/* POST removeAssistantFromCourse */
+router.post("/removeAssistantFromCourse", userService.requireLogin, userService.isAdmin, courseService.removeAssistantFromCourse, function(req, res, next) {
+    res.status(200).json(req.resultSet);
+});
+
 /* POST add assistant to course */
 router.post("/addAssistantToCourse", userService.requireLogin, userService.isAdmin, userService.registerAssistantToCourse, function(req, res, next) {
     res.status(200).json(req.resultSet);

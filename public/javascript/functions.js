@@ -109,7 +109,7 @@ $(function() {
                 courseSelection: courseID
             },
             success: function(data) {
-                alert(data);
+                $("#addAssistantStatus").html(userID + " is now asssigned as an assistant for " + courseID);
             }
         })
         .done(function() {
@@ -117,12 +117,83 @@ $(function() {
         })
         .fail(function() {
             console.log("error");
-            $("legend").html(userID + " is already assigned as an assistant for " + courseID);
+            $("#addAssistantStatus").html(userID + " is already assigned as an assistant for " + courseID);
         })
         .always(function() {
             console.log("complete");
         });
     };
+
+    myApp.fetchSeminarGroupsForAssistant = function(userID) {
+        $.ajax({
+            url: '/common/fetchSeminarGroupsForAssistant',
+            type: 'POST',
+            dataType: 'JSON',
+            data: {
+                userID: userID
+            },
+            success: function(data) {
+                populateTable(data);
+            }
+        })
+        .done(function() {
+            console.log("success");
+        })
+        .fail(function() {
+            console.log("error");
+        })
+        .always(function() {
+            console.log("complete");
+        });
+    };
+
+    myApp.removeAssistantFromCourse = function(userID, courseID) {
+        $.ajax({
+            url: '/admin/removeAssistantFromCourse',
+            type: 'POST',
+            dataType: 'JSON',
+            data: {
+                userID: userID,
+                courseID: courseID
+            },
+            success: function(data) {
+                console.log(data);
+                // location.reload();
+            }
+        })
+        .done(function() {
+            console.log("success");
+        })
+        .fail(function() {
+            console.log("error");
+        })
+        .always(function() {
+            console.log("complete");
+            $("#fetchCoursesForAssistant").trigger('click');
+        });
+    };
+
+    function populateTable(data) {
+        var $table = $("table");
+        var $tbody = $("table tbody");
+        $tbody.html("");
+        data.forEach(function(value, index) {
+            $tbody.append("<tr><td>" + value.courseID + "</td><td>" + value.name + "</td><td><a id=\"removeAssistantFromCourse\" data-courseid = \"" + value.courseID + "\" href=\"#\">Remove assistant from course</a></td>");
+        });
+        $table.removeClass('hide');
+        addEventListenerForRemoveAnchor();
+    }
+
+    function addEventListenerForRemoveAnchor() {
+        $("table #removeAssistantFromCourse").on('click', function(event) {
+            event.preventDefault();
+            var userID = $("#studentAssistant").val();
+            var courseID = $(this).data('courseid');
+            myApp.removeAssistantFromCourse(userID, courseID);
+        });
+    }
+
+
 
     $("#loginButton").on('click', function(e) {
         $("legend").html("");
@@ -218,12 +289,28 @@ $(function() {
         if(statusMessages.length == 0) {
             myApp.addAssistantToCourse(userID, courseID);
         } else {
-            var $legend = $("legend");
+            var $legend = $("#addAssistantStatus");
             statusMessage.forEach(function(item, index) {
                 $legend.append("<span class='bg-danger'>" + item + "</span><br>");
             });
         }
+    });
 
+    $("#fetchCoursesForAssistant").on('click', function(event) {
+        event.preventDefault();
+        var userID = $("#studentAssistant").val();
+        if(userID.length > 0) {
+            myApp.fetchSeminarGroupsForAssistant(userID);
+        } else {
+            $("legend").html("Du må velge en bruker for å fortsette");
+        }
+    });
+
+    $("#studentAssistant").on('change', function(e) {
+        e.preventDefault();
+        var $table = $("table");
+        $table.find('tbody').html("");
+        $table.addClass('hide');
     });
 
     function isEmpty(value) {

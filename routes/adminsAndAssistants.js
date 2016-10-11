@@ -6,6 +6,7 @@ var connection = require('../modules/connection');
 var cookieParser = require('cookie-parser');
 var seminarService = require("../modules/seminar-service");
 var userService = require("../modules/user-service");
+var courseService = require("../modules/course-service");
 
 
 
@@ -32,6 +33,11 @@ router.post("/createNewSeminarGroup", userService.requireLogin, userService.isAd
 /* POST checkExistingUser */
 router.post("/checkExistingUser", userService.requireLogin, userService.isAdminOrAssistant, userService.checkExistingUser, function(req, res, next) {
     // TODO Return data to client
+    res.status(200).json(req.resultSet);
+});
+
+/* POST fetchSeminarGroupsForAssistant */
+router.post("/fetchSeminarGroupsForAssistant", userService.requireLogin, userService.isAdminOrAssistant, courseService.getAllCoursesForAssistant, function(req, res, next) {
     res.status(200).json(req.resultSet);
 });
 
