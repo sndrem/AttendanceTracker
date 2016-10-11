@@ -78,6 +78,7 @@ var seminarService = {
         const groupName = req.body.groupName;
         const query = "INSERT INTO seminargroup (courseID, name) "
                     + "VALUES (?, ?);";
+        const query2 = "SELECT * FROM seminargroup WHERE name = ?";
         var statusMessages = [];
         if(courseID === '') {
             statusMessages.push("Course ID cannot be empty");
@@ -86,8 +87,21 @@ var seminarService = {
         if(groupName === '') {
             statusMessages.push("Group name cannot be empty");
         }
+        
+
 
         if(statusMessages.length == 0) {
+            connection.query(query2, [groupName],function(err,result){
+                if(err){
+                    console.log("ERROR:",err);
+                    next(err);
+                }else{
+                    console.log("RESULT", result);
+                    console.log("YES");
+                    next();
+                }
+            });
+
             connection.query(query, [courseID, groupName], function(err, result) {
                 if(err) {
                     console.log("Error", err);
@@ -103,6 +117,8 @@ var seminarService = {
             next();
         }
     },
+
+   
 
     /*
     Retrieves all courses
