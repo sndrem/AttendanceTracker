@@ -750,7 +750,20 @@ $(function() {
         });
     }
 
+    //calculate percentage attendace from html elements
+    $("#attendancePercentage").each(function() {
+    	var attended = 0;
+    	var total = $("#totalSeminars").text();
+    	total = parseInt(total.substring(total.length -1, total.length));
 
+		$(".table tbody tr").each(function(){
+    		$(this).find("td.success").each(function(){
+        		attended++;
+    		});
+    	});
+
+		$("#attendancePercentage").append(" "+(attended/total*100)+"%");
+    });
 
 
 });
