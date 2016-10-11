@@ -278,7 +278,23 @@ var seminarService = {
                 next();
             }
         })
+    },
 
+    getAllStudentsFromGroup: function(req, res, next) {
+        const semGrID = req.params.semGrID;
+        const query = "SELECT person.StudID, CONCAT(fName, ' ', lName) as fullName, semGrID from person "
+                    + "JOIN `is_in_seminar_group` "
+                    + "ON person.`StudID` = `is_in_seminar_group`.`StudID` "
+                    + "WHERE `is_in_seminar_group`.`semGrID` = ?";
+        console.log("Skal hente studenter som er i gruppe med ID " + semGrID);
+        connection.query(query, [semGrID], function(err, result) {
+            if(err) {
+                next(err);
+            } else {
+                req.semGroupsStudents = result;
+                next();
+            }
+        });
     }
 }
 

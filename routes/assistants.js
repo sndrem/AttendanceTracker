@@ -49,4 +49,10 @@ router.post("/createNewSeminarGroup", userService.requireLogin, userService.isAs
     }
 });
 
+/* GET takeAttendance */
+router.get("/takeAttendance/:semGrID", userService.requireLogin, userService.isAssistant, seminarService.getAllStudentsFromGroup, function(req, res, next) {
+    console.log(req.semGroupsStudents);
+    res.render("takeAttendance", {"students": req.semGroupsStudents});
+});
+
 module.exports = router;
