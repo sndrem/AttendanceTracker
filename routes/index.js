@@ -12,7 +12,7 @@ connection.connect();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    res.render('index', { "title": 'Tregas'});  
+    res.render('index', { "title": 'Foribus'});  
 });
 
 /* GET register page */
