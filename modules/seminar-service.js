@@ -78,7 +78,8 @@ var seminarService = {
         const groupName = req.body.groupName;
         const query = "INSERT INTO seminargroup (courseID, name) "
                     + "VALUES (?, ?);";
-        const query2 = "SELECT * FROM seminargroup WHERE name = ?";
+        const query2 = "SELECT * FROM seminargroup WHERE name = ? AND courseID = ?";
+        
         var statusMessages = [];
         if(courseID === '') {
             statusMessages.push("Course ID cannot be empty");
@@ -91,27 +92,36 @@ var seminarService = {
 
 
         if(statusMessages.length == 0) {
-            connection.query(query2, [groupName],function(err,result){
+            connection.query(query2, [groupName, courseID],function(err,result){
                 if(err){
                     console.log("ERROR:",err);
                     next(err);
                 }else{
                     console.log("RESULT", result);
-                    console.log("YES");
-                    next();
-                }
-            });
+                   
+                   if(result[0] == null){
+                        console.log("DOES NOT EXIST");
 
-            connection.query(query, [courseID, groupName], function(err, result) {
-                if(err) {
-                    console.log("Error", err);
-                    next(err);
-                } else {
-                    console.log("Result", result);
-                    req.queryResult = result;
-                    next();
+                        connection.query(query, [courseID, groupName], function(err, result) {
+                            if(err) {
+                                console.log("Error", err);
+                                next(err);
+                            } else {
+                                console.log("Result", result);
+                                req.queryResult = result;
+                                next();
+                            }
+                        });
+                    }else{
+                        console.log("DOES EXISTS");
+                        //DO SOMETHING HERE
+                        next();    
+                    }
+
+                    
                 }
             });
+               
         } else {
             req.statusMessages = statusMessages;
             next();
