@@ -89,6 +89,27 @@ var userService = {
         });
     },
 
+    // Connects an assistant to a course
+    registerAssistantToCourse: function(req, res, next) {
+        const assistantID = req.body.studentAssistant;
+        const courseID = req.body.courseSelection;
+        const query = "INSERT INTO is_assistant_for VALUES(?, ?)";
+        if(assistantID.length > 0 || courseID.length > 0) {
+            connection.query(query, [assistantID, courseID], function(err, result) {
+                if(err) {
+                    next(err);
+                } else {
+                    req.resultSet = result;
+                    next();
+                }
+            });
+        } else {
+            res.status(400).json({'message': 'Assistant and/or course cannot be empty'});
+        }
+
+
+    },
+
     authenticate: function(req, res, next) {
         var email = req.body.email;
         var password = req.body.password;

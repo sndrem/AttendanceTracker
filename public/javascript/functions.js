@@ -97,7 +97,32 @@ $(function() {
                     console.log("complete");
                 });
         }
-    }
+    };
+
+    myApp.addAssistantToCourse = function(userID, courseID) {
+        $.ajax({
+            url: '/admin/addAssistantToCourse',
+            type: 'POST',
+            dataType: 'JSON',
+            data: {
+                studentAssistant: userID,
+                courseSelection: courseID
+            },
+            success: function(data) {
+                alert(data);
+            }
+        })
+        .done(function() {
+            console.log("success");
+        })
+        .fail(function() {
+            console.log("error");
+            $("legend").html(userID + " is already assigned as an assistant for " + courseID);
+        })
+        .always(function() {
+            console.log("complete");
+        });
+    };
 
     $("#loginButton").on('click', function(e) {
         $("legend").html("");
@@ -174,6 +199,31 @@ $(function() {
                 $legend.find("ul").append("<li class=\"bg-danger\">" + element + "</li>");
             });
         }
+    });
+
+    $("#addAssistantToCourseBtn").on('click', function(event) {
+        event.preventDefault();
+        var userID = $("#studentAssistant").val();
+        var courseID = $("#courseSelection").val();
+        var statusMessages = [];
+
+        if(isEmpty(userID)) {
+            statusMessages.push("User cannot be empty");
+        }
+
+        if(isEmpty(courseID)) {
+            statusMessages.push("Course cannot be empty");
+        }
+
+        if(statusMessages.length == 0) {
+            myApp.addAssistantToCourse(userID, courseID);
+        } else {
+            var $legend = $("legend");
+            statusMessage.forEach(function(item, index) {
+                $legend.append("<span class='bg-danger'>" + item + "</span><br>");
+            });
+        }
+
     });
 
     function isEmpty(value) {

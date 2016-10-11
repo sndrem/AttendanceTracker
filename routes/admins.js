@@ -37,5 +37,10 @@ router.get("/addAssistantToCourse", userService.requireLogin, userService.isAdmi
     res.render("addAssistantToCourse", {"model": model});
 });
 
+/* POST add assistant to course */
+router.post("/addAssistantToCourse", userService.requireLogin, userService.isAdmin, userService.registerAssistantToCourse, function(req, res, next) {
+    res.status(200).json(req.resultSet);
+});
+
 
 module.exports = router;

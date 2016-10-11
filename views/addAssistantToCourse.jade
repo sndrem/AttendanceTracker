@@ -1,16 +1,16 @@
 extends layout
 
 block content
-    h2 Add an assistant to course
+    h2 Add an assistant to a course
 
-    form(action="/addAssistantToCourse" method="POST")
-        legend
+    form(action="/admin/addAssistantToCourse" method="POST")
+        legend #{message}
         .form-group
             label(for="assistantUser") Assistant
             select#studentAssistant(name="studentAssistant").form-control
                 for assistant in model.assistants
                     option(value="#{assistant.StudID}") #{assistant.fName} #{assistant.lName}
-        .form-group            
+        .form-group
             label(for="courseSelector") Course
             select#courseSelection(name="courseSelection").form-control
                 for course in model.courses
