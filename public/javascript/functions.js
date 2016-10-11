@@ -417,7 +417,7 @@ $(function() {
                         $status.html("");
                         $status.append(data);
                         if(data.redirect_url) {
-                            $status.html("<p>There are no courses with " + courseID + " registered. Create the course before you can create seminar groups.</p> "
+                            $status.html("<p>There are no courses with " + courseID + " registered. If you are an admin you can create a new course. If you are a student assistant, then you need to contact an administrator.</p> "
                                             + "<a href=\"" + data.redirect_url + "\" class=\"btn btn-primary\">Create new course</a>");
 
                         } else {
