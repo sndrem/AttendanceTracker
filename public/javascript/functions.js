@@ -413,9 +413,18 @@ $(function() {
                         groupName: groupName},
                     async: true,
                     success: function(data) {
-                        console.log(data);
-                         $("#status").append(data);
-                         document.reload();
+                        var $status = $("#status");
+                        $status.html("");
+                        $status.append(data);
+                        if(data.redirect_url) {
+                            $status.html("<p>There are no courses with " + courseID + " registered. Create the course before you can create seminar groups.</p> "
+                                            + "<a href=\"" + data.redirect_url + "\" class=\"btn btn-primary\">Create new course</a>");
+
+                        } else {
+                            setTimeout(function(){
+                            location.reload();
+                         }, 3000);
+                        }
                     }
                 })
                 .done(function() {

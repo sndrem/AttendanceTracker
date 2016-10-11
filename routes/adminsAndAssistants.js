@@ -19,7 +19,7 @@ router.get("/createNewSeminarGroup", userService.requireLogin, userService.isAdm
 });
 
 /* POST createNewSeminarGroup */
-router.post("/createNewSeminarGroup", userService.requireLogin, userService.isAdminOrAssistant, seminarService.checkIfGroupExists, seminarService.createSeminarGroup);
+router.post("/createNewSeminarGroup", userService.requireLogin, userService.isAdminOrAssistant, courseService.courseExists, seminarService.checkIfGroupExists, seminarService.createSeminarGroup);
 
 /* POST checkExistingUser */
 router.post("/checkExistingUser", userService.requireLogin, userService.isAdminOrAssistant, userService.checkExistingUser, function(req, res, next) {

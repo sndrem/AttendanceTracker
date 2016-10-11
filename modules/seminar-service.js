@@ -121,7 +121,7 @@ var seminarService = {
                     if(result.length == 0){
                         next();
                     }else{
-                        res.status(200).json("The group allready exists");
+                        res.status(200).json("The group already exists");
                     }     
                 }
         });

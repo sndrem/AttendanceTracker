@@ -93,6 +93,22 @@ var courseService ={
                 next();
             }
         });
+    },
+
+    courseExists: function(req, res, next) {
+        const courseID = req.body.courseID;
+        const query = "SELECT courseID FROM course WHERE courseID = ?";
+        connection.query(query, [courseID], function(err, result) {
+            if(err) {
+                next(err);
+            } else {
+                if(result.length == 0) {
+                    res.status(200).json({'redirect_url': '/admin/createCourse'});
+                } else {
+                    next();
+                }
+            }
+        });
     }
 }
 
