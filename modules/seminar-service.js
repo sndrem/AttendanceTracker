@@ -88,20 +88,20 @@ var seminarService = {
         if(groupName === '') {
             statusMessages.push("Group name cannot be empty");
         }
-        
-
 
         if(statusMessages.length == 0) {
+            //kjører query2 som sjekker om det finnes en gruppe med likt navn og courseID
             connection.query(query2, [groupName, courseID],function(err,result){
                 if(err){
                     console.log("ERROR:",err);
                     next(err);
                 }else{
                     console.log("RESULT", result);
-                   
-                   if(result[0] == null){
+                    
+                    //hvis resultatet er tomt, altså det ikke finnes et fag fra før, kjør koden under
+                    if(result[0] == null){
                         console.log("DOES NOT EXIST");
-
+                        //originale query. legger til den nye gruppen
                         connection.query(query, [courseID, groupName], function(err, result) {
                             if(err) {
                                 console.log("Error", err);
