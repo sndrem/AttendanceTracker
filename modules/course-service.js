@@ -109,7 +109,35 @@ var courseService ={
                 }
             }
         });
+    },
+
+    createCourse: function(req, res, next){
+        var courseID = req.body.courseID;
+        var name = req.body.courseName;
+        var semester = req.body.courseSemester;
+        var attendance = req.body.attendancePercentage;
+        
+        var values = {
+            courseID : courseID,
+            name : name,
+            semester : semester,
+            attendance : attendance
+        }
+
+        const query = "INSERT INTO `course` SET ?";
+
+        connection.query(query, values, function(err, result) {
+            if(err){
+                next(err);
+            } else{
+                next();
+            }
+
+
+        });
+
     }
+
 }
 
 module.exports = courseService;
