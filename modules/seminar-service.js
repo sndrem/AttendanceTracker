@@ -296,6 +296,7 @@ var seminarService = {
             }
         });
     }
+
 }
 
 module.exports = seminarService;

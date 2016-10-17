@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var connection = require('../modules/connection');
 var cookieParser = require('cookie-parser');
+var courseService = require("../modules/course-service");
 var seminarService = require("../modules/seminar-service");
 var userService = require("../modules/user-service");
 
@@ -36,11 +37,12 @@ router.get("/removeSeminar/:semGrID", userService.requireLogin, seminarService.r
 });
 
 /* GET Seminar details for student */
-router.get("/seminarDetails/:semGrID", userService.requireLogin, seminarService.getSeminarGroupDetails, seminarService.getSeminarDetails, seminarService.getNumberOfSeminarsForStudent, function(req, res, next) {
+router.get("/seminarDetails/:semGrID", userService.requireLogin, seminarService.getSeminarGroupDetails, seminarService.getSeminarDetails, seminarService.getNumberOfSeminarsForStudent, courseService.getCourseAttendance, function(req, res, next) {
     var values = {
         title: 'Seminar details',
         seminar: req.seminarDetails,
-        groupDetails: req.seminarGroupDetails
+        groupDetails: req.seminarGroupDetails,
+        courseDetails: req.courseAttendance
     }
     res.render("seminarDetails", values);
 });

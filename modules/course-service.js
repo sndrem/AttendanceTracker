@@ -146,6 +146,23 @@ var courseService ={
 
         });
 
+    },
+
+    getCourseAttendance: function(req, res, next) {
+        const semGrID = req.params.semGrID;
+        const query = "SELECT `attendance`, `plannedSeminars`" 
+                    + "FROM `course`"+
+                    + "JOIN `seminargroup`"+
+                    + "ON `course`.courseID = `seminargroup`.courseID"+
+                    + "WHERE `seminargroup`.semGrID = ?";
+        console.log("Skal hente course attendance  fra id " + semGrID);
+        connection.query(query, [semGrID], function(err, result) {
+            if(err) {
+                next(err);
+            } else 
+                req.courseAttendance = result[0];
+                next();
+        }); 
     }
 
 }
