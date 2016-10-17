@@ -25,6 +25,9 @@ block content
                         option(value="#{i}" selected) #{i}
                     - else
                         option(value="#{i}") #{i}
+        .form-group
+            label(for="plannedSeminars") Planned Seminars
+            input(type="text" name = "plannedSeminars" placeholder="10" required).form-control
 
         .form-group
             button.btn.btn-primary#createCourseBtn Create new course

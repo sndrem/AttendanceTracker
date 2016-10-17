@@ -116,20 +116,30 @@ var courseService ={
         var name = req.body.courseName;
         var semester = req.body.courseSemester;
         var attendance = req.body.attendancePercentage;
+    
+        var plannedSeminars = parseInt(req.body.plannedSeminars);
+
+        console.log(plannedSeminars);
+
         
         var values = {
             courseID : courseID,
             name : name,
             semester : semester,
-            attendance : attendance
+            attendance : attendance,
+            plannedSeminars : plannedSeminars
         }
 
         const query = "INSERT INTO `course` SET ?";
 
         connection.query(query, values, function(err, result) {
             if(err){
-                next(err);
+               // res.status(400).json(err);
+                req.message = "Course with ID " + courseID + " allready exists";
+                console.log(err);
+                next();
             } else{
+                req.message = "Course with ID " + courseID + " is now created";
                 next();
             }
 
