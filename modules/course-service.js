@@ -119,8 +119,6 @@ var courseService ={
     
         var plannedSeminars = parseInt(req.body.plannedSeminars);
 
-        console.log(plannedSeminars);
-
         
         var values = {
             courseID : courseID,
@@ -134,16 +132,13 @@ var courseService ={
 
         connection.query(query, values, function(err, result) {
             if(err){
-               // res.status(400).json(err);
-                req.message = "Course with ID " + courseID + " allready exists";
-                console.log(err);
-                next();
+                console.log("error ", err);
+                next(err);
             } else{
-                req.message = "Course with ID " + courseID + " is now created";
-                next();
+                console.log("result", result);
+                req.queryResult = result;
+                res.status(200).json(courseID + " was created");
             }
-
-
         });
 
     },

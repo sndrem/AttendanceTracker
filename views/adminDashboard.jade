@@ -20,7 +20,14 @@ block content
                     p Here you can register a new seminar group
 
                     p: a(href="/common/createNewSeminarGroup").btn.btn-primary Create new seminar group
-    .row 
+    .row
+        .col-xs-12.col-sm-6.col-md.4
+            .thumbnail
+                .caption
+                    h3 Create a new Course
+                    p Here you can create a new course
+
+                    p: a(href="/admin/createCourse").btn.btn-primary Create Course
         .col-xs-12.col-sm-6.col-md.4
             .thumbnail
                 .caption
@@ -28,7 +35,7 @@ block content
                     p Here you can register an assistant with a specific course
 
                     p: a(href="/admin/addAssistantToCourse").btn.btn-primary Add Assistant to Course
-
+    .row 
         .col-xs-12.col-sm-6.col-md.4
             .thumbnail
                 .caption
@@ -36,3 +43,5 @@ block content
                     p Here you can remove assistants from courses
 
                     p: a(href="/admin/removeAssistantFromCourse").btn.btn-primary Remove assistant from course
+
+
