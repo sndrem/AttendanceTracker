@@ -750,28 +750,6 @@ $(function() {
         });
     }
 
-    $("#allowedLimit").each(function() {
-    	var absence = 0;
-    	var allowedAbsence = 1;
-
-    	var percentage = $("#attendanceCourse").text();
-    	percentage = parseInt(percentage.replace(/[^0-9]/g, ''));
-
-    	var total = $("#totalSeminars").text();
-    	total = parseInt(total.substring(total.length -2, total.length));
-
-    	$(".table tbody tr").each(function(){
-    		$(this).find("td.danger").each(function(){
-        		absence++;
-    		});
-    	});
-
-    	allowedAbsence = total*((100-percentage)/100);
-
-    	$("#allowedLimit").append(" " + absence + "/" + Math.ceil(allowedAbsence));
-
-    });
-
     //calculate percentage attendace from html elements
     $("#attendancePercentage").each(function() {
     	var attended = 0;

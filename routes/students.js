@@ -37,12 +37,14 @@ router.get("/removeSeminar/:semGrID", userService.requireLogin, seminarService.r
 });
 
 /* GET Seminar details for student */
-router.get("/seminarDetails/:semGrID", userService.requireLogin, seminarService.getSeminarGroupDetails, seminarService.getSeminarDetails, seminarService.getNumberOfSeminarsForStudent, courseService.getCourseAttendance, function(req, res, next) {
+router.get("/seminarDetails/:semGrID", userService.requireLogin, seminarService.getSeminarGroupDetails, seminarService.getSeminarDetails, seminarService.getNumberOfSeminarsForStudent, seminarService.getAbsenceOfSeminarForStudent, seminarService.getTotalMinutesOfPlannedSeminars, courseService.getCourseAttendance, function(req, res, next) {
     var values = {
         title: 'Seminar details',
         seminar: req.seminarDetails,
         groupDetails: req.seminarGroupDetails,
-        courseDetails: req.courseAttendance
+        courseDetails: req.courseAttendance,
+        absenceDetails: req.numOfAbsence,
+        totalPlanned: req.totalPlanned
     }
     res.render("seminarDetails", values);
 });
