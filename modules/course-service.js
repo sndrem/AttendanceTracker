@@ -116,9 +116,14 @@ var courseService ={
         var name = req.body.courseName;
         var semester = req.body.courseSemester;
         var attendance = req.body.attendancePercentage;
-    
-        var plannedSeminars = parseInt(req.body.plannedSeminars);
-
+        
+        var planned = req.body.plannedSeminars;
+        
+        if(planned == null || planned == ""){
+            var plannedSeminars = 0;
+        }else{
+            var plannedSeminars = parseInt(req.body.plannedSeminars);
+        }
         
         var values = {
             courseID : courseID,
@@ -135,9 +140,8 @@ var courseService ={
                 console.log("error ", err);
                 next(err);
             } else{
-                console.log("result", result);
-                req.queryResult = result;
-                res.status(200).json(courseID + " was created");
+                req.resultSet = result;
+                next();
             }
         });
 

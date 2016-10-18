@@ -787,5 +787,31 @@ $(function() {
 		$("#attendancePercentage").append(" "+(attended/total*100)+"%");
     });
 
-
+    function addClickEventForCourseRegistration() {
+         $(".createCourseBtn").on('click', function(e) {
+            e.preventDefault();
+            var courseID = $(this).data('courseID');
+            $.ajax({
+                    url: '/createCourse',
+                    type: 'POST',
+                    dataType: 'JSON',
+                    data: {
+                        courseID: courseID
+                    },
+                    success: function(data) {
+                        alert(data);
+                    }
+                })
+                .done(function() {
+                    console.log("success");
+                })
+                .fail(function(data) {
+                    console.log("error");
+                })
+                .always(function() {
+                    console.log("complete");
+                    location.reload();
+                });
+        });
+    };
 });
