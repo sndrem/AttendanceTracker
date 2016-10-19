@@ -103,9 +103,11 @@ var courseService ={
                 next(err);
             } else {
                 if(result.length == 0) {
-                    res.status(200).json({'redirect_url': '/admin/createCourse'});
-                } else {
                     next();
+                } else {
+                   console.log("allready exists");
+                   res.status(200).json("the course allready exists");
+
                 }
             }
         });

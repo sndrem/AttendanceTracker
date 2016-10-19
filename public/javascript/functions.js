@@ -778,6 +778,7 @@ $(function() {
                     },
                     success: function(data) {
                         alert(data);
+                        
                     }
                 })
                 .done(function() {
@@ -792,4 +793,12 @@ $(function() {
                 });
         });
     };
+
+    $("#createCourseBtn").on("click", function(e){
+        
+        var $status = $("#status");
+        $status.html("");
+        $status.append("Course created");
+        
+    });
 });

@@ -60,8 +60,9 @@ router.get("/createCourse", userService.requireLogin, userService.isAdmin, funct
     res.render("createCourse");
 });
 
-router.post("/createCourse", userService.requireLogin, userService.isAdmin, courseService.createCourse, function(req, res,next){
+router.post("/createCourse", userService.requireLogin, userService.isAdmin, courseService.courseExists, courseService.createCourse, function(req, res,next){
     res.render("createCourse");
 });
+
 
 module.exports = router;
