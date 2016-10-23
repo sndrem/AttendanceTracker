@@ -51,8 +51,21 @@ router.post("/createNewSeminarGroup", userService.requireLogin, userService.isAs
 
 /* GET takeAttendance */
 router.get("/takeAttendance/:semGrID", userService.requireLogin, userService.isAssistant, seminarService.getAllStudentsFromGroup, function(req, res, next) {
-    console.log(req.semGroupsStudents);
-    res.render("takeAttendance", {"students": req.semGroupsStudents});
+    console.log("Params: ", req.params);
+    res.render("takeAttendance", {
+        "students": req.semGroupsStudents,
+        "semGrID": req.params.semGrID
+    });
+});
+
+/* POST takeAttendance */
+router.post("/takeAttendance/:semGrID", userService.requireLogin, userService.isAssistant, seminarService.getAllStudentsFromGroup, function(req, res, next) {
+    console.log(req.body);
+    var response = {
+        present: req.body,
+        allStudents: req.semGroupsStudents
+    }
+    res.status(200).json(response);
 });
 
 module.exports = router;

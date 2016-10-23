@@ -2,7 +2,15 @@ extends layout
 
 block content
     h2 Take attendance
-    
-    ul
-    for student in students
-        li #{student.fullName}
+
+    .row
+        .col-xs-12.col-sm-8.col-md-6.col-lg-6.col-xl-4
+            form(action="/assistant/takeAttendance/#{semGrID}" name="takeAttendanceForm" method="POST")
+                legend#status
+                for student in students
+                    .form-group
+                        label.form-control
+                            input(type='checkbox' value='#{student.StudID}' name='students[]')
+                            span  #{student.fullName}
+
+                button.btn.btn-primary Save Attendance
