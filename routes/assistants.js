@@ -65,7 +65,17 @@ router.post("/takeAttendance/:semGrID", userService.requireLogin, userService.is
         present: req.body,
         allStudents: req.semGroupsStudents
     }
-    res.status(200).json(response);
+    for(var i = 0; i < req.semGroupsStudents.length; i++) {
+        console.log(req.semGroupsStudents[i].StudID);
+        console.log(req.body['students[]'][0]);
+        if(req.semGroupsStudents[i].StudID === req.body['students[]'][i]) {
+            req.semGroupsStudents[i].isPresent = true;
+        } else {
+            req.semGroupsStudents[i].isPresent = false;
+        }
+    }
+
+    res.status(200).send(req.semGroupsStudents);
 });
 
 module.exports = router;
