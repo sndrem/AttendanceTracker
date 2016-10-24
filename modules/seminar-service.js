@@ -433,12 +433,14 @@ var seminarService = {
     createSeminar: function(req, res, next) {
         const semGrID = req.body.semGrID;
         const place = req.body.place;
-        const date = new Date().toISOString().substring(0,10);
+        // Sjekk date-greien her: http://stackoverflow.com/questions/5129624/convert-js-date-time-to-mysql-datetime/11150727#11150727
+        // Den gir noe feil tid, lol
+        const date = new Date().toISOString().slice(0, 19).replace('T', ' ');
         const status = req.body.status;
         console.log(status);
-        const query = "INSERT INTO seminar (semGrID, oblig, place, duration, cancelled) "
-                    + "VALUES(?, ?, ?, ?, ?)";
-        connection.query(query, [semGrID, 1, place, 120, status], function(err, data) {
+        const query = "INSERT INTO seminar (semGrID, oblig, place, date, duration, cancelled) "
+                    + "VALUES(?, ?, ?, ?, ?, ?)";
+        connection.query(query, [semGrID, 1, place, date, 120, status], function(err, data) {
             if(err) {
                 console.log(err);
                 next(err);

@@ -48,7 +48,22 @@ router.get("/seminarDetails/:courseID", userService.requireLogin, seminarService
         totalPlanned: req.totalPlanned
     }
     console.log(values);
-    res.render("seminarDetails", values);
+    res.render("courseDetails", values);
+});
+
+/* GET Seminar details for student */
+router.get("/seminarDetails/:courseID/:semGrID", userService.requireLogin, seminarService.getCourseDetails, seminarService.getSeminarGroupsForCourse, seminarService.getSeminarDetails, seminarService.getNumberOfSeminarsForStudent, seminarService.getAbsenceOfSeminarForStudent, seminarService.getTotalMinutesOfPlannedSeminars, courseService.getCourseAttendance, function(req, res, next) {
+    var values = {
+        title: 'Seminar Details',
+        attendances: req.seminarDetails,
+        groupDetails: req.courseDetails,
+        courseDetails: req.courseAttendance,
+        seminarGroups: req.seminarGroups,
+        absenceDetails: req.numOfAbsence,
+        totalPlanned: req.totalPlanned
+    }
+    console.log(values);
+    res.render("courseDetails", values);
 });
 
 module.exports = router;
