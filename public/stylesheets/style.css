@@ -55,4 +55,7 @@ body {
 #courseTable tbody tr th, td {
   width: auto; }
 
+.frontPageBtn {
+  margin-right: 5%; }
+
 /*# sourceMappingURL=style.css.map */
