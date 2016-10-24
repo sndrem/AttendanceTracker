@@ -103,9 +103,12 @@ var courseService ={
                 next(err);
             } else {
                 if(result.length == 0) {
-                    res.status(200).json({'redirect_url': '/admin/createCourse'});
-                } else {
                     next();
+                } else {
+
+                   console.log("allready exists");
+                   res.status(200).json("the course allready exists");
+
                 }
             }
         });
@@ -114,7 +117,7 @@ var courseService ={
     createCourse: function(req, res, next){
         var courseID = req.body.courseID;
         var name = req.body.courseName;
-        var semester = req.body.courseSemester;
+        var semester = req.body.semester;
         var attendance = req.body.attendancePercentage;
         
         var planned = req.body.plannedSeminars;

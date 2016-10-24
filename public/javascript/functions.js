@@ -830,27 +830,46 @@ $(function() {
          $(".createCourseBtn").on('click', function(e) {
             e.preventDefault();
             var courseID = $(this).data('courseID');
-            $.ajax({
-                    url: '/createCourse',
-                    type: 'POST',
-                    dataType: 'JSON',
-                    data: {
-                        courseID: courseID
-                    },
-                    success: function(data) {
-                        alert(data);
-                    }
-                })
-                .done(function() {
-                    console.log("success");
-                })
-                .fail(function(data) {
-                    console.log("error");
-                })
-                .always(function() {
-                    console.log("complete");
-                    location.reload();
-                });
+
         });
     };
+
+    $("#createCourseBtn").on("click", function(e){
+        e.preventDefault();
+        var $status = $("#status");
+
+        var courseID = $("#courseID").val();
+        var courseName = $("#courseName").val();
+        var semester = $("#semester").val();
+        var attendancePercentage = $("#attendancePercentage").val();
+        var plannedSeminars = $("#plannedSeminars").val();
+
+
+        $.ajax({
+            url: '/admin/createCourse',
+                type: 'POST',
+                dataType: 'JSON',
+                data: {
+                    courseID : courseID,
+                    courseName : courseName,
+                    semester : semester,
+                    attendancePercentage : attendancePercentage,
+                    plannedSeminars : plannedSeminars
+                },
+                success: function(data) {
+                    $status.html(data);
+                }
+            })
+            .done(function() {
+                console.log("success");
+            })
+            .fail(function(data) {
+                console.log("error");
+            })
+            .always(function() {
+                console.log("complete");
+                //location.reload();
+            });
+        
+    });
 });
