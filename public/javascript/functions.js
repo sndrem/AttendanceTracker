@@ -276,12 +276,24 @@ $(function() {
         event.preventDefault();
         // Get all students 
         var students = [];
+
+        // Get status of seminar, if cancelled or not
+        // By adding + to the start of the expression, we automatically convert true to 1 and false to 0
+        const cancelled = +$("#cancelledCheckBox").prop('checked');
+
         $(".student-attendance").each(function(index, element) {
-            // If the student is checked, add true to attended-attribute
-            students.push({
-                StudID: $(element).val(),
-                attended: $(element).prop('checked')
-            });
+            // if the seminar is cancelled, everyone gets registered as attended
+            if(cancelled === 1) {
+                students.push({
+                    StudID: $(element).val(),
+                    attended: true
+                });
+            } else {
+                students.push({
+                    StudID: $(element).val(),
+                    attended: $(element).prop('checked')
+                });
+            }
         });
 
         // Get place of seminar and check that it is not empty
@@ -290,11 +302,6 @@ $(function() {
             alert("Please choose a place for the seminar");
             return;
         }
-
-        // Get status of seminar, if cancelled or not
-        // By adding + to the start of the expression, we automatically convert true to 1 and false to 0
-        const cancelled = +$("#cancelledCheckBox").prop('checked');
-
 
         // Get seminar group ID from hidden html input field
         const semGrID = $("#semGrID").val();
