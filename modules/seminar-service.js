@@ -375,11 +375,12 @@ var seminarService = {
     createSeminar: function(req, res, next) {
         const semGrID = req.body.semGrID;
         const place = req.body.place;
+        const date = new Date().toISOString().substring(0,10);
         const status = req.body.status;
         console.log(status);
-        const query = "INSERT INTO seminar (semGrID, oblig, place, duration, cancelled) "
-                    + "VALUES(?, ?, ?, ?, ?)";
-        connection.query(query, [semGrID, 1, place, 120, status], function(err, data) {
+        const query = "INSERT INTO seminar (semGrID, oblig, place, date, duration, cancelled) "
+                    + "VALUES(?, ?, ?,?, ?, ?)";
+        connection.query(query, [semGrID, 1, place, date, 120, status], function(err, data) {
             if(err) {
                 console.log(err);
                 next(err);
