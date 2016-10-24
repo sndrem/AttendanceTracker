@@ -95,6 +95,23 @@ var courseService ={
         });
     },
 
+    courseExistsCreatingSeminarGroup: function(req, res, next){
+        const courseID = req.body.courseID;
+        const query = "SELECT courseID FROM course WHERE courseID = ?";
+        connection.query(query, [courseID], function(err, result) {
+            if(err) {
+                next(err);
+            } else {
+                if(result.length == 0) {
+                   console.log("the course does not exists");
+                   res.status(200).json("The course does not exists. Contact the system admin for creation of courses");
+                } else {
+                   next();
+                }
+            }
+        });
+    },
+
     courseExists: function(req, res, next) {
         const courseID = req.body.courseID;
         const query = "SELECT courseID FROM course WHERE courseID = ?";
@@ -105,7 +122,6 @@ var courseService ={
                 if(result.length == 0) {
                     next();
                 } else {
-
                    console.log("allready exists");
                    res.status(200).json("the course allready exists");
 
