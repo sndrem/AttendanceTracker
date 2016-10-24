@@ -7,15 +7,15 @@ block content
         legend#status
         .form-group
             label(for="courseID") Course ID
-            input(type="text" name="courseID" placeholder="Course ID eg. INFO100" required).form-control
+            input#courseID(type="text" name="courseID" placeholder="Course ID eg. INFO100" required).form-control
 
         .form-group
             label(for="courseName") Course name
-            input(type="text" name="courseName" placeholder="Course name eg. Examen facultatum - Grunnkurs i informasjonsvitskap" required).form-control
+            input#courseName(type="text" name="courseName" placeholder="Course name eg. Examen facultatum - Grunnkurs i informasjonsvitskap" required).form-control
 
         .form-group
             label(for="semester") Semester
-            input(type="text" name="courseSemester" placeholder="Semester for the course eg. Vår, Høst eller vår og høst" required).form-control
+            input#semester(type="text" name="courseSemester" placeholder="Semester for the course eg. Vår, Høst eller vår og høst" required).form-control
 
         .form-group
             label(for="attendancePercentage") Attendance in percent (%)
@@ -27,7 +27,7 @@ block content
                         option(value="#{i}") #{i}
         .form-group
             label(for="plannedSeminars") Planned Seminars
-            input(type="text" name ="plannedSeminars" placeholder="10").form-control
+            input#plannedSeminars(type="text" name ="plannedSeminars" placeholder="if empty, this will default to 0").form-control
 
         .form-group
             button.btn.btn-primary#createCourseBtn Create new course

@@ -61,7 +61,7 @@ router.get("/createCourse", userService.requireLogin, userService.isAdmin, funct
 });
 
 router.post("/createCourse", userService.requireLogin, userService.isAdmin, courseService.courseExists, courseService.createCourse, function(req, res,next){
-    res.render("createCourse");
+    res.status(200).json("Course created");
 });
 
 
