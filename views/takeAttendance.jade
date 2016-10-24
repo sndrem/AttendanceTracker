@@ -15,3 +15,18 @@ block content
                 input.hidden#semGrID(type="text" value="#{semGrID}")
 
                 button#registerAttendanceBtn.btn.btn-primary Save Attendance
+                label
+                    input#cancelledCheckBox(type="checkbox")
+                    span  Seminar is cancelled?
+
+        .col-xs-12.col-sm-8.col-md-6.col-lg-6.col-xl-4
+            h4 Choose place for seminar
+            .form-group
+                select#placeSelection(name="place").form-control
+                    option(value="")
+                    option(value="UPHIL205") Uphil 205
+                    option(value="UPHIL215") Uphil 215
+                    option(value="UPHIL305") Uphil 305
+                    option(value="UPHIL315") Uphil 315
+                    option(value="SV203") SV 203
+                    option(value="Unknown") Unknown location

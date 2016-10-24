@@ -349,9 +349,33 @@ var seminarService = {
 
     registerAttendanceForGroup: function(req, res, next) {
         console.log("Should take attendance for group");
-        var students = req.body.students;
-        console.log(JSON.parse(students).length);
+        var students = JSON.parse(req.body.students);
+        console.log(req.body);
+        if(students.length == 0) {
+            next();
+        } else if(students.length > 0) {
+
+        }
         next();
+    },
+
+    // Used when creating a new row in the seminar-table in our database
+    createSeminar: function(req, res, next) {
+        const semGrID = req.body.semGrID;
+        const place = req.body.place;
+        const status = req.body.status;
+        console.log(status);
+        const query = "INSERT INTO seminar (semGrID, oblig, place, duration, cancelled) "
+                    + "VALUES(?, ?, ?, ?, ?)";
+        connection.query(query, [semGrID, 1, place, 120, status], function(err, data) {
+            if(err) {
+                console.log(err);
+                next(err);
+            } else {
+                console.log(data);
+                next();
+            }
+        });
     }
 
 }

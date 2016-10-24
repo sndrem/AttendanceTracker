@@ -284,20 +284,35 @@ $(function() {
             });
         });
 
-        // Get seminar group ID from hidden html input field
+        // Get place of seminar and check that it is not empty
+        const place = $("#placeSelection").val();
+        if(place.length === 0) {
+            alert("Please choose a place for the seminar");
+            return;
+        }
 
+        // Get status of seminar, if cancelled or not
+        // By adding + to the start of the expression, we automatically convert true to 1 and false to 0
+        const cancelled = +$("#cancelledCheckBox").prop('checked');
+        console.log(cancelled);
+
+
+        // Get seminar group ID from hidden html input field
         const semGrID = $("#semGrID").val();
-        console.log(students);
+
         // Post to server
         $.ajax({
             url: '/assistant/takeAttendance/' + semGrID,
             type: 'POST',
             dataType: 'JSON',
             data: {
-                students: JSON.stringify(students)
+                students: JSON.stringify(students),
+                semGrID: semGrID,
+                place: place,
+                status: cancelled
             },
             success: function(data) {
-                console.log(data.length);
+                console.log(data);
             }
         })
         .done(function() {

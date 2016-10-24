@@ -58,7 +58,7 @@ router.get("/takeAttendance/:semGrID", userService.requireLogin, userService.isA
 });
 
 /* POST takeAttendance */
-router.post("/takeAttendance/:semGrID", userService.requireLogin, userService.isAssistant, seminarService.registerAttendanceForGroup, function(req, res, next) {
+router.post("/takeAttendance/:semGrID", userService.requireLogin, userService.isAssistant, seminarService.createSeminar, seminarService.registerAttendanceForGroup, function(req, res, next) {
 
     res.status(200).send(req.body.students);
 });
