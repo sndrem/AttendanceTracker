@@ -272,6 +272,45 @@ $(function() {
         }
     });
 
+    $("#registerAttendanceBtn").on('click', function(event) {
+        event.preventDefault();
+        // Get all students 
+        var students = [];
+        $(".student-attendance").each(function(index, element) {
+            // If the student is checked, add true to attended-attribute
+            students.push({
+                StudID: $(element).val(),
+                attended: $(element).prop('checked')
+            });
+        });
+
+        // Get seminar group ID from hidden html input field
+
+        const semGrID = $("#semGrID").val();
+        console.log(students);
+        // Post to server
+        $.ajax({
+            url: '/assistant/takeAttendance/' + semGrID,
+            type: 'POST',
+            dataType: 'JSON',
+            data: {
+                students: JSON.stringify(students)
+            },
+            success: function(data) {
+                console.log(data.length);
+            }
+        })
+        .done(function() {
+            console.log("success");
+        })
+        .fail(function() {
+            console.log("error");
+        })
+        .always(function() {
+            console.log("complete");
+        });
+    });
+
     $("#addAssistantToCourseBtn").on('click', function(event) {
         event.preventDefault();
         var userID = $("#studentAssistant").val();

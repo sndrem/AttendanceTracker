@@ -39,7 +39,7 @@ router.post("/getSeminarGroupsFromCourse", userService.requireLogin, userService
 
 /* POST createNewSeminarGroup */
 router.post("/createNewSeminarGroup", userService.requireLogin, userService.isAssistant, seminarService.createSeminarGroup, function(req, res, next) {
-    console.log("Should create a new semianr group");
+    console.log("Should create a new seminar group");
     console.log(req.statusMessages);
     console.log(req.queryResult);
     if(req.statusMessages && res.statusMessages.length > 0) {
@@ -51,7 +51,6 @@ router.post("/createNewSeminarGroup", userService.requireLogin, userService.isAs
 
 /* GET takeAttendance */
 router.get("/takeAttendance/:semGrID", userService.requireLogin, userService.isAssistant, seminarService.getAllStudentsFromGroup, function(req, res, next) {
-    console.log("Params: ", req.params);
     res.render("takeAttendance", {
         "students": req.semGroupsStudents,
         "semGrID": req.params.semGrID
@@ -59,23 +58,9 @@ router.get("/takeAttendance/:semGrID", userService.requireLogin, userService.isA
 });
 
 /* POST takeAttendance */
-router.post("/takeAttendance/:semGrID", userService.requireLogin, userService.isAssistant, seminarService.getAllStudentsFromGroup, function(req, res, next) {
-    console.log(req.body);
-    var response = {
-        present: req.body,
-        allStudents: req.semGroupsStudents
-    }
-    for(var i = 0; i < req.semGroupsStudents.length; i++) {
-        console.log(req.semGroupsStudents[i].StudID);
-        console.log(req.body['students[]'][0]);
-        if(req.semGroupsStudents[i].StudID === req.body['students[]'][i]) {
-            req.semGroupsStudents[i].isPresent = true;
-        } else {
-            req.semGroupsStudents[i].isPresent = false;
-        }
-    }
+router.post("/takeAttendance/:semGrID", userService.requireLogin, userService.isAssistant, seminarService.registerAttendanceForGroup, function(req, res, next) {
 
-    res.status(200).send(req.semGroupsStudents);
+    res.status(200).send(req.body.students);
 });
 
 module.exports = router;

@@ -10,7 +10,8 @@ block content
                 for student in students
                     .form-group
                         label.form-control
-                            input(type='checkbox' value='#{student.StudID}' name='students[]')
+                            input.student-attendance(type='checkbox' value='#{student.StudID}' name='students[]')
                             span  #{student.fullName}
+                input.hidden#semGrID(type="text" value="#{semGrID}")
 
-                button.btn.btn-primary Save Attendance
+                button#registerAttendanceBtn.btn.btn-primary Save Attendance
