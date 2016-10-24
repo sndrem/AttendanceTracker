@@ -351,12 +351,24 @@ var seminarService = {
         console.log("Should take attendance for group");
         var students = JSON.parse(req.body.students);
         console.log(req.body);
+        var studentList = [];
         if(students.length == 0) {
             next();
         } else if(students.length > 0) {
-
+            students.forEach(function(student){
+                studentList.push([student.StudID, req.seminarInsertId, student.attended]);
+            });
+            const query = "INSERT INTO attends_seminar (StudID, semID, attended) VALUES ?";
+            connection.query(query, [studentList], function(err, data) {
+                if(err) {
+                    console.log(err);
+                    next(err);
+                } else {
+                    console.log(data);
+                    next();
+                }
+            });
         }
-        next();
     },
 
     // Used when creating a new row in the seminar-table in our database
@@ -373,6 +385,7 @@ var seminarService = {
                 next(err);
             } else {
                 console.log(data);
+                req.seminarInsertId = data.insertId;
                 next();
             }
         });

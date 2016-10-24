@@ -294,7 +294,6 @@ $(function() {
         // Get status of seminar, if cancelled or not
         // By adding + to the start of the expression, we automatically convert true to 1 and false to 0
         const cancelled = +$("#cancelledCheckBox").prop('checked');
-        console.log(cancelled);
 
 
         // Get seminar group ID from hidden html input field
@@ -317,6 +316,7 @@ $(function() {
         })
         .done(function() {
             console.log("success");
+            $("#status").html("Seminar opprettet.");
         })
         .fail(function() {
             console.log("error");
