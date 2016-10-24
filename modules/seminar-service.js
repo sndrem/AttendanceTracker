@@ -34,6 +34,40 @@ var seminarService = {
         });
     },
 
+    // Retrieves all seminar groups for a given course
+    getSeminarGroupsForCourse: function(req, res, next) {
+        const courseID = req.params.courseID;
+        const query = "SELECT * FROM seminargroup "
+                    + "WHERE courseID = ?";
+        connection.query(query, [courseID], function(err, result) {
+            if(err) {
+                next(err);
+            } else {
+                req.seminarGroups = result;
+                next();
+            }
+        });
+    },
+
+    // Retrieves all the course names and course id's for the logged in user that they are a member of
+    getUserCourses: function(req, res, next) {
+        const userID = req.session.user.StudID;
+        const query = "SELECT DISTINCT course.`name`, course.`courseID` FROM course "
+                    + "JOIN seminargroup "
+                    + "ON seminargroup.`courseID` = course.`courseID` "
+                    + "JOIN `is_in_seminar_group` "
+                    + "ON seminargroup.`semGrID` = `is_in_seminar_group`.`semGrID` "
+                    + "WHERE `is_in_seminar_group`.`StudID` = ?";
+        connection.query(query, [userID], function(err, result) {
+            if(err) {
+                next(err);
+            } else {
+                req.userCourses = result;
+                next();
+            }
+        });
+    },
+
     /*
     Retrieves all seminar groups
      */
@@ -221,6 +255,29 @@ var seminarService = {
         });
     },
 
+    getAllAttendanceForCourseForStudent: function(req, res, next) {
+        const userID = req.session.user.StudID;
+        const courseID = req.params.courseID;
+        const query = "SELECT seminargroup.`name`, seminar.`semID`, seminar.`date`, seminar.`semGrID`, seminar.`place`, seminar.`oblig`, seminar.`duration`, seminar.`cancelled`, `attends_seminar`.`attended` FROM seminar "
+                    + "JOIN `attends_seminar` "
+                    + "ON seminar.`semID` = `attends_seminar`.`semID` "
+                    + "JOIN `person` "
+                    + "ON person.`StudID` = `attends_seminar`.`StudID` "
+                    + "JOIN seminargroup  "
+                    + "ON seminargroup.`semGrID` = seminar.`semGrID` "
+                    + "WHERE `person`.`StudID`= ? AND seminargroup.`courseID` = ? "
+                    + "ORDER BY seminar.`date` ";
+        connection.query(query, [userID, courseID], function(err, result) {
+            if(err) {
+                next(err);
+            } else {
+                req.studentAttendance = result;
+                console.log(result);
+                next();
+            }
+        });
+
+    },
 
     getSeminarDetails: function(req, res, next) {
         const seminarID = req.params.semGrID;
@@ -244,15 +301,15 @@ var seminarService = {
         });
     },
 
-    getSeminarGroupDetails: function(req, res, next) {
-        const seminarID = req.params.semGrID;
-        const query = "SELECT * FROM seminargroup "
-                    + "WHERE semGrID = ?";
-        connection.query(query, [seminarID], function(err, result) {
+    getCourseDetails: function(req, res, next) {
+        const courseID = req.params.courseID;
+        const query = "SELECT * FROM course "
+                    + "WHERE courseID = ?";
+        connection.query(query, [courseID], function(err, result) {
             if(err) {
                 next(err);
             } else {
-                req.seminarGroupDetails = result[0];
+                req.courseDetails = result[0];
                 next();
             }
         });
@@ -378,9 +435,9 @@ var seminarService = {
         const date = new Date().toISOString().substring(0,10);
         const status = req.body.status;
         console.log(status);
-        const query = "INSERT INTO seminar (semGrID, oblig, place, date, duration, cancelled) "
-                    + "VALUES(?, ?, ?,?, ?, ?)";
-        connection.query(query, [semGrID, 1, place, date, 120, status], function(err, data) {
+        const query = "INSERT INTO seminar (semGrID, oblig, place, duration, cancelled) "
+                    + "VALUES(?, ?, ?, ?, ?)";
+        connection.query(query, [semGrID, 1, place, 120, status], function(err, data) {
             if(err) {
                 console.log(err);
                 next(err);

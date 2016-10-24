@@ -2,32 +2,41 @@ extends layout
 
 block content
     h3 #{title}
-    
-    p Here is an overview over your attendance for #{groupDetails.name}
+
+    p Here is an overview over your attendance for #{groupDetails.courseID} - #{groupDetails.name}
+    p If you want to check your absence for a given group, please choose the right group from the list below
+    ul
+    for seminar in seminarGroups
+        li: a(href="#{seminar.semGrID}") #{seminar.name}
 
     table.table.table-striped
         thead
             tr
                 th Date
+                th Group
                 th place
                 th Duration in minutes
                 th Attended
 
         tbody
-            for sem in seminar
+            for attendance in attendances
                 tr
-                    td #{sem.date}
-                    td #{sem.place}
-                    td #{sem.duration} minutes
-                    if sem.attended == 1
+                    td #{attendance.date}
+                    td #{attendance.name}
+                    td #{attendance.place}
+                    td #{attendance.duration} minutes
+                    if attendance.attended == 1
                         td.success Yes
                     else 
                         td.danger No
-
-    p#attendanceCourse Attendance limit for this course: #{courseDetails.attendance} %
-    p#totalSeminars Planned number of seminars: #{courseDetails.plannedSeminars}
-    p#allowedLimit Your absence from seminars: #{absenceDetails.sumAbsence} hours / #{totalPlanned.totalPlanned} available hours
-    p#attendancePercentage Your current attendance: 
+    
+    
+    .well
+        h3 These data are valid for all your attendance
+        p#attendanceCourse Attendance limit for this course: #{courseDetails.attendance} %
+        p#totalSeminars Planned number of seminars: #{courseDetails.plannedSeminars}
+        p#allowedLimit Your absence from seminars: #{absenceDetails.sumAbsence} hours / #{totalPlanned.totalPlanned} available hours
+        p#attendancePercentage Your current attendance: 
 
 
 
