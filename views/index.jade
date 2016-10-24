@@ -14,12 +14,15 @@ block content
                 .panel-heading
                     h3 For students
                 .panel-body
-                    p You can easily create a new user with email and password. Registration takes no time and only has to be done once.
-                    a(href="/register").btn.btn-primary Register
+                    p You can easily create a new user with email and password. Registration takes no time and only has to be done once. If you allready have an account, you can log in. 
+
+                    a.frontPageBtn(href="/register").btn.btn-primary Register
+                    
+                    a.frontPageBtn(href="/login").btn.btn-primary Log in
         .col-xs-12.col-sm-6.col-md-6
             .panel.panel-primary
                 .panel-heading
                     h3 For student assistants and administrators
                 .panel-body
                     p You should have received username and passord from the course admin. Use that to log in. 
-                    a(href="/login").btn.btn-primary Log in
+                    a.frontPageBtn(href="/login").btn.btn-primary Log in
