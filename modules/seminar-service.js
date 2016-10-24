@@ -380,22 +380,23 @@ var seminarService = {
                     + "FROM `attends_seminar` "
                     + "JOIN seminar ON `attends_seminar`.`semID` = seminar.`semID` "
                     + "JOIN seminargroup ON seminar.`semGrID` = seminargroup.`semGrID` "
-                    + "WHERE `attends_seminar`.`StudID` = ? AND seminargroup.`semGrID`=?)* "
+                    + "JOIN course ON seminargroup.`courseID` = course.`courseID` "
+                    + "WHERE `attends_seminar`.`StudID` = ? AND seminargroup.`courseID`= course.`courseID`)* "
                     + "(SELECT DISTINCT `course`.`plannedSeminars` "
                     + "FROM `attends_seminar` "
                     + "JOIN seminar ON `attends_seminar`.`semID` = seminar.`semID` "
                     + "JOIN seminargroup ON seminar.`semGrID` = seminargroup.`semGrID` "
                     + "JOIN course ON seminargroup.`courseID` = course.`courseID` "
-                    + "WHERE `attends_seminar`.`StudID` = ? AND seminargroup.`semGrID`=?) * "
+                    + "WHERE `attends_seminar`.`StudID` = ? AND seminargroup.`courseID`= course.`courseID`) * "
                     + "(SELECT DISTINCT (100-`course`.`attendance`)/100 "
                     + "FROM `attends_seminar` "
                     + "JOIN seminar ON `attends_seminar`.`semID` = seminar.`semID` "
                     + "JOIN seminargroup ON seminar.`semGrID` = seminargroup.`semGrID` "
                     + "JOIN course ON seminargroup.`courseID` = course.`courseID` "
-                    + "WHERE `attends_seminar`.`StudID` = ? AND seminargroup.`semGrID`=?)"
+                    + "WHERE `attends_seminar`.`StudID` = ? AND seminargroup.`courseID`= course.`courseID`)"
                     + "/60 "
                     + "as totalPlanned";
-        connection.query(query, [userID, seminarID, userID, seminarID, userID, seminarID], function(err, result) {
+        connection.query(query, [userID, userID,  userID], function(err, result) {
             if(err) {
                 next(err);
             } else {
