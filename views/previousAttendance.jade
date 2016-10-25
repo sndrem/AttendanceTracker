@@ -30,9 +30,10 @@ block content
                         option(value="Unknown") Unknown location
 
                 .form-group
-                    button#registerAttendanceBtn.btn.btn-primary.form-control Save Attendance
+                    input#insertID(name='insertID' type='text' value="#{prevSemID}" hidden)
+
                 .form-group
-                    button#updateAttendanceBtn.btn.btn-success.form-control.hide Update Attendance
+                    button#updateAttendanceBtn.btn.btn-success.form-control Update Attendance
                 label
                     input#cancelledCheckBox(type="checkbox")
                     span  Seminar is cancelled?

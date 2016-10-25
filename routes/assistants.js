@@ -73,10 +73,11 @@ router.post("/previousSeminar/:prevSemId", userService.requireLogin, userService
 
 router.get("/previousSeminars/:semGrID/:prevSemId", userService.requireLogin, userService.isAssistant, seminarService.getPreviousSeminars, seminarService.getPreviousAttendance, seminarService.getPlaceOfSeminar, function(req, res, next){
     date = req.previousAttendance.length > 0 ? req.previousAttendance[0].date : null
-    res.render("takeAttendance", {
+    res.render("previousAttendance", {
         "students": req.previousAttendance,
         "semGrID": req.params.semGrID,
         "previousSeminars": req.previousSeminars,
+        "prevSemID": req.params.prevSemId,
         "place": req.seminarPlace,
         "date": date
     });
