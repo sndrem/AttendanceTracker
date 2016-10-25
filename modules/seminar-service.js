@@ -506,7 +506,8 @@ var seminarService = {
     getPreviousSeminars: function(req, res, next) {
         const semGrID = req.params.semGrID;
         const query = "SELECT DISTINCT semID, place, date, semGrID FROM seminar "
-                    + "WHERE semGrID = ?";
+                    + "WHERE semGrID = ? "
+                    + "ORDER BY date DESC";
         connection.query(query, [semGrID], function(err, result) {
             if(err) {
                 next(err);
@@ -519,7 +520,7 @@ var seminarService = {
 
     getPreviousAttendance: function(req, res, next) {
         const prevId = req.params.prevSemId;
-        const query = "SELECT person.`StudID`, CONCAT(person.fName, ' ', person.lName) as fullName, attended, date "
+        const query = "SELECT person.`StudID`, CONCAT(person.fName, ' ', person.lName) as fullName, attended, seminar.cancelled, attends_seminar.semID, date "
                     + "FROM person "
                     + "JOIN `attends_seminar` "
                     + "ON person.`StudID` = `attends_seminar`.`StudID` "
@@ -543,7 +544,11 @@ var seminarService = {
             if(err) {
                 next(err);
             } else {
-                req.seminarPlace = result[0].place;
+                if(result.length > 0) {
+                    req.seminarPlace = result[0].place;
+                } else {
+                    req.seminarPlace = "Unknown location";
+                }
                 next();
             }
         });

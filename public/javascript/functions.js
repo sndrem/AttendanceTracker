@@ -346,7 +346,7 @@ $(function() {
             $updateBtn.parent().append("<button class='btn btn-default' id='resetAttendanceBtn'>Reset form</button>");
             $("#registerAttendanceBtn").addClass('hide');
             $("form").append("<input id='insertID' name='insertID' type='text' value='" + insertID + "' hidden>");
-            resetAttendanceBtnClickListener();
+            resetAttendanceBtnClickListener(semGrID);
         })
         .fail(function() {
             console.log("error");
@@ -358,6 +358,7 @@ $(function() {
 
     $("#updateAttendanceBtn").on('click', function(event) {
         event.preventDefault();
+        var $this = $(this);
         var students = getStudentAttendanceList();
         const cancelled = isSeminarCancelled();
         const place = getPlaceOfSeminar();
@@ -374,7 +375,6 @@ $(function() {
                 place: place,
                 semGrID: semGrID,
                 updateID: updateID
-
             },
             success: function(data) {
                 console.log(data);
@@ -382,6 +382,8 @@ $(function() {
         })
         .done(function() {
             console.log("success");
+            $("#status").html("Seminar group is now updated");
+            resetAttendanceBtnClickListener(semGrID);
         })
         .fail(function() {
             console.log("error");
@@ -391,15 +393,10 @@ $(function() {
         });
     });
 
-    function resetAttendanceBtnClickListener() {
+    function resetAttendanceBtnClickListener(semGrID) {
         $("#resetAttendanceBtn").on('click', function(event) {
             event.preventDefault();
-            myApp.resetForm();
-            $("#registerAttendanceBtn").removeClass('hide');
-            $("#updateAttendanceBtn").addClass('hide');
-            $(this).addClass('hide');
-            $("#status").html("");
-            $("#insertID").remove();
+            document.location.href = "/assistant/takeAttendance/" + semGrID;
         });
     }
 
@@ -407,27 +404,6 @@ $(function() {
         event.preventDefault();
         var prevSeminarUrlLocation = $(this).val();
         document.location.href = "/assistant/previousSeminars" + prevSeminarUrlLocation;
-
-        // $.ajax({
-        //     url: '/assistant/previousSeminar/' + prevSeminarId,
-        //     type: 'POST',
-        //     dataType: 'JSON',
-        //     data: {
-        //         prevId: prevSeminarId
-        //     },
-        //     success: function(data) {
-        //         console.log(data);
-        //     }
-        // })
-        // .done(function() {
-        //     console.log("success");
-        // })
-        // .fail(function() {
-        //     console.log("error");
-        // })
-        // .always(function() {
-        //     console.log("complete");
-        // });
     });
 
     $("#addAssistantToCourseBtn").on('click', function(event) {

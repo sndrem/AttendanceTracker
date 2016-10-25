@@ -34,8 +34,12 @@ block content
 
                 .form-group
                     button#updateAttendanceBtn.btn.btn-success.form-control Update Attendance
+                    a(href="/assistant/takeAttendance/#{semGrID}")#resetAttendanceBtn.btn.btn-default Reset Form
                 label
-                    input#cancelledCheckBox(type="checkbox")
+                    if cancelled
+                        input#cancelledCheckBox(type="checkbox" checked)
+                    else 
+                        input#cancelledCheckBox(type="checkbox")
                     span  Seminar is cancelled?
 
         .col-xs-12.col-sm-8.col-md-6.col-lg-6.col-xl-4

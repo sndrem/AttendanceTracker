@@ -7,7 +7,6 @@ var bodyParser = require('body-parser');
 var expressValidator = require("express-validator");
 var session = require('client-sessions');
 
-
 var userService = require("./modules/user-service");
 var routes = require('./routes/index');
 var students = require('./routes/students');
@@ -16,7 +15,7 @@ var admins = require('./routes/admins');
 var adminsAndAssistants = require('./routes/adminsAndAssistants');
 
 var app = express();
-
+app.locals.moment = require('moment');
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
