@@ -380,22 +380,23 @@ var seminarService = {
                     + "FROM `attends_seminar` "
                     + "JOIN seminar ON `attends_seminar`.`semID` = seminar.`semID` "
                     + "JOIN seminargroup ON seminar.`semGrID` = seminargroup.`semGrID` "
-                    + "WHERE `attends_seminar`.`StudID` = ? AND seminargroup.`semGrID`=?)* "
+                    + "JOIN course ON seminargroup.`courseID` = course.`courseID` "
+                    + "WHERE `attends_seminar`.`StudID` = ? AND seminargroup.`courseID`= course.`courseID`)* "
                     + "(SELECT DISTINCT `course`.`plannedSeminars` "
                     + "FROM `attends_seminar` "
                     + "JOIN seminar ON `attends_seminar`.`semID` = seminar.`semID` "
                     + "JOIN seminargroup ON seminar.`semGrID` = seminargroup.`semGrID` "
                     + "JOIN course ON seminargroup.`courseID` = course.`courseID` "
-                    + "WHERE `attends_seminar`.`StudID` = ? AND seminargroup.`semGrID`=?) * "
+                    + "WHERE `attends_seminar`.`StudID` = ? AND seminargroup.`courseID`= course.`courseID`) * "
                     + "(SELECT DISTINCT (100-`course`.`attendance`)/100 "
                     + "FROM `attends_seminar` "
                     + "JOIN seminar ON `attends_seminar`.`semID` = seminar.`semID` "
                     + "JOIN seminargroup ON seminar.`semGrID` = seminargroup.`semGrID` "
                     + "JOIN course ON seminargroup.`courseID` = course.`courseID` "
-                    + "WHERE `attends_seminar`.`StudID` = ? AND seminargroup.`semGrID`=?)"
+                    + "WHERE `attends_seminar`.`StudID` = ? AND seminargroup.`courseID`= course.`courseID`)"
                     + "/60 "
                     + "as totalPlanned";
-        connection.query(query, [userID, seminarID, userID, seminarID, userID, seminarID], function(err, result) {
+        connection.query(query, [userID, userID,  userID], function(err, result) {
             if(err) {
                 next(err);
             } else {
@@ -433,21 +434,72 @@ var seminarService = {
     createSeminar: function(req, res, next) {
         const semGrID = req.body.semGrID;
         const place = req.body.place;
-        const date = new Date().toISOString().substring(0,10);
+        // Sjekk date-greien her: http://stackoverflow.com/questions/5129624/convert-js-date-time-to-mysql-datetime/11150727#11150727
+        // Den gir noe feil tid, lol
+        const date = new Date().toISOString().slice(0, 19).replace('T', ' ');
         const status = req.body.status;
-        console.log(status);
-        const query = "INSERT INTO seminar (semGrID, oblig, place, duration, cancelled) "
-                    + "VALUES(?, ?, ?, ?, ?)";
-        connection.query(query, [semGrID, 1, place, 120, status], function(err, data) {
+
+        const query = "INSERT INTO seminar (semGrID, oblig, place, date, duration, cancelled) "
+                    + "VALUES(?, ?, ?, ?, ?, ?)";
+        connection.query(query, [semGrID, 1, place, date, 120, status], function(err, data) {
             if(err) {
                 console.log(err);
                 next(err);
             } else {
-                console.log(data);
+
                 req.seminarInsertId = data.insertId;
                 next();
             }
         });
+    },
+
+    updateSeminar: function(req, res, next) {
+        const semGrID = req.body.semGrID;
+        const place = req.body.place;
+        const updateID = req.body.updateID;
+        // Sjekk date-greien her: http://stackoverflow.com/questions/5129624/convert-js-date-time-to-mysql-datetime/11150727#11150727
+        // Den gir noe feil tid, lol
+        // const date = new Date().toISOString().slice(0, 19).replace('T', ' ');
+        const status = req.body.status;
+
+        const query = "UPDATE seminar SET place = ?, cancelled = ? "
+                    + "WHERE semID = ?";
+        connection.query(query, [place, status, updateID], function(err, data) {
+            if(err) {
+                console.log(err);
+                next(err);
+            } else {
+                req.resultSet = data;
+                next();
+            }
+        });
+    },
+
+    updateAttendanceForGroup: function(req, res, next) {
+        console.log("Skal oppdatere oppmøte for et seminar");
+        console.log(req.body);
+        var students = JSON.parse(req.body.students);
+        const updateID = req.body.updateID;
+        var studentList = [];
+        var queries = '';
+        if(students.length == 0) {
+            next();
+        } else if(students.length > 0) {
+            students.forEach(function(student){
+                queries += mysql.format("UPDATE attends_seminar SET StudID = ?, semID = ?, attended = ? WHERE semID = ?", [student.StudID, updateID, student.attended, updateID]);
+                studentList.push([student.StudID, updateID, student.attended]);
+            });
+        
+            connection.query(queries, function(err, data) {
+                if(err) {
+                    console.log("Feil:", err);
+                    next(err);
+                } else {
+                    console.log(data);
+                    next();
+                }
+            });
+        }
     }
 
 }

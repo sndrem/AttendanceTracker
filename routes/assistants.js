@@ -59,8 +59,11 @@ router.get("/takeAttendance/:semGrID", userService.requireLogin, userService.isA
 
 /* POST takeAttendance */
 router.post("/takeAttendance/:semGrID", userService.requireLogin, userService.isAssistant, seminarService.createSeminar, seminarService.registerAttendanceForGroup, function(req, res, next) {
+    res.status(200).send(JSON.stringify(req.seminarInsertId));
+});
 
-    res.status(200).send(req.body.students);
+router.post("/updateAttendance/:semGrID", userService.requireLogin, userService.isAssistant, seminarService.updateSeminar, seminarService.updateAttendanceForGroup, function(req, res, next) {
+    res.status(200).json(req.resultSet);
 });
 
 module.exports = router;

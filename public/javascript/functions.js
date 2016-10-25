@@ -272,15 +272,10 @@ $(function() {
         }
     });
 
-    $("#registerAttendanceBtn").on('click', function(event) {
-        event.preventDefault();
+    function getStudentAttendanceList() {
         // Get all students 
         var students = [];
-
-        // Get status of seminar, if cancelled or not
-        // By adding + to the start of the expression, we automatically convert true to 1 and false to 0
-        const cancelled = +$("#cancelledCheckBox").prop('checked');
-
+        var cancelled = isSeminarCancelled();
         $(".student-attendance").each(function(index, element) {
             // if the seminar is cancelled, everyone gets registered as attended
             if(cancelled === 1) {
@@ -295,16 +290,40 @@ $(function() {
                 });
             }
         });
+        return students;
+    }
+
+    function isSeminarCancelled() {
+        return +$("#cancelledCheckBox").prop('checked');
+    }
+
+    function getPlaceOfSeminar() {
+        return $("#placeSelection").val();;
+    }
+
+    function getSemGrID() {
+        return $("#semGrID").val();
+    }
+
+    $("#registerAttendanceBtn").on('click', function(event) {
+        event.preventDefault();
+        
+        // get students
+        var students = getStudentAttendanceList();
+
+        // Get status of seminar, if cancelled or not
+        // By adding + to the start of the expression, we automatically convert true to 1 and false to 0
+        const cancelled = isSeminarCancelled();
 
         // Get place of seminar and check that it is not empty
-        const place = $("#placeSelection").val();
+        const place = getPlaceOfSeminar();
         if(place.length === 0) {
             alert("Please choose a place for the seminar");
             return;
         }
 
         // Get seminar group ID from hidden html input field
-        const semGrID = $("#semGrID").val();
+        const semGrID = getSemGrID();
 
         // Post to server
         $.ajax({
@@ -318,12 +337,14 @@ $(function() {
                 status: cancelled
             },
             success: function(data) {
-                console.log(data);
+                // console.log(data);
             }
         })
-        .done(function() {
-            console.log("success");
+        .done(function(insertID) {
             $("#status").html("Seminar opprettet.");
+            $("#updateAttendanceBtn").removeClass('hide');
+            $("#registerAttendanceBtn").addClass('hide');
+            $("form").append("<input id='insertID' name='insertID' type='text' value='" + insertID + "' hidden>");
         })
         .fail(function() {
             console.log("error");
@@ -331,6 +352,43 @@ $(function() {
         .always(function() {
             console.log("complete");
         });
+    });
+
+    $("#updateAttendanceBtn").on('click', function(event) {
+        event.preventDefault();
+        var students = getStudentAttendanceList();
+        const cancelled = isSeminarCancelled();
+        const place = getPlaceOfSeminar();
+        const semGrID = getSemGrID();
+        const updateID = $("#insertID").val();
+
+        $.ajax({
+            url: '/assistant/updateAttendance/' + semGrID,
+            type: 'POST',
+            dataType: 'JSON',
+            data: {
+                students: JSON.stringify(students),
+                status: cancelled,
+                place: place,
+                semGrID: semGrID,
+                updateID: updateID
+
+            },
+            success: function(data) {
+                console.log(data);
+            }
+        })
+        .done(function() {
+            console.log("success");
+        })
+        .fail(function() {
+            console.log("error");
+        })
+        .always(function() {
+            console.log("complete");
+        });
+        
+
     });
 
     $("#addAssistantToCourseBtn").on('click', function(event) {
