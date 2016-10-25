@@ -1,4 +1,5 @@
 var mysql = require('mysql');
+var moment = require('moment');
 var userService = require("../modules/user-service")
 var mysql = require('mysql');
 var salt = "85478tug9efunc78ryw378e983wud";
@@ -435,9 +436,7 @@ var seminarService = {
     createSeminar: function(req, res, next) {
         const semGrID = req.body.semGrID;
         const place = req.body.place;
-        // Sjekk date-greien her: http://stackoverflow.com/questions/5129624/convert-js-date-time-to-mysql-datetime/11150727#11150727
-        // Den gir noe feil tid, lol
-        const date = new Date().toISOString().slice(0, 19).replace('T', ' ');
+        const date = moment().format("YYYY-MM-DD HH:mm:ss");
         const status = req.body.status;
 
         const query = "INSERT INTO seminar (semGrID, oblig, place, date, duration, cancelled) "
