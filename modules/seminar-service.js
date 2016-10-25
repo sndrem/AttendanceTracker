@@ -501,6 +501,52 @@ var seminarService = {
                 }
             });
         }
+    },
+
+    getPreviousSeminars: function(req, res, next) {
+        const semGrID = req.params.semGrID;
+        const query = "SELECT DISTINCT semID, place, date, semGrID FROM seminar "
+                    + "WHERE semGrID = ?";
+        connection.query(query, [semGrID], function(err, result) {
+            if(err) {
+                next(err);
+            } else {
+                req.previousSeminars = result;
+                next();
+            }
+        });
+    },
+
+    getPreviousAttendance: function(req, res, next) {
+        const prevId = req.params.prevSemId;
+        const query = "SELECT person.`StudID`, CONCAT(person.fName, ' ', person.lName) as fullName, attended, date "
+                    + "FROM person "
+                    + "JOIN `attends_seminar` "
+                    + "ON person.`StudID` = `attends_seminar`.`StudID` "
+                    + "JOIN seminar "
+                    + "ON `attends_seminar`.semID = seminar.`semID` "
+                    + "WHERE `attends_seminar`.`semID` = ? "
+        connection.query(query, [prevId], function(err, result) {
+            if(err) {
+                next(err);
+            } else {
+                req.previousAttendance = result;
+                next();
+            }
+        });
+    },
+
+    getPlaceOfSeminar: function(req, res, next) {
+        const semID = req.params.prevSemId;
+        const query = "SELECT place FROM seminar WHERE semID = ?";
+        connection.query(query, [semID], function(err, result) {
+            if(err) {
+                next(err);
+            } else {
+                req.seminarPlace = result[0].place;
+                next();
+            }
+        });
     }
 
 }

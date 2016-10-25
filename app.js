@@ -38,6 +38,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use("/student", express.static("public"));
 app.use("/assistant", express.static("public"));
 app.use("/assistant/:semGrID", express.static("public"));
+app.use("/assistant/previousSeminars/:semGrID/:prevSeminarId", express.static("public"));
 app.use("/admin", express.static("public"));
 app.use("/common", express.static("public"));
 app.use("/student/seminarDetails/:courseKey/:seminarKey", express.static("public"));

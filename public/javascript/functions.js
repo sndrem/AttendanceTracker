@@ -307,7 +307,7 @@ $(function() {
 
     $("#registerAttendanceBtn").on('click', function(event) {
         event.preventDefault();
-        
+        var $updateBtn = $("#updateAttendanceBtn");
         // get students
         var students = getStudentAttendanceList();
 
@@ -342,9 +342,11 @@ $(function() {
         })
         .done(function(insertID) {
             $("#status").html("Seminar opprettet.");
-            $("#updateAttendanceBtn").removeClass('hide');
+            $updateBtn.removeClass('hide');
+            $updateBtn.parent().append("<button class='btn btn-default' id='resetAttendanceBtn'>Reset form</button>");
             $("#registerAttendanceBtn").addClass('hide');
             $("form").append("<input id='insertID' name='insertID' type='text' value='" + insertID + "' hidden>");
+            resetAttendanceBtnClickListener();
         })
         .fail(function() {
             console.log("error");
@@ -387,8 +389,45 @@ $(function() {
         .always(function() {
             console.log("complete");
         });
-        
+    });
 
+    function resetAttendanceBtnClickListener() {
+        $("#resetAttendanceBtn").on('click', function(event) {
+            event.preventDefault();
+            myApp.resetForm();
+            $("#registerAttendanceBtn").removeClass('hide');
+            $("#updateAttendanceBtn").addClass('hide');
+            $(this).addClass('hide');
+            $("#status").html("");
+            $("#insertID").remove();
+        });
+    }
+
+    $("#previousSeminar").on('change', function(event) {
+        event.preventDefault();
+        var prevSeminarUrlLocation = $(this).val();
+        document.location.href = "/assistant/previousSeminars" + prevSeminarUrlLocation;
+
+        // $.ajax({
+        //     url: '/assistant/previousSeminar/' + prevSeminarId,
+        //     type: 'POST',
+        //     dataType: 'JSON',
+        //     data: {
+        //         prevId: prevSeminarId
+        //     },
+        //     success: function(data) {
+        //         console.log(data);
+        //     }
+        // })
+        // .done(function() {
+        //     console.log("success");
+        // })
+        // .fail(function() {
+        //     console.log("error");
+        // })
+        // .always(function() {
+        //     console.log("complete");
+        // });
     });
 
     $("#addAssistantToCourseBtn").on('click', function(event) {

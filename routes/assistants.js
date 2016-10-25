@@ -50,10 +50,11 @@ router.post("/createNewSeminarGroup", userService.requireLogin, userService.isAs
 });
 
 /* GET takeAttendance */
-router.get("/takeAttendance/:semGrID", userService.requireLogin, userService.isAssistant, seminarService.getAllStudentsFromGroup, function(req, res, next) {
+router.get("/takeAttendance/:semGrID", userService.requireLogin, userService.isAssistant, seminarService.getAllStudentsFromGroup, seminarService.getPreviousSeminars, function(req, res, next) {
     res.render("takeAttendance", {
         "students": req.semGroupsStudents,
-        "semGrID": req.params.semGrID
+        "semGrID": req.params.semGrID,
+        "previousSeminars": req.previousSeminars
     });
 });
 
@@ -65,5 +66,21 @@ router.post("/takeAttendance/:semGrID", userService.requireLogin, userService.is
 router.post("/updateAttendance/:semGrID", userService.requireLogin, userService.isAssistant, seminarService.updateSeminar, seminarService.updateAttendanceForGroup, function(req, res, next) {
     res.status(200).json(req.resultSet);
 });
+
+router.post("/previousSeminar/:prevSemId", userService.requireLogin, userService.isAssistant, seminarService.getPreviousAttendance, function(req, res, next) {
+    res.status(200).json(req.previousAttendance);
+});
+
+router.get("/previousSeminars/:semGrID/:prevSemId", userService.requireLogin, userService.isAssistant, seminarService.getPreviousSeminars, seminarService.getPreviousAttendance, seminarService.getPlaceOfSeminar, function(req, res, next){
+    date = req.previousAttendance.length > 0 ? req.previousAttendance[0].date : null
+    res.render("takeAttendance", {
+        "students": req.previousAttendance,
+        "semGrID": req.params.semGrID,
+        "previousSeminars": req.previousSeminars,
+        "place": req.seminarPlace,
+        "date": date
+    });
+});
+
 
 module.exports = router;
