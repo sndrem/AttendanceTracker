@@ -18,16 +18,7 @@ block content
                             span  #{student.fullName}
                 input.hidden#semGrID(type="text" value="#{semGrID}")
 
-                .form-group
-                    label(for="placeSelection") Choose place for seminar
-                    select#placeSelection(name="place").form-control
-                        option(value="")
-                        option(value="UPHIL205") Uphil 205
-                        option(value="UPHIL215") Uphil 215
-                        option(value="UPHIL305") Uphil 305
-                        option(value="UPHIL315") Uphil 315
-                        option(value="SV203") SV 203
-                        option(value="Unknown") Unknown location
+                include partials/locations
 
                 .form-group
                     button#registerAttendanceBtn.btn.btn-primary.form-control Save Attendance

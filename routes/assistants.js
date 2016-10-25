@@ -51,11 +51,12 @@ router.post("/createNewSeminarGroup", userService.requireLogin, userService.isAs
 });
 
 /* GET takeAttendance */
-router.get("/takeAttendance/:semGrID", userService.requireLogin, userService.isAssistant, seminarService.getAllStudentsFromGroup, seminarService.getPreviousSeminars, function(req, res, next) {
+router.get("/takeAttendance/:semGrID", userService.requireLogin, userService.isAssistant, seminarService.getAllStudentsFromGroup, seminarService.getPreviousSeminars, seminarService.getLocations, function(req, res, next) {
     res.render("takeAttendance", {
         "students": req.semGroupsStudents,
         "semGrID": req.params.semGrID,
-        "previousSeminars": req.previousSeminars
+        "previousSeminars": req.previousSeminars,
+        "locations": req.locations
     });
 });
 
@@ -72,7 +73,7 @@ router.post("/previousSeminar/:prevSemId", userService.requireLogin, userService
     res.status(200).json(req.previousAttendance);
 });
 
-router.get("/previousSeminars/:semGrID/:prevSemId", userService.requireLogin, userService.isAssistant, seminarService.getPreviousSeminars, seminarService.getPreviousAttendance, seminarService.getPlaceOfSeminar, function(req, res, next){
+router.get("/previousSeminars/:semGrID/:prevSemId", userService.requireLogin, userService.isAssistant, seminarService.getPreviousSeminars, seminarService.getPreviousAttendance, seminarService.getPlaceOfSeminar, seminarService.getLocations, function(req, res, next){
     var date = req.previousAttendance.length > 0 ? req.previousAttendance[0].date : null
     var cancelled = req.previousAttendance.length > 0 ? req.previousAttendance[0].cancelled : false
     res.render("previousAttendance", {
@@ -82,7 +83,8 @@ router.get("/previousSeminars/:semGrID/:prevSemId", userService.requireLogin, us
         "prevSemID": req.params.prevSemId,
         "place": req.seminarPlace,
         "date": moment(date).format("DD/MM/YYYY HH:mm"),
-        "cancelled": cancelled
+        "cancelled": cancelled,
+        "locations": req.locations
     });
 });
 

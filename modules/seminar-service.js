@@ -578,6 +578,18 @@ var seminarService = {
                 next();
             }
         });
+    },
+
+    getLocations: function(req, res, next) {
+        const query = "SELECT roomCode, roomName FROM locations";
+        connection.query(query, function(err, result) {
+            if(err) {
+                next(err);
+            } else {
+                req.locations = result;
+                next();
+            }
+        });
     }
 
 }
