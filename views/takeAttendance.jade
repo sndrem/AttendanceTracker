@@ -37,10 +37,4 @@ block content
                     input#cancelledCheckBox(type="checkbox")
                     span  Seminar is cancelled?
 
-        .col-xs-12.col-sm-8.col-md-6.col-lg-6.col-xl-4
-            h4 Previous seminars
-            form(action="#")
-                .form-group
-                    select#previousSeminar(name="previousSeminar").form-control
-                        for prev in previousSeminars
-                            option(value="/#{semGrID}/#{prev.semID}") #{prev.place} - #{prev.date}
+        include partials/previousSeminars

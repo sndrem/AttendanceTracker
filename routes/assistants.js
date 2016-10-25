@@ -1,4 +1,5 @@
 var express = require('express');
+var moment = require('moment');
 var router = express.Router();
 var connection = require('../modules/connection');
 var cookieParser = require('cookie-parser');
@@ -80,7 +81,7 @@ router.get("/previousSeminars/:semGrID/:prevSemId", userService.requireLogin, us
         "previousSeminars": req.previousSeminars,
         "prevSemID": req.params.prevSemId,
         "place": req.seminarPlace,
-        "date": date,
+        "date": moment(date).format("DD/MM/YYYY HH:mm"),
         "cancelled": cancelled
     });
 });

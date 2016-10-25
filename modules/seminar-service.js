@@ -446,7 +446,6 @@ var seminarService = {
                 console.log(err);
                 next(err);
             } else {
-
                 req.seminarInsertId = data.insertId;
                 next();
             }
