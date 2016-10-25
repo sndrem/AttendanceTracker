@@ -357,14 +357,15 @@ var seminarService = {
     getAbsenceOfSeminarForStudent: function(req, res, next) {
         const userID = req.user.StudID;
         const seminarID = req.params.semGrID;
+        const courseID = req.params.courseID;
         const query = "SELECT SUM(`seminar`.`duration`)/60 as sumAbsence "
                     + "FROM `attends_seminar` " 
                     + "JOIN seminar ON `attends_seminar`.`semID` = seminar.`semID` " 
                     + "JOIN seminargroup ON seminar.`semGrID` = seminargroup.`semGrID` "
                     + "JOIN course ON seminargroup.`courseID` = course.`courseID`" 
-                    + "WHERE `attends_seminar`.`StudID` = ? AND `attends_seminar`.`attended` = 0 ";
+                    + "WHERE `attends_seminar`.`StudID` = ? AND seminargroup.`courseID` = ? AND `attends_seminar`.`attended` = 0 ";
         console.log("Ska hente seminarer for student "+userID+" og legge sammen fravær total minutter");
-        connection.query(query, [userID, seminarID], function(err, result) {
+        connection.query(query, [userID, courseID], function(err, result) {
             if(err) {
                 next(err);
             } else {
@@ -374,31 +375,58 @@ var seminarService = {
         });
     },
 
+    getStudentAttendanceForCourse: function(req, res, next) {
+        const userID = req.user.StudID;
+        const courseID = req.params.courseID;
+        const semGrID = req.params.semGrID;
+        const query = "SELECT "
+                    + "(SELECT COUNT(`attends_seminar`.`attended`) " 
+                    + "FROM `attends_seminar` "
+                    + "JOIN seminar ON `attends_seminar`.`semID` = seminar.`semID` "
+                    + "JOIN seminargroup ON seminar.`semGrID` = seminargroup.`semGrID` "
+                    + "JOIN course ON seminargroup.`courseID` = course.`courseID`"
+                    + "WHERE `attends_seminar`.`StudID` = ? AND seminar.`semGrID` = seminargroup.`semGrID` AND seminargroup.`courseID` = ? AND `attends_seminar`.`attended` = 1)/ "
+                    + "(SELECT DISTINCT `course`.`plannedSeminars` "
+                    + "FROM course "
+                    + "WHERE course.`courseID` = ?) * 100 "
+                    + "as totalAttendance";
+        connection.query(query, [userID, courseID, courseID], function(err, result) {
+            if(err) {
+                next(err);
+            } else {
+                req.numOfAttendance = result[0];
+                console.log(result);
+                next();
+            }
+        });
+    },
+
     getTotalMinutesOfPlannedSeminars: function(req, res, next) {
         const userID = req.user.StudID;
         const seminarID = req.params.semGrID;
+        const courseID = req.params.courseID;
         const query = "SELECT "
                     + "(SELECT DISTINCT `seminar`.`duration` " 
                     + "FROM `attends_seminar` "
                     + "JOIN seminar ON `attends_seminar`.`semID` = seminar.`semID` "
                     + "JOIN seminargroup ON seminar.`semGrID` = seminargroup.`semGrID` "
                     + "JOIN course ON seminargroup.`courseID` = course.`courseID` "
-                    + "WHERE `attends_seminar`.`StudID` = ? AND seminargroup.`courseID`= course.`courseID` LIMIT 1)* "
+                    + "WHERE `attends_seminar`.`StudID` = ? AND seminargroup.`courseID` = ? LIMIT 1)* "
                     + "(SELECT DISTINCT `course`.`plannedSeminars` "
                     + "FROM `attends_seminar` "
                     + "JOIN seminar ON `attends_seminar`.`semID` = seminar.`semID` "
                     + "JOIN seminargroup ON seminar.`semGrID` = seminargroup.`semGrID` "
                     + "JOIN course ON seminargroup.`courseID` = course.`courseID` "
-                    + "WHERE `attends_seminar`.`StudID` = ? AND seminargroup.`courseID`= course.`courseID`) * "
+                    + "WHERE `attends_seminar`.`StudID` = ?) * "
                     + "(SELECT DISTINCT (100-`course`.`attendance`)/100 "
                     + "FROM `attends_seminar` "
                     + "JOIN seminar ON `attends_seminar`.`semID` = seminar.`semID` "
                     + "JOIN seminargroup ON seminar.`semGrID` = seminargroup.`semGrID` "
                     + "JOIN course ON seminargroup.`courseID` = course.`courseID` "
-                    + "WHERE `attends_seminar`.`StudID` = ? AND seminargroup.`courseID`= course.`courseID`)"
+                    + "WHERE `attends_seminar`.`StudID` = ?)"
                     + "/60 "
                     + "as totalPlanned";
-        connection.query(query, [userID, userID,  userID], function(err, result) {
+        connection.query(query, [userID, courseID, userID, userID], function(err, result) {
             if(err) {
                 next(err);
             } else {

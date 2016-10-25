@@ -37,7 +37,7 @@ router.get("/removeSeminar/:semGrID", userService.requireLogin, seminarService.r
 });
 
 /* GET Seminar details for student */
-router.get("/seminarDetails/:courseID", userService.requireLogin, seminarService.getCourseDetails, seminarService.getSeminarGroupsForCourse, seminarService.getAllAttendanceForCourseForStudent, seminarService.getSeminarDetails, seminarService.getNumberOfSeminarsForStudent, seminarService.getAbsenceOfSeminarForStudent, seminarService.getTotalMinutesOfPlannedSeminars, courseService.getCourseAttendance, function(req, res, next) {
+router.get("/seminarDetails/:courseID", userService.requireLogin, seminarService.getCourseDetails, seminarService.getSeminarGroupsForCourse, seminarService.getAllAttendanceForCourseForStudent, seminarService.getSeminarDetails, seminarService.getNumberOfSeminarsForStudent, seminarService.getAbsenceOfSeminarForStudent, seminarService.getTotalMinutesOfPlannedSeminars, courseService.getCourseAttendance, seminarService.getStudentAttendanceForCourse, function(req, res, next) {
     var values = {
         title: 'Seminar Details',
         attendances: req.studentAttendance,
@@ -45,6 +45,7 @@ router.get("/seminarDetails/:courseID", userService.requireLogin, seminarService
         courseDetails: req.courseAttendance,
         seminarGroups: req.seminarGroups,
         absenceDetails: req.numOfAbsence,
+        attendedCourse: req.numOfAttendance,
         totalPlanned: req.totalPlanned
     }
     console.log(values);
@@ -52,7 +53,7 @@ router.get("/seminarDetails/:courseID", userService.requireLogin, seminarService
 });
 
 /* GET Seminar details for student */
-router.get("/seminarDetails/:courseID/:semGrID", userService.requireLogin, seminarService.getCourseDetails, seminarService.getSeminarGroupsForCourse, seminarService.getSeminarDetails, seminarService.getNumberOfSeminarsForStudent, seminarService.getAbsenceOfSeminarForStudent, seminarService.getTotalMinutesOfPlannedSeminars, courseService.getCourseAttendance, function(req, res, next) {
+router.get("/seminarDetails/:courseID/:semGrID", userService.requireLogin, seminarService.getCourseDetails, seminarService.getSeminarGroupsForCourse, seminarService.getSeminarDetails, seminarService.getNumberOfSeminarsForStudent, seminarService.getAbsenceOfSeminarForStudent, seminarService.getTotalMinutesOfPlannedSeminars, courseService.getCourseAttendance, seminarService.getStudentAttendanceForCourse, function(req, res, next) {
     var values = {
         title: 'Seminar Details',
         attendances: req.seminarDetails,
@@ -60,6 +61,7 @@ router.get("/seminarDetails/:courseID/:semGrID", userService.requireLogin, semin
         courseDetails: req.courseAttendance,
         seminarGroups: req.seminarGroups,
         absenceDetails: req.numOfAbsence,
+        attendedCourse: req.numOfAttendance,
         totalPlanned: req.totalPlanned
     }
     console.log(values);
