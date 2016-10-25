@@ -96,6 +96,18 @@ var courseService ={
         });
     },
 
+    removeAssistant: function(req, res, next) {
+        const userID = req.body.StudID;
+        const query = "DELETE FROM admins WHERE id = ?";
+        connection.query(query, [userID], function(err, result) {
+            if(err) {
+                next(err);
+            } else {
+                next();
+            }
+        });
+    },
+
     courseExistsCreatingSeminarGroup: function(req, res, next){
         const courseID = req.body.courseID;
         const query = "SELECT courseID FROM course WHERE courseID = ?";

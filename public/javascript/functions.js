@@ -173,6 +173,32 @@ $(function() {
         });
     };
 
+    // Removes a person as an assistant
+    myApp.removeAssistant = function(studentID) {
+        $.ajax({
+            url: '/admin/removeAssistant',
+            type: 'POST',
+            dataType: 'JSON',
+            data: {
+                StudID: studentID
+            },
+        })
+        .done(function() {
+            console.log("success");
+            $("legend").html(studentID + " was successfully removed as an assistant");
+            setTimeout(function() {
+                document.location.reload();
+            }, 2500)
+        })
+        .fail(function() {
+            console.log("error");
+        })
+        .always(function() {
+            console.log("complete");
+        });
+        
+    };
+
     function populateTable(data) {
         var $table = $("table");
         var $tbody = $("table tbody");
@@ -192,6 +218,17 @@ $(function() {
             myApp.removeAssistantFromCourse(userID, courseID);
         });
     }
+
+    $("#removeStudentAsAssistant").on('click', function(event) {
+        event.preventDefault();
+        var confirmation = confirm("Are you sure you want to remove the student as an assistant? This step cannot be undone, so use it with care");
+        if(confirmation) {
+            const studentID = $("#studentAssistant").val();
+            myApp.removeAssistant(studentID);
+        } else {
+            return;
+        }
+    });
 
 
 

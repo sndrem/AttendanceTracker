@@ -50,6 +50,10 @@ router.post("/removeAssistantFromCourse", userService.requireLogin, userService.
     res.status(200).json(req.resultSet);
 });
 
+router.post("/removeAssistant", userService.requireLogin, userService.isAdmin, courseService.removeAssistant, function(req, res, next) {
+    res.status(200).json("Success");
+});
+
 /* POST add assistant to course */
 router.post("/addAssistantToCourse", userService.requireLogin, userService.isAdmin, userService.registerAssistantToCourse, function(req, res, next) {
     res.status(200).json(req.resultSet);
