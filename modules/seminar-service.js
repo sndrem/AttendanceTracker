@@ -383,7 +383,7 @@ var seminarService = {
                     + "JOIN seminar ON `attends_seminar`.`semID` = seminar.`semID` "
                     + "JOIN seminargroup ON seminar.`semGrID` = seminargroup.`semGrID` "
                     + "JOIN course ON seminargroup.`courseID` = course.`courseID` "
-                    + "WHERE `attends_seminar`.`StudID` = ? AND seminargroup.`courseID`= course.`courseID`)* "
+                    + "WHERE `attends_seminar`.`StudID` = ? AND seminargroup.`courseID`= course.`courseID` LIMIT 1)* "
                     + "(SELECT DISTINCT `course`.`plannedSeminars` "
                     + "FROM `attends_seminar` "
                     + "JOIN seminar ON `attends_seminar`.`semID` = seminar.`semID` "
