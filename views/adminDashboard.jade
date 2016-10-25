@@ -4,7 +4,8 @@ block content
     h2 Hello #{user}
 
     p What would you like to do?
-
+    
+    h2 Students
     .row
         .col-xs-12.col-sm-6.col-md.4
             .thumbnail
@@ -16,10 +17,21 @@ block content
         .col-xs-12.col-sm-6.col-md.4
             .thumbnail
                 .caption
-                    h3 Register a new seminar group
-                    p Here you can register a new seminar group
+                    h3 Add an assistant to a course
+                    p Here you can register an assistant with a specific course
 
-                    p: a(href="/common/createNewSeminarGroup").btn.btn-primary Create new seminar group
+                    p: a(href="/admin/addAssistantToCourse").btn.btn-primary Add Assistant to Course
+
+        .col-xs-12.col-sm-6.col-md.4
+            .thumbnail
+                .caption
+                    h3 Remove an assistant from a course
+                    p Here you can remove assistants from courses
+
+                    p: a(href="/admin/removeAssistantFromCourse").btn.btn-primary Remove assistant from course
+        
+
+    h2 Courses and seminar groups
     .row
         .col-xs-12.col-sm-6.col-md.4
             .thumbnail
@@ -30,18 +42,9 @@ block content
                     p: a(href="/admin/createCourse").btn.btn-primary Create Course
         .col-xs-12.col-sm-6.col-md.4
             .thumbnail
-                .caption
-                    h3 Add an assistant to a course
-                    p Here you can register an assistant with a specific course
+                    .caption
+                        h3 Register a new seminar group
+                        p Here you can register a new seminar group
 
-                    p: a(href="/admin/addAssistantToCourse").btn.btn-primary Add Assistant to Course
-    .row 
-        .col-xs-12.col-sm-6.col-md.4
-            .thumbnail
-                .caption
-                    h3 Remove an assistant from a course
-                    p Here you can remove assistants from courses
-
-                    p: a(href="/admin/removeAssistantFromCourse").btn.btn-primary Remove assistant from course
-
-
+                        p: a(href="/common/createNewSeminarGroup").btn.btn-primary Create new seminar group
+        
