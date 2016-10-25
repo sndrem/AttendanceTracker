@@ -6,7 +6,8 @@ var connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     password: '',
-    database: 'atdb'
+    database: 'atdb',
+    multipleStatements: true
 });
 
 var seminarService = {
@@ -486,10 +487,10 @@ var seminarService = {
             next();
         } else if(students.length > 0) {
             students.forEach(function(student){
-                queries += mysql.format("UPDATE attends_seminar SET StudID = ?, semID = ?, attended = ? WHERE semID = ?", [student.StudID, updateID, student.attended, updateID]);
+                queries += mysql.format("UPDATE attends_seminar SET StudID = ?, semID = ?, attended = ? WHERE semID = ? AND StudID = ? ; ", [student.StudID, updateID, student.attended, updateID, student.StudID]);
                 studentList.push([student.StudID, updateID, student.attended]);
             });
-        
+            console.log(queries);
             connection.query(queries, function(err, data) {
                 if(err) {
                     console.log("Feil:", err);
