@@ -110,7 +110,7 @@ var seminarService = {
      */
     createSeminarGroup: function(req, res, next) {
         console.log(req.body);
-        const courseID = req.body.courseID;
+        const courseID = req.body.courseID.toUpperCase();
         const groupName = req.body.groupName;
         const query = "INSERT INTO seminargroup (courseID, name) "
                     + "VALUES (?, ?);";
