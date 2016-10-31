@@ -135,8 +135,8 @@ var courseService ={
                 if(result.length == 0) {
                     next();
                 } else {
-                   console.log("allready exists");
-                   res.status(200).json("the course allready exists");
+                   console.log("already exists");
+                   res.status(200).json("the course already exists");
 
                 }
             }
