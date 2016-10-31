@@ -940,6 +940,7 @@ $(function() {
         var plannedSeminars = $("#plannedSeminars").val();
         var statusMessages = [];
 
+        // EINAR, DU MÅ SJEKKE AT IKKE STRENGENE ER TOMME
 
         if (courseID === '') {
             statusMessages.push("Course id cannot be empty");
