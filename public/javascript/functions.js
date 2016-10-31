@@ -939,6 +939,7 @@ $(function() {
         var attendancePercentage = $("#attendancePercentage").val();
         var plannedSeminars = $("#plannedSeminars").val();
 
+        // EINAR, DU MÅ SJEKKE AT IKKE STRENGENE ER TOMME
 
         $.ajax({
             url: '/admin/createCourse',
