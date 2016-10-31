@@ -938,33 +938,49 @@ $(function() {
         var semester = $("#semester").val();
         var attendancePercentage = $("#attendancePercentage").val();
         var plannedSeminars = $("#plannedSeminars").val();
+        var statusMessages = [];
 
 
-        $.ajax({
-            url: '/admin/createCourse',
-                type: 'POST',
-                dataType: 'JSON',
-                data: {
-                    courseID : courseID,
-                    courseName : courseName,
-                    semester : semester,
-                    attendancePercentage : attendancePercentage,
-                    plannedSeminars : plannedSeminars
-                },
-                success: function(data) {
-                    $status.html(data);
-                }
-            })
-            .done(function() {
-                console.log("success");
-            })
-            .fail(function(data) {
-                console.log("error");
-            })
-            .always(function() {
-                console.log("complete");
-                //location.reload();
-            });
-        
+        if (courseID === '') {
+            statusMessages.push("Course id cannot be empty");
+        }
+
+        if (courseName === '') {
+            statusMessages.push("Course name cannot be empty");
+        }
+
+        if (semester === '') {
+            statusMessages.push("Semester cannot be empty");
+        }
+
+        if(statusMessages.length > 0){
+            //error melding her
+        }else{
+            $.ajax({
+                url: '/admin/createCourse',
+                    type: 'POST',
+                    dataType: 'JSON',
+                    data: {
+                        courseID : courseID,
+                        courseName : courseName,
+                        semester : semester,
+                        attendancePercentage : attendancePercentage,
+                        plannedSeminars : plannedSeminars
+                    },
+                    success: function(data) {
+                        $status.html(data);
+                    }
+                })
+                .done(function() {
+                    console.log("success");
+                })
+                .fail(function(data) {
+                    console.log("error");
+                })
+                .always(function() {
+                    console.log("complete");
+                    //location.reload();
+                });
+        }
     });
 });
