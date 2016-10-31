@@ -956,6 +956,11 @@ $(function() {
 
         if(statusMessages.length > 0){
             //error melding her
+            var $status = $("#status ul");
+            $status.html("");
+            for (var i = 0; i < statusMessages.length; i++) {
+                $status.append("<li class=\"bg-danger\">" + statusMessages[i] + "</li>");
+            }
         }else{
             $.ajax({
                 url: '/admin/createCourse',
