@@ -7,12 +7,4 @@ block content
     include ./partials/dashboardNavElements
 
     p Select the course you want to register attendance for
-    section.row
-        .col-xs-12
-            form(action="/assistant/getSeminarGroupsFromCourse" method="GET")
-                .form-group
-                    select#courseSelection.form-control
-                        for course in courses
-                            option(value="#{course.courseID}") #{course.courseID} - #{course.name}
-
-    section.seminars.row
+    include ./partials/assistantCourses

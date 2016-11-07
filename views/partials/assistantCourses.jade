@@ -1,0 +1,9 @@
+section.row
+    .col-xs-12
+        form(action="/assistant/getSeminarGroupsFromCourse" method="GET")
+            .form-group
+                select#courseSelection.form-control
+                    for course in courses
+                        option(value="#{course.courseID}") #{course.courseID} - #{course.name}
+
+section.seminars.row

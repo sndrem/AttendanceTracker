@@ -88,5 +88,14 @@ router.get("/previousSeminars/:semGrID/:prevSemId", userService.requireLogin, us
     });
 });
 
+router.get("/attendanceStatus/:semGrID", userService.requireLogin, userService.isAssistant, seminarService.getAllAttendanceInfoForStudentsFromGroups, function(req, res, next) {
+    var model = {
+        title: 'Attendance Status',
+        students: req.semGroupsStudents
+    }
+    console.log(model);
+    res.render("attendanceStatus", model);
+});
+
 
 module.exports = router;

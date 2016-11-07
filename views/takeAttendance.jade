@@ -2,12 +2,14 @@ extends layout
 
 block content
     h2 Take attendance
+    include ./partials/dashboardNavElements
 
     .row
         .col-xs-12.col-sm-8.col-md-6.col-lg-6.col-xl-4
             h4 Students
             form(action="/assistant/takeAttendance/#{semGrID}" name="takeAttendanceForm" method="POST")
                 legend#status Todays date: #{moment(Date.now()).format('DD/MM/YYYY')}
+
                 .form-group.checkButtons
                     a#checkAllAttendanceBtn(href="#") Check all
                     a#uncheckAllAttendanceBtn(href="#") Uncheck all
@@ -31,4 +33,6 @@ block content
                     input#cancelledCheckBox(type="checkbox")
                     span  Seminar is cancelled?
 
+    
+        a(href="/assistant/attendanceStatus/#{semGrID}").btn.btn-success Show Attendance Status
         include partials/previousSeminars

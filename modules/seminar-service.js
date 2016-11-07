@@ -354,6 +354,28 @@ var seminarService = {
         });
     },
 
+    getAllAttendanceInfoForStudentsFromGroups: function(req, res, next) {
+        const semGrID = req.params.semGrID;
+        const query = "SELECT concat(fName, ' ', lName) as fullName, count(attended) as totalAttendance, count(case attended when 1 then 1 else null END) as met, count(case attended when 1 then null else 1 END) as away "
+                    + "FROM person "
+                    + "JOIN `attends_seminar` "
+                    + "ON person.`StudID` = `attends_seminar`.`StudID` "
+                    + "JOIN seminar "
+                    + "ON `attends_seminar`.`semID` = seminar.`semID` "
+                    + "JOIN seminargroup "
+                    + "ON seminar.`semGrID` = seminargroup.`semGrID` "
+                    + "where seminargroup.`semGrID` =  1 "
+                    + "group by fullName ";
+        connection.query(query, [semGrID], function(err, result) {
+            if(err) {
+                next(err);
+            } else {
+                req.semGroupsStudents = result;
+                next();
+            }
+        });
+    },
+
     getAbsenceOfSeminarForStudent: function(req, res, next) {
         const userID = req.user.StudID;
         const seminarID = req.params.semGrID;

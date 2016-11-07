@@ -1,0 +1,27 @@
+extends layout
+block content
+    h3 #{title}
+    include ./partials/dashboardNavElements
+    
+    table.table.table-hover
+        thead
+            tr
+                th Name
+                th Attended
+                th Been away
+                th Total
+        tbody
+
+        for student in students
+            if student.away <= 0
+                tr.success
+                    td #{student.fullName}
+                    td #{student.met}
+                    td #{student.away}
+                    td #{student.totalAttendance}
+            else 
+                tr.warning
+                    td #{student.fullName}
+                    td #{student.met}
+                    td #{student.away}
+                    td #{student.totalAttendance}
