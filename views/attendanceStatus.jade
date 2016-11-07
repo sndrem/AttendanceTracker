@@ -3,6 +3,7 @@ block content
     h3 #{title}
     include ./partials/dashboardNavElements
     
+    p.special Total number of seminars: #{numOfSeminars}
     table.table.table-hover
         thead
             tr
@@ -14,13 +15,13 @@ block content
 
         for student in students
             if student.away <= 0
-                tr.success
+                tr(data-student_id="#{student.StudID}").success
                     td #{student.fullName}
                     td #{student.met}
                     td #{student.away}
                     td #{student.totalAttendance}
             else 
-                tr.warning
+                tr(data-student_id="#{student.StudID}").warning
                     td #{student.fullName}
                     td #{student.met}
                     td #{student.away}

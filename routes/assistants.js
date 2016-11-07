@@ -88,10 +88,11 @@ router.get("/previousSeminars/:semGrID/:prevSemId", userService.requireLogin, us
     });
 });
 
-router.get("/attendanceStatus/:semGrID", userService.requireLogin, userService.isAssistant, seminarService.getAllAttendanceInfoForStudentsFromGroups, function(req, res, next) {
+router.get("/attendanceStatus/:semGrID", userService.requireLogin, userService.isAssistant, seminarService.getAllAttendanceInfoForStudentsFromGroups, seminarService.getTotalSeminarsForSeminarGroup, function(req, res, next) {
     var model = {
         title: 'Attendance Status',
-        students: req.semGroupsStudents
+        students: req.semGroupsStudents,
+        numOfSeminars: req.totalSeminars
     }
     console.log(model);
     res.render("attendanceStatus", model);

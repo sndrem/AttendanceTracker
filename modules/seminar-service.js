@@ -356,7 +356,7 @@ var seminarService = {
 
     getAllAttendanceInfoForStudentsFromGroups: function(req, res, next) {
         const semGrID = req.params.semGrID;
-        const query = "SELECT concat(fName, ' ', lName) as fullName, count(attended) as totalAttendance, count(case attended when 1 then 1 else null END) as met, count(case attended when 1 then null else 1 END) as away "
+        const query = "SELECT person.StudID, concat(fName, ' ', lName) as fullName, count(attended) as totalAttendance, count(case attended when 1 then 1 else null END) as met, count(case attended when 1 then null else 1 END) as away "
                     + "FROM person "
                     + "JOIN `attends_seminar` "
                     + "ON person.`StudID` = `attends_seminar`.`StudID` "
@@ -365,7 +365,7 @@ var seminarService = {
                     + "JOIN seminargroup "
                     + "ON seminar.`semGrID` = seminargroup.`semGrID` "
                     + "where seminargroup.`semGrID` =  1 "
-                    + "group by fullName ";
+                    + "group by fullName, person.StudID ";
         connection.query(query, [semGrID], function(err, result) {
             if(err) {
                 next(err);
@@ -612,6 +612,21 @@ var seminarService = {
                 next();
             }
         });
+    },
+
+    getTotalSeminarsForSeminarGroup: function(req, res, next) {
+        const semGrID = req.params.semGrID;
+        const query = "SELECT count(`semGrID`) as totalSeminars "
+                    + "FROM seminar "
+                    + "WHERE semGrID = ?";
+        connection.query(query, [semGrID], function(err, result) {
+            if(err) {
+                next(err);
+            } else {
+                req.totalSeminars = result[0].totalSeminars;
+                next();
+            }
+        }); 
     }
 
 }
