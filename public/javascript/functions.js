@@ -380,7 +380,7 @@ $(function() {
         .done(function(insertID) {
             $("#status").html("Seminar opprettet.");
             $updateBtn.removeClass('hide');
-            $updateBtn.parent().append("<button class='btn btn-default' id='resetAttendanceBtn'>Reset form</button>");
+            $updateBtn.parent().append("<button class='btn btn-default' id='resetAttendanceBtn'>Reset form/New seminar</button>");
             $("#registerAttendanceBtn").addClass('hide');
             $("form").append("<input id='insertID' name='insertID' type='text' value='" + insertID + "' hidden>");
             resetAttendanceBtnClickListener(semGrID);
