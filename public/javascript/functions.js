@@ -786,6 +786,21 @@ $(function() {
         });
     });
 
+    // Method for checking all input boxes
+    $("#checkAllAttendanceBtn").on('click', function(event) {
+        event.preventDefault();
+        $("form input[type='checkbox'].student-attendance").each(function(index, el) {
+            $(el).prop('checked', true);
+        });
+    });
+
+    $("#uncheckAllAttendanceBtn").on('click', function(event) {
+        event.preventDefault();
+        $("form input[type='checkbox'].student-attendance").each(function(index, el) {
+            $(el).prop('checked', false);
+        });
+    });
+
     // Method to populate the registration fields for the creation of a new student assistant
     function unhideformFields() {
         $("form div.hide").each(function(index, val) {
