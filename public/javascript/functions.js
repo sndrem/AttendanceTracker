@@ -755,6 +755,55 @@ $(function() {
         colorMarkElement($("#studentID"), '#FFF');
     })
 
+    // Functionality for getting more attendance info for a given student
+    $(".studentAttendanceInfo").on('click', function(event) {
+        event.preventDefault();
+        const StudID = $(this).data('student_id');
+        const semGrID = $(this).data('semgrid');
+        const studentName = $(this).find("td:first-child")[0].innerText;
+        $.ajax({
+            url: '/assistant/studentAttendanceInfo',
+            type: 'POST',
+            dataType: 'JSON',
+            data: {
+                StudID: StudID,
+                semGrID: semGrID
+            },
+            success: function(data) {
+                showAttendanceData(studentName, data);
+            }
+        })
+        .done(function() {
+            console.log("success");
+        })
+        .fail(function() {
+            console.log("error");
+        })
+        .always(function() {
+            console.log("complete");
+        });
+        
+    });
+
+    function showAttendanceData(studentName, data) {
+        $(".well").removeClass('hide');
+        $("#studentName").text("Status for: " + studentName);
+        $(".well table tbody").html(data.map(function(index, elem) {
+            return "<tr><td>" + moment(index.date).format('MMMM Do YYYY, h:mm:ss a') + "</td><td>" + index.place + "</td><td>" + formatAttendanceData(index.attended) + "</td></tr>";
+        }))
+    }
+
+    function formatAttendanceData(attended) {
+        return attended === 1 ? "Yes" : "No";
+    }
+
+    $("#clearStudentAttendanceInfo").on('click', function(event) {
+        event.preventDefault();
+        var $well = $(".well");
+        $well.addClass('hide');
+        $well.find("tbody").html("");
+    });
+
     function populateDropdown(data) {
         console.log("Should populate dropdown");
         var $selectDiv = $(".multipleNameSelect");

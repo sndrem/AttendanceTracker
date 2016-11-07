@@ -15,14 +15,29 @@ block content
 
         for student in students
             if student.away <= 0
-                tr(data-student_id="#{student.StudID}").success
+                tr.studentAttendanceInfo(data-student_id="#{student.StudID}", data-semgrid="#{semGrID}").success
                     td #{student.fullName}
                     td #{student.met}
                     td #{student.away}
                     td #{student.totalAttendance}
             else 
-                tr(data-student_id="#{student.StudID}").warning
+                tr.studentAttendanceInfo(data-student_id="#{student.StudID}", data-semgrid="#{semGrID}").warning
                     td #{student.fullName}
                     td #{student.met}
                     td #{student.away}
                     td #{student.totalAttendance}
+
+
+    .well.hide
+        a#clearStudentAttendanceInfo(href="#") Clear
+        h4#studentName Status for XXX XXX
+        table.table.table-striped
+            thead
+                tr
+                    th Date
+                    th Location
+                    th Attended
+            tbody
+                
+
+

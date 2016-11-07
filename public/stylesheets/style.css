@@ -36,6 +36,9 @@ body {
 .container {
   margin-bottom: 16%; }
 
+tr:hover {
+  cursor: pointer; }
+
 #courseTable thead {
   display: table;
   table-layout: fixed;

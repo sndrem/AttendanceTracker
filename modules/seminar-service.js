@@ -278,7 +278,6 @@ var seminarService = {
                 next();
             }
         });
-
     },
 
     getSeminarDetails: function(req, res, next) {
@@ -364,7 +363,7 @@ var seminarService = {
                     + "ON `attends_seminar`.`semID` = seminar.`semID` "
                     + "JOIN seminargroup "
                     + "ON seminar.`semGrID` = seminargroup.`semGrID` "
-                    + "where seminargroup.`semGrID` =  1 "
+                    + "where seminargroup.`semGrID` =  ? "
                     + "group by fullName, person.StudID ";
         connection.query(query, [semGrID], function(err, result) {
             if(err) {
@@ -627,8 +626,34 @@ var seminarService = {
                 next();
             }
         }); 
-    }
+    },
 
+    getStudentAttendanceInfo: function(req, res, next) {
+        const userID = req.body.StudID;
+        console.log("User: ", userID);
+        const semGrID = req.body.semGrID;
+        console.log("SemgrID: ", semGrID);
+        const query = "SELECT seminargroup.`name`, seminar.`semID`, seminar.`date`, seminar.`semGrID`, seminar.`place`, seminar.`oblig`, seminar.`duration`, seminar.`cancelled`, `attends_seminar`.`attended` FROM seminar "
+                    + "JOIN `attends_seminar` "
+                    + "ON seminar.`semID` = `attends_seminar`.`semID` "
+                    + "JOIN `person` "
+                    + "ON person.`StudID` = `attends_seminar`.`StudID` "
+                    + "JOIN seminargroup  "
+                    + "ON seminargroup.`semGrID` = seminar.`semGrID` "
+                    + "WHERE `person`.`StudID`= ? AND seminar.`semGrID` = ?"
+                    + "ORDER BY seminar.`date`"
+        connection.query(query, [userID, semGrID], function(err, result) {
+            if(err) {
+                console.log(err);
+                next(err);
+            } else {
+                console.log("Result: ", result);
+                req.studentAttendance = result;
+                console.log(result);
+                next();
+            }
+        });
+    }
 }
 
 module.exports = seminarService;

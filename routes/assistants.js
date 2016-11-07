@@ -92,11 +92,17 @@ router.get("/attendanceStatus/:semGrID", userService.requireLogin, userService.i
     var model = {
         title: 'Attendance Status',
         students: req.semGroupsStudents,
-        numOfSeminars: req.totalSeminars
+        numOfSeminars: req.totalSeminars,
+        semGrID: req.params.semGrID
     }
     console.log(model);
     res.render("attendanceStatus", model);
 });
+
+router.post("/studentAttendanceInfo", userService.requireLogin, userService.isAssistant, seminarService.getStudentAttendanceInfo, function(req, res, next) {
+    res.status(200).json(req.studentAttendance);
+});
+
 
 
 module.exports = router;
