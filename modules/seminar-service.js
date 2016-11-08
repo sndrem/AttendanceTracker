@@ -355,7 +355,7 @@ var seminarService = {
 
     getAllAttendanceInfoForStudentsFromGroups: function(req, res, next) {
         const semGrID = req.params.semGrID;
-        const query = "SELECT person.StudID, concat(fName, ' ', lName) as fullName, count(attended) as totalAttendance, count(case attended when 1 then 1 else null END) as met, count(case attended when 1 then null else 1 END) as away "
+        const query = "SELECT person.StudID, concat(fName, ' ', lName) as fullName, count(attended) as totalAttendance, count(case attended when 1 then 1 else null END) as met, count(case attended when 1 then null else 1 END) as away, eMail as email "
                     + "FROM person "
                     + "JOIN `attends_seminar` "
                     + "ON person.`StudID` = `attends_seminar`.`StudID` "
@@ -364,7 +364,7 @@ var seminarService = {
                     + "JOIN seminargroup "
                     + "ON seminar.`semGrID` = seminargroup.`semGrID` "
                     + "where seminargroup.`semGrID` =  ? "
-                    + "group by fullName, person.StudID ";
+                    + "group by fullName, person.StudID, person.eMail ";
         connection.query(query, [semGrID], function(err, result) {
             if(err) {
                 next(err);

@@ -759,9 +759,10 @@ $(function() {
     // Functionality for getting more attendance info for a given student
     $(".studentAttendanceInfo").on('click', function(event) {
         event.preventDefault();
-        const StudID = $(this).data('student_id');
-        const semGrID = $(this).data('semgrid');
-        const studentName = $(this).find("td:first-child")[0].innerText;
+        console.log($(this));
+        const StudID = $(this).parent().data('student_id');
+        const semGrID = $(this).parent().data('semgrid');
+        const studentName = $(this)[0].innerHTML;
         $.ajax({
             url: '/assistant/studentAttendanceInfo',
             type: 'POST',
@@ -783,19 +784,18 @@ $(function() {
         .always(function() {
             console.log("complete");
         });
-        
     });
 
     function showAttendanceData(studentName, data) {
         $(".well").removeClass('hide');
         $("#studentName").text("Status for: " + studentName);
         $(".well table tbody").html(data.map(function(index, elem) {
-            return "<tr><td>" + moment(index.date).format('MMMM Do YYYY, h:mm:ss a') + "</td><td>" + index.place + "</td><td>" + formatAttendanceData(index.attended) + "</td></tr>";
+            return "<tr><td>" + moment(index.date).format('MMMM Do YYYY, h:mm:ss a') + "</td><td>" + index.place + "</td>" + formatAttendanceData(index.attended) + "</tr>";
         }))
     }
 
     function formatAttendanceData(attended) {
-        return attended === 1 ? "Yes" : "No";
+        return attended === 1 ? "<td class='success'>Yes</td>" : "<td class='warning'>No</td>";
     }
 
     $("#clearStudentAttendanceInfo").on('click', function(event) {
@@ -803,6 +803,12 @@ $(function() {
         var $well = $(".well");
         $well.addClass('hide');
         $well.find("tbody").html("");
+    });
+
+    $(".studentMessage").on('click', function(event) {
+        console.log("Click");
+        var $input = $(this).find('input');
+        $input.prop("checked", !input.prop("checked"));
     });
 
     function populateDropdown(data) {

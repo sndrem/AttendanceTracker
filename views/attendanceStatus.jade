@@ -2,35 +2,43 @@ extends layout
 block content
     h3 #{title}
     include ./partials/dashboardNavElements
-    
+
     p.special Total number of seminars: #{numOfSeminars}
-    table.table.table-hover
-        thead
-            tr
-                th Name
-                th Attended
-                th Been away
-                th Total
-        tbody
+    form(action="/assistant/sendMessages")
+        .form-group
+            table.table.table-hover
+                thead
+                    tr
+                        th Name
+                        th Attended
+                        th Been away
+                        th Total
+                        th Send message?
+                tbody
 
-        for student in students
-            if student.away <= 0
-                tr.studentAttendanceInfo(data-student_id="#{student.StudID}", data-semgrid="#{semGrID}").success
-                    td #{student.fullName}
-                    td #{student.met}
-                    td #{student.away}
-                    td #{student.totalAttendance}
-            else 
-                tr.studentAttendanceInfo(data-student_id="#{student.StudID}", data-semgrid="#{semGrID}").warning
-                    td #{student.fullName}
-                    td #{student.met}
-                    td #{student.away}
-                    td #{student.totalAttendance}
+                for student in students
+                    if student.away <= 0
+                        tr(data-student_id="#{student.StudID}", data-email="#{student.email}", data-semgrid="#{semGrID}").success
+                            td.studentAttendanceInfo #{student.fullName}
+                            td #{student.met}
+                            td #{student.away}
+                            td #{student.totalAttendance}
+                            td: input(type="checkbox" name="studentMessage[]")
+                    else 
+                        tr(data-student_id="#{student.StudID}",data-email="#{student.email}", data-semgrid="#{semGrID}").warning
+                            td.studentAttendanceInfo #{student.fullName}
+                            td #{student.met}
+                            td #{student.away}
+                            td #{student.totalAttendance}
+                            td: input(type="checkbox" name="studentMessage[]")
 
+        .form-grouo
+            .sendMessage
+                button.pull-right.btn.btn-primary#sendMessagesBtn Send emails
 
     .well.hide
         a#clearStudentAttendanceInfo(href="#") Clear
-        h4#studentName Status for XXX XXX
+        h4#studentName
         table.table.table-striped
             thead
                 tr
@@ -38,6 +46,3 @@ block content
                     th Location
                     th Attended
             tbody
-                
-
-
