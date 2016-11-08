@@ -811,6 +811,43 @@ $(function() {
         $input.prop("checked", !input.prop("checked"));
     });
 
+    $("#sendMessagesBtn").on('click', function(event) {
+        event.preventDefault();
+        var students = [];
+        $("table tr td:nth-child(5) input:checked").each(function(index, el) {
+            var email = $(el).parent().parent().data("email")
+            var beenAway = parseInt($(el).parent().parent().find("td:nth-child(3)")[0].innerHTML);
+            var name = $(el).parent().parent().find("td:nth-child(1)")[0].innerHTML;
+            console.log(beenAway);
+            students.push({
+                    email: email,
+                    beenAway: beenAway,
+                    name: name
+            });
+        });
+      console.log(students);
+      $.ajax({
+          url: '/assistant/sendMessages',
+          type: 'POST',
+          dataType: 'JSON',
+          data: {
+            students: JSON.stringify(students)
+        },
+        success: function(data){
+            console.log(data);
+        },
+      })
+      .done(function() {
+          console.log("success");
+      })
+      .fail(function() {
+          console.log("error");
+      })
+      .always(function() {
+          console.log("complete");
+      });
+    });
+
     function populateDropdown(data) {
         console.log("Should populate dropdown");
         var $selectDiv = $(".multipleNameSelect");

@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser');
 var seminarService = require("../modules/seminar-service");
 var userService = require("../modules/user-service");
 var courseService = require("../modules/course-service");
+var messageService = require("../modules/message-service");
 
 
 /* GET Dashboard page */
@@ -101,6 +102,10 @@ router.get("/attendanceStatus/:semGrID", userService.requireLogin, userService.i
 
 router.post("/studentAttendanceInfo", userService.requireLogin, userService.isAssistant, seminarService.getStudentAttendanceInfo, function(req, res, next) {
     res.status(200).json(req.studentAttendance);
+});
+
+router.post("/sendMessages", userService.requireLogin, userService.isAssistant, messageService.sendMessage, function(req, res, next) {
+    res.status(200).json(JSON.parse(req.body.students));
 });
 
 

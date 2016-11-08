@@ -4,7 +4,7 @@ block content
     include ./partials/dashboardNavElements
 
     p.special Total number of seminars: #{numOfSeminars}
-    form(action="/assistant/sendMessages")
+    form(action="/assistant/sendMessages" method="POST")
         .form-group
             table.table.table-hover
                 thead
