@@ -677,6 +677,7 @@ $(function() {
                 /* iterate through array or object */
                 const html = "<div class=\"col-xs-12 col-sm-12 col-md-6 col-lg-4\">" +
                     "<div class=\"thumbnail\" >" +
+                    "<span class='badge'>" + val.numOfStudents + "</span>" +
                     "<a href=\"/assistant/takeAttendance/" + val.semGrID + "\"><h4>" + val.name + "</h4></a>" +
                     "</div>" +
                     "</div>";

@@ -52,13 +52,17 @@ var courseService ={
 
     getSeminarGroupsFromCourse: function(req, res, next) {
         const courseID = req.body.courseID;
-        const query = "SELECT * FROM seminargroup "
-                    + "WHERE courseID = ?";
+        const query = "SELECT seminargroup.semGrID, courseID, name, count(`is_in_seminar_group`.`StudID`) as numOfStudents FROM seminargroup "
+                    + "LEFT JOIN `is_in_seminar_group` "
+                    + "ON seminargroup.`semGrID` = `is_in_seminar_group`.`semGrID` "
+                    + "WHERE courseID = ? "
+                    + "GROUP BY seminargroup.`semGrID`";
         if(courseID) {
             connection.query(query, [courseID], function(err, result) {
                 if(err) {
                     next(err);
                 } else {
+                    console.log(result);
                     req.resultSet = result;
                     next();
                 }
