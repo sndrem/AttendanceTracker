@@ -813,19 +813,27 @@ $(function() {
 
     $("#sendMessagesBtn").on('click', function(event) {
         event.preventDefault();
+        var confirmation = confirm("This will send out an email to all students you have checked off. Are you sure you want to send the email?");
+        if(confirmation === false) {
+            return;
+        }
         var students = [];
-        $("table tr td:nth-child(5) input:checked").each(function(index, el) {
-            var email = $(el).parent().parent().data("email")
-            var beenAway = parseInt($(el).parent().parent().find("td:nth-child(3)")[0].innerHTML);
-            var name = $(el).parent().parent().find("td:nth-child(1)")[0].innerHTML;
-            console.log(beenAway);
-            students.push({
-                    email: email,
-                    beenAway: beenAway,
-                    name: name
+        var $checkboxes = $("table tr td:nth-child(5) input:checked");
+        if($checkboxes.length > 0) {
+            $checkboxes.each(function(index, el) {
+                var email = $(el).parent().parent().data("email")
+                var beenAway = parseInt($(el).parent().parent().find("td:nth-child(3)")[0].innerHTML);
+                var name = $(el).parent().parent().find("td:nth-child(1)")[0].innerHTML;
+                console.log(beenAway);
+                students.push({
+                        email: email,
+                        beenAway: beenAway,
+                        name: name
+                });
             });
-        });
-      console.log(students);
+        } else {
+            return;
+        }
       $.ajax({
           url: '/assistant/sendMessages',
           type: 'POST',
@@ -847,6 +855,21 @@ $(function() {
           console.log("complete");
       });
     });
+
+    // Makes the send message button active if at least one checkbox is checked
+    $("table tr td:nth-child(5) input").on('change', function(event) {
+        event.preventDefault();
+        var numOfCheckedCheckboxes = getNumOfCheckedCheckboxes();
+        if(numOfCheckedCheckboxes > 0) {
+            $("#sendMessagesBtn").prop('disabled', false);    
+        } else {
+            $("#sendMessagesBtn").prop('disabled', true);
+        }
+    });
+
+    function getNumOfCheckedCheckboxes() {
+        return $("table tr td:nth-child(5) input:checked").length;
+    }
 
     function populateDropdown(data) {
         console.log("Should populate dropdown");
