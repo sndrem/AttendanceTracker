@@ -806,7 +806,6 @@ $(function() {
     });
 
     $(".studentMessage").on('click', function(event) {
-        console.log("Click");
         var $input = $(this).find('input');
         $input.prop("checked", !input.prop("checked"));
     });
@@ -824,7 +823,6 @@ $(function() {
                 var email = $(el).parent().parent().data("email")
                 var beenAway = parseInt($(el).parent().parent().find("td:nth-child(3)")[0].innerHTML);
                 var name = $(el).parent().parent().find("td:nth-child(1)")[0].innerHTML;
-                console.log(beenAway);
                 students.push({
                         email: email,
                         beenAway: beenAway,
@@ -842,7 +840,12 @@ $(function() {
             students: JSON.stringify(students)
         },
         success: function(data){
-            console.log(data);
+            $(".sendMessage").append("<div class='alert alert-success'>Mail successfully sent</div>");
+            myApp.resetForm();
+            setTimeout(function(){
+                $(".alert").remove();
+            }, 5000);
+
         },
       })
       .done(function() {
@@ -867,6 +870,7 @@ $(function() {
         }
     });
 
+    // Returns the number of checked checkboxes
     function getNumOfCheckedCheckboxes() {
         return $("table tr td:nth-child(5) input:checked").length;
     }
