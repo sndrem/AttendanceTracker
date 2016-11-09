@@ -268,7 +268,7 @@ var seminarService = {
                     + "JOIN seminargroup  "
                     + "ON seminargroup.`semGrID` = seminar.`semGrID` "
                     + "WHERE `person`.`StudID`= ? AND seminargroup.`courseID` = ? "
-                    + "ORDER BY seminar.`date` ";
+                    + "ORDER BY seminar.`date` desc ";
         connection.query(query, [userID, courseID], function(err, result) {
             if(err) {
                 next(err);
