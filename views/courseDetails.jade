@@ -22,7 +22,7 @@ block content
         tbody
             for attendance in attendances
                 tr
-                    td #{attendance.date}
+                    td #{moment(attendance.date).format('DD/MM/YYYY HH:MM')}
                     td #{attendance.name}
                     td #{attendance.place}
                     td #{attendance.duration} minutes
