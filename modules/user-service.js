@@ -73,6 +73,27 @@ var userService = {
         });
     },
 
+    updateUserProfile: function(req, res, next) {
+        console.log(req.body.user);
+        var user = JSON.parse(req.body.user);
+        const firstName = user.firstName;
+        console.log("First name: ", firstName);
+        const lastName = user.lastName;
+        const email = user.email;
+        const userID = req.session.user.StudID;
+
+        const query = "UPDATE person SET fName = ?, lName = ?, eMail = ? WHERE StudID = ?";
+        connection.query(query, [firstName, lastName, email, userID], function(err, result) {
+            if(err) {
+                next(err);
+                console.log("Error: ", err);
+            } else {
+                req.resultSet = result;
+                next();
+            }
+        });
+    },
+
     // Adds a user to the admin table as an assistant
     registerUserAsAssistant: function(req, res, next) {
         const adminID = req.body.studentID;

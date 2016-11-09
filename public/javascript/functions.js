@@ -68,7 +68,29 @@ $(function() {
 
     myApp.updateProfile = function(user) {
         // TODO Implement update functionality
-        console.log(user);
+        if(user) {
+            $.ajax({
+                url: '/updateProfile',
+                type: 'POST',
+                dataType: 'JSON',
+                data: {
+                    user: JSON.stringify(user)
+                },
+                success: function(data) {
+                    console.log(data);
+                }
+            })
+            .done(function() {
+                console.log("success");
+            })
+            .fail(function() {
+                console.log("error");
+            })
+            .always(function() {
+                console.log("complete");
+            });
+            
+        }
     };
 
     myApp.isValidEmail = function(email) {
