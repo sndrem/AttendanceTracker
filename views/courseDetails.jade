@@ -2,7 +2,7 @@ extends layout
 
 block content
     h3 #{title}
-
+    include ./partials/dashboardNavElements
     p Here is an overview over your attendance for #{groupDetails.courseID} - #{groupDetails.name}
     p If you want to check your absence for a given group, please choose the right group from the list below
     ul

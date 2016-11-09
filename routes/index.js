@@ -49,6 +49,10 @@ router.post("/login", userService.authenticate, userService.checkAdminStatus, fu
     res.status(200).json(data);
 });
 
+router.get("/updateProfile", userService.requireLogin, function(req, res, next) {
+    res.render("updateProfile");
+});
+
 router.post("/updateProfile", userService.requireLogin, userService.updateUserProfile, function(req, res, next) {
     res.status(200).json(JSON.parse(req.body.user));
 });
