@@ -4,12 +4,14 @@ block content
     h3 #{title}
     include ./partials/dashboardNavElements
     p Here is an overview over your attendance for #{groupDetails.courseID} - #{groupDetails.name}
-    p If you want to check your absence for a given group, please choose the right group from the list below
-    ul
-        li: a(href="/student/seminarDetails/#{groupDetails.courseID}") All attendance
-        for seminar in seminarGroups
-            li: a(href="/student/seminarDetails/#{groupDetails.courseID}/#{seminar.semGrID}") #{seminar.name}
-
+    .row
+        .col-xs-12.col-sm-12.col-md-6.col-lg-6
+            p If you want to check your absence for a given group, please choose the right group from the list below
+            ul
+                li: a(href="/student/seminarDetails/#{groupDetails.courseID}") All attendance
+                for seminar in seminarGroups
+                    li: a(href="/student/seminarDetails/#{groupDetails.courseID}/#{seminar.semGrID}") #{seminar.name}
+        
     table.table.table-striped
         thead
             tr

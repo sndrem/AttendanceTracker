@@ -70,6 +70,23 @@ var seminarService = {
         });
     },
 
+    getUserSeminarGroups: function(req, res, next) {
+        const StudID = req.session.user.StudID;
+        const query = "SELECT StudID, seminargroup.semGrID, courseID, name "
+                    + "FROM `is_in_seminar_group` "
+                    + "JOIN `seminargroup` "
+                    + "ON `is_in_seminar_group`.`semGrID` = seminargroup.`semGrID`  "
+                    + "WHERE `is_in_seminar_group`.`StudID` = ? ";
+        connection.query(query, [StudID], function(err, result) {
+            if(err) {
+                next(err);
+            } else {
+                req.userSeminarGroups = result;
+                next();
+            }
+        });
+    },
+
     /*
     Retrieves all seminar groups
      */
@@ -224,7 +241,7 @@ var seminarService = {
     Removes a user from a seminar
      */
     removeUserFromSeminar: function(req, res, next) {
-        const seminarID = req.params.semGrID;
+        const seminarID = req.params.courseID;
         const userID = req.user.StudID;
         const query = 'DELETE FROM is_in_seminar_group '
                     + 'WHERE StudID = ? AND semGrID = ?';

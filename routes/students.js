@@ -7,12 +7,14 @@ var seminarService = require("../modules/seminar-service");
 var userService = require("../modules/user-service");
 
 /* GET Dashboard page */
-router.get("/dashboard", userService.requireLogin, seminarService.getUserCourses, function(req, res, next) {
+router.get("/dashboard", userService.requireLogin, seminarService.getUserCourses, seminarService.getUserSeminarGroups, function(req, res, next) {
     var model = {
         title: 'Dashboard',
         courses: req.userCourses,
-        user: req.session.user
+        user: req.session.user,
+        groups: req.userSeminarGroups
     }
+    console.log(model);
     res.render("dashboard", model);
 });
 
