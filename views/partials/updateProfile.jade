@@ -1,0 +1,19 @@
+.panel.panel-default
+    .panel-heading
+        h4 Update your profile, #{user.fName}
+    .panel-body
+        form(action="#", method="POST")
+            legend#statusMessage
+
+            .form-group
+                label(for="firstName") First Name
+                input.form-control(type="text" id="firstName" value="#{user.fName}" name="firstName" placeholder="First name")
+            .form-group
+                label(for="lastName") Last Name
+                input.form-control(type="text" id="lastName" value="#{user.lName}" name="lastName" placeholder="Last name")
+            .form-group
+                label(for="email") Email
+                input.form-control(type="email" id="email" value="#{user.eMail}" name="email" placeholder="Email")
+
+            .form-group
+                button.btn.btn-primary.form-control#updateProfileBtn Update Profile
