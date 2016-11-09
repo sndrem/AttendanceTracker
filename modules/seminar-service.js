@@ -241,7 +241,7 @@ var seminarService = {
     Removes a user from a seminar
      */
     removeUserFromSeminar: function(req, res, next) {
-        const seminarID = req.params.courseID;
+        const seminarID = req.params.semGrID;
         const userID = req.user.StudID;
         const query = 'DELETE FROM is_in_seminar_group '
                     + 'WHERE StudID = ? AND semGrID = ?';
