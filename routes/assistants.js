@@ -108,6 +108,10 @@ router.post("/sendMessages", userService.requireLogin, userService.isAssistant, 
     res.status(200).json(JSON.parse(req.body.students));
 });
 
+router.post("/deleteSeminar/:semGrID/:prevSemId", userService.requireLogin, userService.isAssistant, seminarService.deleteSeminar, function(req, res, next) {
+    res.redirect("/assistant/registerAttendance");
+});
+
 
 
 module.exports = router;

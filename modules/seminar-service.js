@@ -653,6 +653,23 @@ var seminarService = {
                 next();
             }
         });
+    },
+
+    deleteSeminar: function(req, res, next) {
+        const semID = req.body.seminarID;
+        const seminarGroupID = req.body.semGrID;
+        console.log("SemID: ", semID);
+        console.log("seminarGroupID: ", seminarGroupID);
+        const query = "DELETE from seminar WHERE semID = ? AND semGrID = ?";
+        connection.query(query, [semID, seminarGroupID], function(err, result) {
+            if(err) {
+                next(err);
+            } else {
+                next();
+            }
+        }); 
+
+        next();
     }
 }
 
