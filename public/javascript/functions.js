@@ -77,7 +77,9 @@ $(function() {
                     user: JSON.stringify(user)
                 },
                 success: function(data) {
-                    console.log(data);
+                    // console.log(data);
+                    $(".panel").addClass("panel-success");
+                    $(".glyphicon-ok").removeClass('hide');
                 }
             })
             .done(function() {

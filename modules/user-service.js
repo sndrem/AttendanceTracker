@@ -89,6 +89,7 @@ var userService = {
                 console.log("Error: ", err);
             } else {
                 req.resultSet = result;
+                req.session.user.eMail = email;
                 next();
             }
         });
