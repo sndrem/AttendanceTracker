@@ -9,26 +9,49 @@ block content
         include ./partials/dashboardNavElements
 
     h4 Search for Courses
-    form
-        .form-group
-            input.form-control(type="course" id="inputCourse" name="course" placeholder="INFO132" style="width: 20%")
-    table#courseTable.table-hover.table.table-responsive.hide
-        thead
-            tr
-                th Course ID
-                th Name
-                th Semester
-                th Attendance
-        tbody
-    section.seminars.row
-        for course in courses
-            .col-xs-12.col-sm-12.col-md-6.col-lg-4
-                .thumbnail
-                    a(href="/student/seminarDetails/#{course.courseID}")
-                        h4 #{course.courseID} - #{course.name}
+    .row
+        .col-xs-12.col-sm-12.col-md-8.col-lg-8
+            form
+                .form-group
+                    input.form-control(type="course" id="inputCourse" name="course" placeholder="INFO132" style="width: 20%")
+            table#courseTable.table-hover.table.table-responsive.hide
+                thead
+                    tr
+                        th Course ID
+                        th Name
+                        th Semester
+                        th Attendance
+                tbody
+            section.seminars
+                for course in courses
+                    .col-xs-12.col-sm-12.col-md-6.col-lg-4.thumbnail
+                        a(href="/student/seminarDetails/#{course.courseID}")
+                            h4 #{course.courseID} - #{course.name}
+                        p
+                            a(href="/student/removeSeminar/#{course.semGrID}").btn.btn-danger Remove Seminar
+        .col-xs-12.col-sm-12.col-md-4.col-lg-4
+            .panel.panel-default
+                .panel-heading
+                    h4 Update your profile, #{user.fName}
+                .panel-body
+                    form(action="/updateProfile", method="POST")
+                        legend#statusMessage
+        
+                        .form-group
+                            label(for="firstName") First Name
+                            input.form-control(type="text" id="firstName" value="#{user.fName}" name="firstName" placeholder="First name")
+                        .form-group
+                            label(for="lastName") Last Name
+                            input.form-control(type="text" id="lastName" value="#{user.lName}" name="lastName" placeholder="Last name")
+                        .form-group
+                            label(for="email") Email
+                            input.form-control(type="email" id="email" value="#{user.eMail}" name="email" placeholder="Email")
 
-                    p
-                        a(href="/student/removeSeminar/#{course.semGrID}").btn.btn-danger Remove Seminar
+                        .form-group
+                            button.btn.btn-primary.form-control#updateProfileBtn Update Profile
+
+    
+        
 
 
 
