@@ -1,3 +1,4 @@
+require('dotenv').config();
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -7,6 +8,8 @@ var bodyParser = require('body-parser');
 var expressValidator = require("express-validator");
 var session = require('client-sessions');
 var connection = require('./modules/connection');
+
+
 
 var userService = require("./modules/user-service");
 var routes = require('./routes/index');
