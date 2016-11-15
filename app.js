@@ -1,3 +1,4 @@
+// Henter .env-fil og laster environment variables
 require('dotenv').config();
 var express = require('express');
 var path = require('path');
