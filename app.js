@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var expressValidator = require("express-validator");
 var session = require('client-sessions');
+var connection = require('./modules/connection');
 
 var userService = require("./modules/user-service");
 var routes = require('./routes/index');

@@ -4,17 +4,9 @@
     Date: 04.10.2016
 */
 
-var mysql = require('mysql');
-var userService = require("../modules/user-service")
-var mysql = require('mysql');
+var userService = require("../modules/user-service");
 var salt = "85478tug9efunc78ryw378e983wud";
-var connection = mysql.createConnection({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PWD,
-    database: process.env.DB_DATABASE,
-    multipleStatements: true
-});
+var connection = require('../modules/connection');
 
 var courseService ={
 

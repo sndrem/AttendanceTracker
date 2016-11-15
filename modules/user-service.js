@@ -1,14 +1,7 @@
 var crypto = require('crypto');
 var connection = require("../modules/connection");
-var mysql = require('mysql');
 var utilities = require("../modules/utilities");
-var connection = mysql.createConnection({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PWD,
-    database: process.env.DB_DATABASE,
-    multipleStatements: true
-});
+
 
 var userService = {
     registerUser: function(req, res, next) {

@@ -1,5 +1,4 @@
 var mysql = require('mysql');
-var connectObject = {};
 var connection = mysql.createConnection({
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
@@ -8,9 +7,4 @@ var connection = mysql.createConnection({
     multipleStatements: true
 });
 
-connectObject.connect = function() {
-    console.log("Connecting to database");
-    return connection.connect();
-}
-
-module.exports = connectObject;
+module.exports = connection;

@@ -1,15 +1,7 @@
-var mysql = require('mysql');
 var moment = require('moment');
 var userService = require("../modules/user-service")
-var mysql = require('mysql');
 var salt = "85478tug9efunc78ryw378e983wud";
-var connection = mysql.createConnection({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PWD,
-    database: process.env.DB_DATABASE,
-    multipleStatements: true
-});
+var connection = require('../modules/connection');
 
 var seminarService = {
 
