@@ -5,8 +5,7 @@ $(function() {
         assistent: 'assistent'
     }
 
-
-
+// #################  My app ####################
     myApp.login = function(email, password) {
         // TODO Post request to server
         // Server should log in
@@ -91,7 +90,6 @@ $(function() {
             .always(function() {
                 console.log("complete");
             });
-            
         }
     };
 
@@ -225,9 +223,9 @@ $(function() {
         .always(function() {
             console.log("complete");
         });
-        
     };
 
+    // ######### Functions ##########
     function populateTable(data) {
         var $table = $("table");
         var $tbody = $("table tbody");
@@ -248,6 +246,66 @@ $(function() {
         });
     }
 
+    function getStudentAttendanceList() {
+        // Get all students 
+        var students = [];
+        var cancelled = isSeminarCancelled();
+        $(".student-attendance").each(function(index, element) {
+            // if the seminar is cancelled, everyone gets registered as attended
+            if(cancelled === 1) {
+                students.push({
+                    StudID: $(element).val(),
+                    attended: true
+                });
+            } else {
+                students.push({
+                    StudID: $(element).val(),
+                    attended: $(element).prop('checked')
+                });
+            }
+        });
+        return students;
+    }
+
+    function isSeminarCancelled() {
+        return +$("#cancelledCheckBox").prop('checked');
+    }
+
+    function getPlaceOfSeminar() {
+        return $("#placeSelection").val();;
+    }
+
+    function getSemGrID() {
+        return $("#semGrID").val();
+    }
+
+     function resetAttendanceBtnClickListener(semGrID) {
+        $("#resetAttendanceBtn").on('click', function(event) {
+            event.preventDefault();
+            document.location.href = "/assistant/takeAttendance/" + semGrID;
+        });
+    }
+
+     function isEmpty(value) {
+        return value.length == 0;
+    }
+
+    // Returns the number of checked checkboxes
+    function getNumOfCheckedCheckboxes() {
+        return $("table tr td:nth-child(5) input:checked").length;
+    }
+
+    function populateDropdown(data) {
+        console.log("Should populate dropdown");
+        var $selectDiv = $(".multipleNameSelect");
+        var $select = $("#multipleNameSelect");
+        $selectDiv.removeClass('hide');
+        $select.html("");
+        for(var i = 0; i < data.length; i++) {
+            $select.append("<option value=\"" + data[i].StudID + "\">" + data[i].fName + " " + data[i].lName + "</option>");
+        }
+    }
+
     $("#removeStudentAsAssistant").on('click', function(event) {
         event.preventDefault();
         var confirmation = confirm("Are you sure you want to remove the student as an assistant? This step cannot be undone, so use it with care");
@@ -258,6 +316,36 @@ $(function() {
             return;
         }
     });
+
+    // Function to show thumbnail cards for some data
+    function showSeminarGroupCards(data) {
+        if (data) {
+            var $seminar = $("section.seminars");
+            $seminar.html("");
+            $.each(data, function(index, val) {
+                /* iterate through array or object */
+                const html = "<div class=\"col-xs-12 col-sm-12 col-md-6 col-lg-4\">" +
+                    "<div class=\"thumbnail\" >" +
+                    "<span class='badge'>" + val.numOfStudents + "</span>" +
+                    "<a href=\"/assistant/takeAttendance/" + val.semGrID + "\"><h4>" + val.name + "</h4></a>" +
+                    "</div>" +
+                    "</div>";
+                $seminar.append(html);
+            });
+        }
+    }
+
+    function showAttendanceData(studentName, data) {
+        $(".well").removeClass('hide');
+        $("#studentName").text("Status for: " + studentName);
+        $(".well table tbody").html(data.map(function(index, elem) {
+            return "<tr><td>" + moment(index.date).format('MMMM Do YYYY, h:mm:ss a') + "</td><td>" + index.place + "</td>" + formatAttendanceData(index.attended) + "</tr>";
+        }))
+    }
+
+    function formatAttendanceData(attended) {
+        return attended === 1 ? "<td class='success'>Yes</td>" : "<td class='warning'>No</td>";
+    }
 
 
 
@@ -376,38 +464,7 @@ $(function() {
 
     });
 
-    function getStudentAttendanceList() {
-        // Get all students 
-        var students = [];
-        var cancelled = isSeminarCancelled();
-        $(".student-attendance").each(function(index, element) {
-            // if the seminar is cancelled, everyone gets registered as attended
-            if(cancelled === 1) {
-                students.push({
-                    StudID: $(element).val(),
-                    attended: true
-                });
-            } else {
-                students.push({
-                    StudID: $(element).val(),
-                    attended: $(element).prop('checked')
-                });
-            }
-        });
-        return students;
-    }
-
-    function isSeminarCancelled() {
-        return +$("#cancelledCheckBox").prop('checked');
-    }
-
-    function getPlaceOfSeminar() {
-        return $("#placeSelection").val();;
-    }
-
-    function getSemGrID() {
-        return $("#semGrID").val();
-    }
+    
 
     $("#registerAttendanceBtn").on('click', function(event) {
         event.preventDefault();
@@ -497,12 +554,7 @@ $(function() {
         });
     });
 
-    function resetAttendanceBtnClickListener(semGrID) {
-        $("#resetAttendanceBtn").on('click', function(event) {
-            event.preventDefault();
-            document.location.href = "/assistant/takeAttendance/" + semGrID;
-        });
-    }
+   
 
     $("#previousSeminar").on('change', function(event) {
         event.preventDefault();
@@ -551,9 +603,7 @@ $(function() {
         $table.addClass('hide');
     });
 
-    function isEmpty(value) {
-        return value.length == 0;
-    }
+   
 
 
     $("#searchForGroup").on('click', function(e) {
@@ -735,23 +785,9 @@ $(function() {
     // Trigger change at page load so the chosen element is fetching data at page load
     $("#courseSelection").trigger('change');
 
-    // Function to show thumbnail cards for some data
-    function showSeminarGroupCards(data) {
-        if (data) {
-            var $seminar = $("section.seminars");
-            $seminar.html("");
-            $.each(data, function(index, val) {
-                /* iterate through array or object */
-                const html = "<div class=\"col-xs-12 col-sm-12 col-md-6 col-lg-4\">" +
-                    "<div class=\"thumbnail\" >" +
-                    "<span class='badge'>" + val.numOfStudents + "</span>" +
-                    "<a href=\"/assistant/takeAttendance/" + val.semGrID + "\"><h4>" + val.name + "</h4></a>" +
-                    "</div>" +
-                    "</div>";
-                $seminar.append(html);
-            });
-        }
-    }
+
+
+
 
     // This function call appends the value written in the courseID field
     // to the groupName-field used when creating a new seminargroup
@@ -853,17 +889,7 @@ $(function() {
         });
     });
 
-    function showAttendanceData(studentName, data) {
-        $(".well").removeClass('hide');
-        $("#studentName").text("Status for: " + studentName);
-        $(".well table tbody").html(data.map(function(index, elem) {
-            return "<tr><td>" + moment(index.date).format('MMMM Do YYYY, h:mm:ss a') + "</td><td>" + index.place + "</td>" + formatAttendanceData(index.attended) + "</tr>";
-        }))
-    }
 
-    function formatAttendanceData(attended) {
-        return attended === 1 ? "<td class='success'>Yes</td>" : "<td class='warning'>No</td>";
-    }
 
     $("#clearStudentAttendanceInfo").on('click', function(event) {
         event.preventDefault();
@@ -937,21 +963,7 @@ $(function() {
         }
     });
 
-    // Returns the number of checked checkboxes
-    function getNumOfCheckedCheckboxes() {
-        return $("table tr td:nth-child(5) input:checked").length;
-    }
 
-    function populateDropdown(data) {
-        console.log("Should populate dropdown");
-        var $selectDiv = $(".multipleNameSelect");
-        var $select = $("#multipleNameSelect");
-        $selectDiv.removeClass('hide');
-        $select.html("");
-        for(var i = 0; i < data.length; i++) {
-            $select.append("<option value=\"" + data[i].StudID + "\">" + data[i].fName + " " + data[i].lName + "</option>");
-        }
-    }
 
     $("#multipleNameSelect").on('blur change', function(event) {
         event.preventDefault();
