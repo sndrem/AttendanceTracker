@@ -32,9 +32,19 @@ block content
                             td #{student.totalAttendance}
                             td: input(type="checkbox" name="studentMessage[]")
 
-        .form-grouo
+                
+        .form-group
+            #messageFormatting.hide
+                h4 Placeholder tags
+                p Please use the following placeholder tags to customise the emails. 
+                ul
+                    li {name} - Replaces the tag with the full name of the student
+                    li {beenAway} - Replaces the tag with the number of seminars the student has been away
+                #froala
+        .form-group
             .sendMessage
                 button(disabled).pull-right.btn.btn-primary#sendMessagesBtn Send emails
+
 
     .well.hide
         a#clearStudentAttendanceInfo(href="#") Clear
