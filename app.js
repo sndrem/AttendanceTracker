@@ -1,5 +1,17 @@
+process.env.NODE_ENV = process.env.NODE_ENV || "production";
 // Henter .env-fil og laster environment variables
-require('dotenv').config();
+console.log(process.env.NODE_ENV);
+if(process.env.NODE_ENV === 'test') {
+    console.log("In test environment...");
+    require('dotenv').config({
+        path: "test.env"
+    });
+    console.log("Using .env-variables from test.env-file");
+} else {
+    require('dotenv').config();
+    console.log("Using .env-variables from .env-file");
+}
+
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
