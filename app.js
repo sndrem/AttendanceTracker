@@ -1,15 +1,15 @@
-process.env.NODE_ENV = process.env.NODE_ENV || "production";
+process.env.NODE_ENV = process.env.NODE_ENV || "test";
 // Henter .env-fil og laster environment variables
 console.log(process.env.NODE_ENV);
-if(process.env.NODE_ENV === 'test') {
+if(process.env.NODE_ENV === 'production') {
+    require('dotenv').config();
+    console.log("Using .env-variables from .env-file");
+} else {
     console.log("In test environment...");
     require('dotenv').config({
         path: "test.env"
     });
     console.log("Using .env-variables from test.env-file");
-} else {
-    require('dotenv').config();
-    console.log("Using .env-variables from .env-file");
 }
 
 var express = require('express');
