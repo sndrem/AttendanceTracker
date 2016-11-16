@@ -875,8 +875,6 @@ $(function() {
         }
     });
 
-<<<<<<< HEAD
-
     $("#courseSelection").on('change', function(e) {
         e.preventDefault();
         const $select = $("#courseSelection");
@@ -992,8 +990,7 @@ $(function() {
         var $this = $(this);
     });
 
-=======
->>>>>>> 74a944d35cdc08b4d7a4b6b2a4e9d9d4b7d75cca
+
     $("#resetForm").on('click', function(event) {
         event.preventDefault();
         myApp.resetForm();
@@ -1092,7 +1089,6 @@ $(function() {
       });
     });
 
-<<<<<<< HEAD
     // Makes the send message button active if at least one checkbox is checked
     $("table tr td:nth-child(5) input").on('change', function(event) {
         event.preventDefault();
@@ -1139,8 +1135,6 @@ $(function() {
         });
     });
 
-=======
->>>>>>> 74a944d35cdc08b4d7a4b6b2a4e9d9d4b7d75cca
     // Method for checking all input boxes
     $("#checkAllAttendanceBtn").on('click', function(event) {
         event.preventDefault();
@@ -1156,7 +1150,6 @@ $(function() {
         });
     });
 
-<<<<<<< HEAD
     // Method to populate the registration fields for the creation of a new student assistant
     function unhideformFields() {
         $("form div.hide").each(function(index, val) {
@@ -1305,8 +1298,6 @@ $(function() {
         });
     };
 
-=======
->>>>>>> 74a944d35cdc08b4d7a4b6b2a4e9d9d4b7d75cca
     $("#createCourseBtn").on("click", function(e){
         e.preventDefault();
         var $status = $("#status");
