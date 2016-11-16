@@ -1,20 +1,20 @@
-## Hvordan koble til de to ulike databasene
-1. Pass på at du har en database som heter atdb - Dette er produksjonsdatabasen
-2. Pass på at du har en database som heter testAtdb - Dette er testdatabasen
+## How to connect to the two databases:
+1. Make sure you have a database that is called atdb - This is the production database.
+2. Make sure you have a database that is called testAtdb - This is the test database.
 
-3. Dersom du ønsker å utvikle mot testdatabasen så holder det å skrive inn npm start
+3. If you are planning to develop on the test database, just write npm start.
 
-4. Dersom du ønsker å utvikle mot produksjonsdatasen (det må du aldri gjøre) så er det ulike fremgangsmåter for Mac og Windows.
+4. If you are planning to develop on the production database (don't ever do that) then there are different ways of doing it for mac and windows:
 
 #### For Mac
-skriv 
+write
 ```
-env NODE_ENV=test npm start
+env NODE_ENV=production npm start
 ```
 
 #### For Windows
-skriv 
+write
 ```
-set NODE_ENV=test
+set NODE_ENV=production
 npm start
 ```
