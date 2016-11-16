@@ -52,7 +52,6 @@ $(function() {
                 confirmPassword: confirmPassword
             },
             success: function(data) {
-                console.log(data);
                 document.location.href = "/login";
             }
         })
@@ -60,7 +59,8 @@ $(function() {
             console.log("success");
         })
         .fail(function() {
-            $("#statusMessage").html("<p class='bg-warning'>There is already a user with that username or mail address</p>")
+            $("#statusMessage").html(
+                "<p class='bg-warning'>There is already a user with that username or mail address</p>")
         })
         .always(function() {
             console.log("complete");
@@ -186,8 +186,6 @@ $(function() {
                 courseID: courseID
             },
             success: function(data) {
-                console.log(data);
-                // location.reload();
             }
         })
         .done(function() {
@@ -213,7 +211,6 @@ $(function() {
             },
         })
         .done(function() {
-            console.log("success");
             $("legend").html(studentID + " was successfully removed as an assistant");
             setTimeout(function() {
                 document.location.reload();
@@ -642,7 +639,6 @@ $(function() {
                 status: cancelled
             },
             success: function(data) {
-                // console.log(data);
             }
         })
         .done(function(insertID) {
@@ -751,7 +747,6 @@ $(function() {
                     data: {},
                     async: true,
                     success: function(data) {
-                        console.log(data);
                         showSeminarList(data);
                         addClickEventForSeminarRegistration();
                     }
@@ -880,6 +875,122 @@ $(function() {
         }
     });
 
+    $("#courseSelection").on('change', function(e) {
+        e.preventDefault();
+        const $select = $("#courseSelection");
+        const courseID = $select.val();
+        $("section.seminars").html("");
+        $.ajax({
+                url: '/assistant/getSeminarGroupsFromCourse',
+                type: 'POST',
+                dataType: 'JSON',
+                data: {
+                    courseID: courseID
+                },
+                async: true,
+                success: function(data) {
+                    if (data.length > 0) {
+                        showSeminarGroupCards(data);
+                    } else {
+                        $("section.seminars").html("<p>There are no seminar groups created for " + $("#courseSelection option:selected").text() + " </p>");
+                    }
+
+                }
+            })
+            .done(function() {
+                console.log("success");
+            })
+            .fail(function() {
+                console.log("error");
+            })
+            .always(function() {
+                console.log("complete");
+            });
+    });
+
+    // Trigger change at page load so the chosen element is fetching data at page load
+    $("#courseSelection").trigger('change');
+
+    // Function to show thumbnail cards for some data
+    function showSeminarGroupCards(data) {
+        if (data) {
+            var $seminar = $("section.seminars");
+            $seminar.html("");
+            $.each(data, function(index, val) {
+                /* iterate through array or object */
+                const html = "<div class=\"col-xs-12 col-sm-12 col-md-6 col-lg-4\">" +
+                    "<div class=\"thumbnail\" >" +
+                    "<span class='badge'>" + val.numOfStudents + "</span>" +
+                    "<a href=\"/assistant/takeAttendance/" + val.semGrID + "\"><h4>" + val.name + "</h4></a>" +
+                    "</div>" +
+                    "</div>";
+                $seminar.append(html);
+            });
+        }
+    }
+
+    // This function call appends the value written in the courseID field
+    // to the groupName-field used when creating a new seminargroup
+    $("#courseID").keyup(function(e) {
+        const value = $(this).val();
+        $("#groupName").val(value);
+    });
+
+    // This function call is called when an admin enters the student id when 
+    // registering a student assistant
+    $("#studentID").on("keyup change", function(e) {
+        /* Act on the event */
+        var $this = $(this);
+        colorMarkElement($this, '#fff');
+        // Vi sjekker ikke brukere dersom de har en studentid under 5 karakterer lang.
+        if ($this.val().length >= 1) {
+            var studentID = $this.val();
+            $.ajax({
+                    url: '/common/checkExistingUser',
+                    type: 'POST',
+                    dataType: 'JSON',
+                    data: {
+                        studentID: studentID
+                    },
+                    success: function(data) {
+                        if (data) {
+                            if(data.length > 1) {
+                                // showWarningMessage
+                                populateDropdown(data);
+                            } else {
+                                colorMarkElement($this, '#91C368');
+                                unhideformFields();
+                                populateRegistrationFields(data);
+                                $(".multipleNameSelect").addClass('hide');
+                                $("#createSeminarAssBtn").prop('disabled', false);
+                            }
+                        } else {
+                            hideFormFields();
+                            colorMarkElement($this, '#FC4F4F');
+                        }
+                    }
+                })
+                .done(function() {
+                    console.log("success");
+                })
+                .fail(function() {
+                    console.log("error");
+                })
+                .always(function() {
+                    console.log("complete");
+                });
+        } else {
+            hideFormFields();
+            $(".multipleNameSelect").addClass('hide');
+        }
+    });
+
+    $("#assistantUser").on('keyup change', function(e) {
+        e.preventDefault();
+        var $this = $(this);
+    });
+
+
     $("#resetForm").on('click', function(event) {
         event.preventDefault();
         myApp.resetForm();
@@ -890,7 +1001,7 @@ $(function() {
     // Functionality for getting more attendance info for a given student
     $(".studentAttendanceInfo").on('click', function(event) {
         event.preventDefault();
-        console.log($(this));
+
         const StudID = $(this).parent().data('student_id');
         const semGrID = $(this).parent().data('semgrid');
         const studentName = $(this)[0].innerHTML;
@@ -978,6 +1089,52 @@ $(function() {
       });
     });
 
+    // Makes the send message button active if at least one checkbox is checked
+    $("table tr td:nth-child(5) input").on('change', function(event) {
+        event.preventDefault();
+        var numOfCheckedCheckboxes = getNumOfCheckedCheckboxes();
+        if(numOfCheckedCheckboxes > 0) {
+            $("#sendMessagesBtn").prop('disabled', false);    
+        } else {
+            $("#sendMessagesBtn").prop('disabled', true);
+        }
+    });
+
+    // Returns the number of checked checkboxes
+    function getNumOfCheckedCheckboxes() {
+        return $("table tr td:nth-child(5) input:checked").length;
+    }
+
+    function populateDropdown(data) {
+        var $selectDiv = $(".multipleNameSelect");
+        var $select = $("#multipleNameSelect");
+        $selectDiv.removeClass('hide');
+        $select.html("");
+        for(var i = 0; i < data.length; i++) {
+            $select.append("<option value=\"" + data[i].StudID + "\">" + data[i].fName + " " + data[i].lName + "</option>");
+        }
+    }
+
+    $("#multipleNameSelect").on('blur change', function(event) {
+        event.preventDefault();
+        var value = $(this).val();
+        var $studentID = $("#studentID");
+        $studentID.val(value);
+        $studentID.trigger('change');
+    });
+
+    //sort the table on text input for courses
+    $("#inputCourse").keyup(function() {
+        _this = this;
+
+        $.each($("#courseTable tbody tr"), function() {
+            if ($(this).text().toLowerCase().indexOf($(_this).val().toLowerCase()) === -1)
+                $(this).hide();
+            else
+                $(this).show();
+        });
+    });
+
     // Method for checking all input boxes
     $("#checkAllAttendanceBtn").on('click', function(event) {
         event.preventDefault();
@@ -993,6 +1150,154 @@ $(function() {
         });
     });
 
+    // Method to populate the registration fields for the creation of a new student assistant
+    function unhideformFields() {
+        $("form div.hide").each(function(index, val) {
+            /* iterate through array or object */
+            $(val).removeClass('hide');
+        });
+    }
+
+    function hideFormFields() {
+        $("#firstName").parent().addClass('hide');
+        $("#lastName").parent().addClass('hide');
+        $("#email").parent().addClass('hide');
+    }
+
+
+    function populateRegistrationFields(data) {
+        var $firstName = $("#firstName");
+        var $lastName = $("#lastName");
+        var $email = $("#email");
+        var $studentID = $("#studentID");
+
+        $studentID.val(data.StudID);
+        $firstName.val(data.fName).prop('disabled', true);
+        $lastName.val(data.lName).prop('disabled', true);
+        $email.val(data.eMail).prop('disabled', true);
+
+    }
+
+    // Function to mark a element as green
+    function colorMarkElement(element, color) {
+        element.css('background-color', color);
+        element.css('color', '#2d2d2d');
+    }
+
+
+    function addClickEventForSeminarRegistration() {
+        $(".registerForSeminarBtn").on('click', function(e) {
+            e.preventDefault();
+            var seminarKey = $(this).data('seminarkey');
+            var courseID = $(this).data('courseid');
+            $.ajax({
+                    url: '/student/signUpForSeminar/' + seminarKey,
+                    type: 'POST',
+                    dataType: 'JSON',
+                    data: {
+                        seminarGroup: seminarKey,
+                        courseID: courseID
+                    },
+                    success: function(data) {
+                        alert(data);
+                    }
+                })
+                .done(function() {
+                    console.log("success");
+                })
+                .fail(function(data) {
+                    console.log("error");
+                })
+                .always(function() {
+                    console.log("complete");
+                    location.reload();
+                });
+        });
+    }
+
+    function showSeminarList(data) {
+        var $table = $("#courseTable tbody");
+
+        for (var i = 0; i < data.length; i++) {
+
+            var course = data[i];
+
+            $(
+                "[data-courseid=" + course.courseID + "]").after(
+                "<tr class=semHead" + course.courseID + ">" +
+                "<th></th>" + 
+                "<th></th>" + 
+                "<th>Seminar Group</th>" + 
+                "<th>Registrer</th></tr>" + 
+                "<tr class=semInfo>" +
+                "<td></td>" + 
+                "<td></td>" +
+                "<td>" + course.name + "</td>" +
+                "<td>" + 
+                "<a data-courseid=\"" + course.courseID + "\" data-seminarkey=\"" + course.semGrID +
+                "\" class=\"registerForSeminarBtn\" href=\"#\">Sign Up</a>" +
+                "</td>" +
+                "</tr>"
+                ).one();
+            $(".semHead" + course.courseID + ">:gt(3)").remove();
+            $(".semInfo tr").remove();
+        }
+    }
+
+    
+    function showCourseList(data) {
+        var $table = $("#courseTable tbody");
+        $table.html("");
+        for (var i = 0; i < data.length; i++) {
+            var course = data[i];
+            $table.append("<tr data-courseid=\"" + course.courseID + "\" class='fetchSeminarGroups'>" +
+                "<td class='courseId'>" + course.courseID + "</td>" +
+                "<td >" + course.name + "</td>" +
+                "<td>" + course.semester + "</td>" +
+                "<td>" + course.attendance + " %" + "</td>" +
+                "</tr>");
+        }
+
+    }
+
+    function fetchSeminarGroups() {
+        $('.fetchSeminarGroups').one("click", function(e) {
+            e.preventDefault();
+            var courseID = $(this).data("courseid");
+            $.ajax({
+                    url: '/student/listSeminars',
+                    type: 'POST',
+                    dataType: 'JSON',
+                    data: {
+                        courseID: courseID
+                    },
+                    async: true,
+                    success: function(data) {
+                        showSeminarList(data);
+                        addClickEventForSeminarRegistration();
+                    }
+                })
+                .done(function() {
+                    console.log("success");
+                })
+                .fail(function() {
+                    console.log("error");
+                })
+                .always(function() {
+                    console.log("complete");
+
+                });
+        });
+    }
+
+    function addClickEventForCourseRegistration() {
+         $(".createCourseBtn").on('click', function(e) {
+            e.preventDefault();
+            var courseID = $(this).data('courseID');
+
+        });
+    };
+
     $("#createCourseBtn").on("click", function(e){
         e.preventDefault();
         var $status = $("#status");
@@ -1003,8 +1308,6 @@ $(function() {
         var attendancePercentage = $("#attendancePercentage").val();
         var plannedSeminars = $("#plannedSeminars").val();
         var statusMessages = [];
-
-        // EINAR, DU MÅ SJEKKE AT IKKE STRENGENE ER TOMME
 
         if (courseID === '') {
             statusMessages.push("Course id cannot be empty");
@@ -1049,7 +1352,6 @@ $(function() {
                 })
                 .always(function() {
                     console.log("complete");
-                    //location.reload();
                 });
         }
     });
