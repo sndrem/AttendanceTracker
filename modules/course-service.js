@@ -131,7 +131,6 @@ var courseService ={
                 if(result.length == 0) {
                     next();
                 } else {
-                   console.log("already exists");
                    res.status(200).json("the course already exists");
 
                 }
@@ -182,7 +181,6 @@ var courseService ={
                     + "JOIN `seminargroup`"+
                     + "ON `course`.courseID = `seminargroup`.courseID"+
                     + "WHERE `seminargroup`.semGrID = ?";
-        console.log("Skal hente course attendance  fra id " + semGrID);
         connection.query(query, [semGrID], function(err, result) {
             if(err) {
                 next(err);

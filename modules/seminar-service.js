@@ -99,7 +99,6 @@ var seminarService = {
     */
     getAllSeminarGroupsFromCourseIDExcludingUserID: function(req, res, next) {
         const courseID = req.body.courseID;
-        console.log(courseID);
         const query = "SELECT * FROM seminargroup WHERE courseID = ? AND `semGrID` NOT IN ("+
             " SELECT `semGrID` FROM `is_in_seminar_group` WHERE `StudID` = ? )"+
             " ORDER BY `seminargroup`.`name` DESC";
@@ -118,7 +117,6 @@ var seminarService = {
     Creates a new seminar group
      */
     createSeminarGroup: function(req, res, next) {
-        console.log(req.body);
         const courseID = req.body.courseID.toUpperCase();
         const groupName = req.body.groupName;
         const query = "INSERT INTO seminargroup (courseID, name) "
@@ -140,7 +138,6 @@ var seminarService = {
                     console.log("Error", err);
                     next(err);
                 } else {
-                    console.log("Result", result);
                     req.queryResult = result;
                     res.status(200).json(groupName + " was created");
                 }
@@ -219,7 +216,7 @@ var seminarService = {
         const query = "INSERT INTO enrolled_in SET ?";
         connection.query(query, values, function(err, result) {
             if(err) {
-                console.log("There was an error", err);
+                console.log("There was an error:", err);
                 next();
             } else {
 
@@ -283,7 +280,6 @@ var seminarService = {
                 next(err);
             } else {
                 req.studentAttendance = result;
-                console.log(result);
                 next();
             }
         });
@@ -351,7 +347,6 @@ var seminarService = {
                     + "JOIN `is_in_seminar_group` "
                     + "ON person.`StudID` = `is_in_seminar_group`.`StudID` "
                     + "WHERE `is_in_seminar_group`.`semGrID` = ?";
-        console.log("Skal hente studenter som er i gruppe med ID " + semGrID);
         connection.query(query, [semGrID], function(err, result) {
             if(err) {
                 next(err);
@@ -394,7 +389,6 @@ var seminarService = {
                     + "JOIN seminargroup ON seminar.`semGrID` = seminargroup.`semGrID` "
                     + "JOIN course ON seminargroup.`courseID` = course.`courseID`" 
                     + "WHERE `attends_seminar`.`StudID` = ? AND seminargroup.`courseID` = ? AND `attends_seminar`.`attended` = 0 ";
-        console.log("Ska hente seminarer for student "+userID+" og legge sammen fravær total minutter");
         connection.query(query, [userID, courseID], function(err, result) {
             if(err) {
                 next(err);
@@ -425,7 +419,6 @@ var seminarService = {
                 next(err);
             } else {
                 req.numOfAttendance = result[0];
-                console.log(result);
                 next();
             }
         });
@@ -467,9 +460,7 @@ var seminarService = {
     },
 
     registerAttendanceForGroup: function(req, res, next) {
-        console.log("Should take attendance for group");
         var students = JSON.parse(req.body.students);
-        console.log(req.body);
         var studentList = [];
         if(students.length == 0) {
             next();
@@ -533,8 +524,6 @@ var seminarService = {
     },
 
     updateAttendanceForGroup: function(req, res, next) {
-        console.log("Skal oppdatere oppmøte for et seminar");
-        console.log(req.body);
         var students = JSON.parse(req.body.students);
         const updateID = req.body.updateID;
         var studentList = [];
@@ -546,10 +535,9 @@ var seminarService = {
                 queries += mysql.format("UPDATE attends_seminar SET StudID = ?, semID = ?, attended = ? WHERE semID = ? AND StudID = ? ; ", [student.StudID, updateID, student.attended, updateID, student.StudID]);
                 studentList.push([student.StudID, updateID, student.attended]);
             });
-            console.log(queries);
             connection.query(queries, function(err, data) {
                 if(err) {
-                    console.log("Feil:", err);
+                    console.log("Error:", err);
                     next(err);
                 } else {
                     console.log(data);
@@ -639,9 +627,7 @@ var seminarService = {
 
     getStudentAttendanceInfo: function(req, res, next) {
         const userID = req.body.StudID;
-        console.log("User: ", userID);
         const semGrID = req.body.semGrID;
-        console.log("SemgrID: ", semGrID);
         const query = "SELECT seminargroup.`name`, seminar.`semID`, seminar.`date`, seminar.`semGrID`, seminar.`place`, seminar.`oblig`, seminar.`duration`, seminar.`cancelled`, `attends_seminar`.`attended` FROM seminar "
                     + "JOIN `attends_seminar` "
                     + "ON seminar.`semID` = `attends_seminar`.`semID` "
@@ -656,9 +642,7 @@ var seminarService = {
                 console.log(err);
                 next(err);
             } else {
-                console.log("Result: ", result);
                 req.studentAttendance = result;
-                console.log(result);
                 next();
             }
         });
@@ -667,8 +651,6 @@ var seminarService = {
     deleteSeminar: function(req, res, next) {
         const semID = req.body.seminarID;
         const seminarGroupID = req.body.semGrID;
-        console.log("SemID: ", semID);
-        console.log("seminarGroupID: ", seminarGroupID);
         const query = "DELETE from seminar WHERE semID = ? AND semGrID = ?";
         connection.query(query, [semID, seminarGroupID], function(err, result) {
             if(err) {

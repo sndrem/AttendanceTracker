@@ -67,10 +67,8 @@ var userService = {
     },
 
     updateUserProfile: function(req, res, next) {
-        console.log(req.body.user);
         var user = JSON.parse(req.body.user);
         const firstName = user.firstName;
-        console.log("First name: ", firstName);
         const lastName = user.lastName;
         const email = user.email;
         const userID = req.session.user.StudID;

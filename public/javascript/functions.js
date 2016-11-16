@@ -51,7 +51,6 @@ $(function() {
                 confirmPassword: confirmPassword
             },
             success: function(data) {
-                console.log(data);
                 document.location.href = "/login";
             }
         })
@@ -59,7 +58,8 @@ $(function() {
             console.log("success");
         })
         .fail(function() {
-            $("#statusMessage").html("<p class='bg-warning'>There is already a user with that username or mail address</p>")
+            $("#statusMessage").html(
+                "<p class='bg-warning'>There is already a user with that username or mail address</p>")
         })
         .always(function() {
             console.log("complete");
@@ -186,8 +186,6 @@ $(function() {
                 courseID: courseID
             },
             success: function(data) {
-                console.log(data);
-                // location.reload();
             }
         })
         .done(function() {
@@ -213,7 +211,6 @@ $(function() {
             },
         })
         .done(function() {
-            console.log("success");
             $("legend").html(studentID + " was successfully removed as an assistant");
             setTimeout(function() {
                 document.location.reload();
@@ -441,7 +438,6 @@ $(function() {
                 status: cancelled
             },
             success: function(data) {
-                // console.log(data);
             }
         })
         .done(function(insertID) {
@@ -568,7 +564,6 @@ $(function() {
                     data: {},
                     async: true,
                     success: function(data) {
-                        console.log(data);
                         showSeminarList(data);
                         addClickEventForSeminarRegistration();
                     }
@@ -769,7 +764,6 @@ $(function() {
         // Vi sjekker ikke brukere dersom de har en studentid under 5 karakterer lang.
         if ($this.val().length >= 1) {
             var studentID = $this.val();
-            // TODO Call database to check if student assistant exists
             $.ajax({
                     url: '/common/checkExistingUser',
                     type: 'POST',
@@ -778,7 +772,6 @@ $(function() {
                         studentID: studentID
                     },
                     success: function(data) {
-                        console.log(data);
                         if (data) {
                             if(data.length > 1) {
                                 // showWarningMessage
@@ -826,7 +819,7 @@ $(function() {
     // Functionality for getting more attendance info for a given student
     $(".studentAttendanceInfo").on('click', function(event) {
         event.preventDefault();
-        console.log($(this));
+
         const StudID = $(this).parent().data('student_id');
         const semGrID = $(this).parent().data('semgrid');
         const studentName = $(this)[0].innerHTML;
@@ -943,7 +936,6 @@ $(function() {
     }
 
     function populateDropdown(data) {
-        console.log("Should populate dropdown");
         var $selectDiv = $(".multipleNameSelect");
         var $select = $("#multipleNameSelect");
         $selectDiv.removeClass('hide');
@@ -1008,7 +1000,7 @@ $(function() {
         var $lastName = $("#lastName");
         var $email = $("#email");
         var $studentID = $("#studentID");
-        console.log(data.fName);
+
         $studentID.val(data.StudID);
         $firstName.val(data.fName).prop('disabled', true);
         $lastName.val(data.lName).prop('disabled', true);
@@ -1055,20 +1047,28 @@ $(function() {
 
     function showSeminarList(data) {
         var $table = $("#courseTable tbody");
-        //$table.html("");
-        console.log(data);
+
         for (var i = 0; i < data.length; i++) {
 
             var course = data[i];
 
-            $("[data-courseid=" + course.courseID + "]").after("<tr class=semHead" + course.courseID + ">" +
-             "<th></th><th></th>" + "<th>Seminar Group</th>" + "<th>Registrer</th></tr>" + 
-             "<tr class=semInfo>" +
-                "<td>" + "</td>" + "<td></td>" +
+            $(
+                "[data-courseid=" + course.courseID + "]").after(
+                "<tr class=semHead" + course.courseID + ">" +
+                "<th></th>" + 
+                "<th></th>" + 
+                "<th>Seminar Group</th>" + 
+                "<th>Registrer</th></tr>" + 
+                "<tr class=semInfo>" +
+                "<td></td>" + 
+                "<td></td>" +
                 "<td>" + course.name + "</td>" +
-                "<td><a data-courseid=\"" + course.courseID + "\" data-seminarkey=\"" + course.semGrID 
-                + "\" class=\"registerForSeminarBtn\" href=\"#\">Sign Up</a></td>" +
-                "</tr>").one();
+                "<td>" + 
+                "<a data-courseid=\"" + course.courseID + "\" data-seminarkey=\"" + course.semGrID +
+                "\" class=\"registerForSeminarBtn\" href=\"#\">Sign Up</a>" +
+                "</td>" +
+                "</tr>"
+                ).one();
             $(".semHead" + course.courseID + ">:gt(3)").remove();
             $(".semInfo tr").remove();
         }
@@ -1093,9 +1093,7 @@ $(function() {
     function fetchSeminarGroups() {
         $('.fetchSeminarGroups').one("click", function(e) {
             e.preventDefault();
-            console.log("click");
             var courseID = $(this).data("courseid");
-            console.log(courseID);
             $.ajax({
                     url: '/student/listSeminars',
                     type: 'POST',
@@ -1105,7 +1103,6 @@ $(function() {
                     },
                     async: true,
                     success: function(data) {
-                        console.log(data);
                         showSeminarList(data);
                         addClickEventForSeminarRegistration();
                     }
@@ -1141,8 +1138,6 @@ $(function() {
         var attendancePercentage = $("#attendancePercentage").val();
         var plannedSeminars = $("#plannedSeminars").val();
         var statusMessages = [];
-
-        // EINAR, DU MÅ SJEKKE AT IKKE STRENGENE ER TOMME
 
         if (courseID === '') {
             statusMessages.push("Course id cannot be empty");
@@ -1187,7 +1182,6 @@ $(function() {
                 })
                 .always(function() {
                     console.log("complete");
-                    //location.reload();
                 });
         }
     });
