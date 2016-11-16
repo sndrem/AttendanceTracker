@@ -4,7 +4,7 @@
 
 3. If you are planning to develop on the test database, just write npm start.
 
-4. If you are planning to develop on the production database (don't ever do that) then there are different ways of doing it for mac and windows:
+4. If you are planning to develop on the production database (don't ever do that) then there are different ways of doing it for Mac and Windows:
 
 #### For Mac
 write
