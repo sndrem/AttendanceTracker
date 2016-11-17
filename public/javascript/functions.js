@@ -1099,12 +1099,12 @@ $(function() {
             message: JSON.stringify(formattedMessage)
         },
         success: function(data){
+            console.log(data);
             $(".sendMessage").append("<div class='alert alert-success'>Mail successfully sent</div>");
             myApp.resetForm();
             setTimeout(function(){
                 $(".alert").remove();
             }, 5000);
-
         },
       })
       .done(function() {
@@ -1112,6 +1112,11 @@ $(function() {
       })
       .fail(function() {
           console.log("error");
+          $(".sendMessage").append("<div class='alert alert-warning'>Mail could not be sent</div>");
+                myApp.resetForm();
+                setTimeout(function(){
+                    $(".alert").remove();
+            }, 5000);
       })
       .always(function() {
           console.log("complete");

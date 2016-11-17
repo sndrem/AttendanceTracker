@@ -14,9 +14,6 @@ var messageService ={
 
         var students = JSON.parse(req.body.students);
         var message = JSON.parse(req.body.message);
-        console.log(message);
-        // next();
-        console.log("Students: ", students);
         var from_email = new helper.Email('noreply@foribus.com');
         for(var i = 0; i < students.length; i++) {
             var student = students[i];
@@ -38,17 +35,15 @@ var messageService ={
             sg.API(request, function(error, response) {
               if(error) {
                 console.log("Error: ", error);
+                next(error);
               }
               console.log("Code: ", response.statusCode);
               console.log("Body: ", response.body);
               console.log("Headerson: ", response.headers);
-
             });
         }
         next();
     }
-
-
 }
 
 module.exports = messageService;
