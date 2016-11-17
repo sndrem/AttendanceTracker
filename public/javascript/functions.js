@@ -7,7 +7,7 @@ $(function() {
 
     // Initialize Froala wysiwyg editor
     $('#froala').froalaEditor({
-      toolbarButtons: ['bold', 'italic', 'underline', 'strikeThrough', 'color', 'emoticons', '|', 'paragraphFormat', 'align', 'undo', 'redo', 'html'],
+      toolbarButtons: ['bold', 'italic', 'underline', 'strikeThrough', 'color', 'fontSize', 'emoticons', '|', 'paragraphFormat', 'align', 'undo', 'redo', 'html'],
       fontSizeSelection: true,
       heightMin: 100,
       heightMax: 200,
@@ -22,18 +22,13 @@ $(function() {
         '#15E67F', '#E3DE8C', '#D8A076', '#D83762', '#76B6D8', 'REMOVE',
         '#1C7A90', '#249CB8', '#4ABED9', '#FBD75B', '#FBE571', '#FFFFFF'
       ],
-      emoticonsStep: 4,
-      emoticonsSet: [
-        {code: '1f620', desc: 'Angry face'},
-        {code: '1f621', desc: 'Pouting face'},
-        {code: '1f622', desc: 'Crying face'},
-        {code: '1f623', desc: 'Persevering face'},
-        {code: '1f624', desc: 'Face with look of triumph'},
-        {code: '1f625', desc: 'Disappointed but relieved face'},
-        {code: '1f626', desc: 'Frowning face with open mouth'},
-        {code: '1f627', desc: 'Anguished face'}
-      ]
+      emoticonsStep: 4
     });
+
+    var defaultBeenAwayHtml = "<p>Hey {name}</p><p>You have been away {beenAway} times, and if you want to be "
+                            + "able to take the exam, then you have to start showing up.</p>";
+    $('#froala').froalaEditor('html.set', defaultBeenAwayHtml);
+
 
 /**
     ###########  My app ###########
