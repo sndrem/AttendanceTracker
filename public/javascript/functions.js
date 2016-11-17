@@ -7,7 +7,7 @@ $(function() {
 
     // Initialize Froala wysiwyg editor
     $('#froala').froalaEditor({
-      toolbarButtons: ['bold', 'italic', 'underline', 'strikeThrough', 'color', 'fontSize', 'emoticons', '|', 'paragraphFormat', 'align', 'undo', 'redo', 'html'],
+      toolbarButtons: ['bold', 'italic', 'underline', 'strikeThrough', 'color', 'fontSize', 'fontFamily', 'emoticons', '|', 'paragraphFormat', 'align', 'undo', 'redo', 'html'],
       fontSizeSelection: true,
       heightMin: 100,
       heightMax: 200,
