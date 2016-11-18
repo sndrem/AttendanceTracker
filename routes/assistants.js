@@ -105,7 +105,7 @@ router.post("/studentAttendanceInfo", userService.requireLogin, userService.isAs
 });
 
 router.post("/sendMessages", userService.requireLogin, userService.isAssistant, messageService.sendMessage, function(req, res, next) {
-    res.status(200).json(JSON.parse(req.body.students));
+    res.status(200).json({"message": "Mail sent"});
 });
 
 router.post("/deleteSeminar/:semGrID/:prevSemId", userService.requireLogin, userService.isAssistant, seminarService.deleteSeminar, function(req, res, next) {
