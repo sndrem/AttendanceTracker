@@ -21,6 +21,15 @@ block content
 
         .col-xs-12.col-sm-12.col-md-4.col-lg-6
             p These groups already exsists
-            ul
-                for seminar in seminarGroups
-                    li: b #{seminar.name} in course: #{seminar.courseID}
+            .existing-seminar-groups
+                table.table.table-striped
+                    thead
+                        tr
+                            th Course
+                            th Group name
+                    tbody
+                        for seminar in seminarGroups
+                            tr
+                                td #{seminar.courseID}
+                                td #{seminar.name}
+                                td: a(href="/common/deleteSeminarGroup/#{seminar.semGrID}") Remove

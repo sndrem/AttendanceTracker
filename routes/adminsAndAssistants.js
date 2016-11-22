@@ -18,6 +18,10 @@ router.get("/createNewSeminarGroup", userService.requireLogin, userService.isAdm
     res.render("createNewSeminarGroup", model);
 });
 
+router.get("/deleteSeminarGroup/:semGrID", userService.requireLogin, userService.isAdminOrAssistant, seminarService.deleteSeminarGroup, function(req, res, next) {
+    res.redirect("/common/createNewSeminarGroup");
+});
+
 /* POST createNewSeminarGroup */
 router.post("/createNewSeminarGroup", userService.requireLogin, userService.isAdminOrAssistant, courseService.courseExistsCreatingSeminarGroup, seminarService.checkIfGroupExists, seminarService.createSeminarGroup);
 

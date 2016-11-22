@@ -83,12 +83,27 @@ var seminarService = {
     Retrieves all seminar groups
      */
     getAllSeminarGroups: function(req, res, next) {
-        const query = "SELECT * FROM seminargroup ORDER BY courseID";
+        const query = "SELECT * FROM seminargroup ORDER BY courseID, name";
         connection.query(query, function(err, result) {
             if(err) {
                 next(err);
             } else {
                 req.seminarGroups = result;
+                next();
+            }
+        });
+    },
+
+    /*
+    Deletes a seminar group based on the id
+    */
+    deleteSeminarGroup: function(req, res, next) {
+        const seminarGroupID = req.params.semGrID;
+        const query = "DELETE FROM seminargroup WHERE semGrID = ?";
+        connection.query(query, [seminarGroupID], function(err, result) {
+            if(err) {
+                next(err);
+            } else {
                 next();
             }
         });
