@@ -139,8 +139,10 @@ app.use(function(err, req, res, next) {
 });
 
 
-
-app.set('port', 3000);
+// set the port of our application
+// process.env.PORT lets the port be set by Heroku
+var port = process.env.PORT || 3000;
+app.set('port', port);
 app.listen(app.get('port'), function() {
   console.log("App started on " + app.get('port') + ". To terminate press Ctrl+C");
 });
