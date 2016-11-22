@@ -61,16 +61,22 @@ tr:hover {
   width: auto; }
 
 /* general non-critical error messages */
-#status, #addAssistantStatus, #removeAssistantStatus, .bg-danger, .bg-warning {
+#status, #addAssistantStatus, #removeAssistantStatus, #statusMessage, .bg-danger, .bg-warning, .bg-danger-profile {
   background: #ECEFF1;
-  color: #A95A10; }
+  color: #ef8f4a; }
+
+#statusMessage {
+  background: #fff; }
 
 /* critical error messages */
 .bg-danger {
-  color: red; }
+  color: #cc462e; }
 
 .bg-warning {
-  color: red; }
+  color: #cc462e; }
+
+.bg-danger-profile {
+  background: #fff; }
 
 .frontPageBtn {
   margin-right: 5%; }

@@ -84,7 +84,7 @@ $(function() {
             console.log("success");
         })
         .fail(function() {
-            $("#statusMessage").html(
+            $("#status").html(
                 "<p class='bg-warning'>There is already a user with that username or mail address</p>")
         })
         .always(function() {
@@ -236,7 +236,7 @@ $(function() {
             },
         })
         .done(function() {
-            $("legend").html(studentID + " was successfully removed as an assistant");
+            $("legend").html("<p class='bg-warning'>" + studentID + " was successfully removed as an assistant</p>");
             setTimeout(function() {
                 document.location.reload();
             }, 2500)
@@ -535,9 +535,9 @@ $(function() {
             myApp.login(email, password);
         } else {
             var $legend = $("legend");
-            $legend.append("<ul></ul>");
+            $legend.append("<div></div>");
             $.each(statusMessages, function(index, element) {
-                $legend.find("ul").append("<li class=\"bg-danger\">" + element + "</li>");
+                 $legend.append("<p class='bg-danger'>" + element + "</p>");
             })
         }
     });
@@ -586,9 +586,9 @@ $(function() {
             myApp.register(firstName, lastName, studentID, email, password, confirmPassword);
         } else {
             var $legend = $("legend");
-            $legend.append("<ul></ul>");
+            $legend.append("<div></div>");
             $.each(statusMessages, function(index, element) {
-                $legend.find("ul").append("<li class=\"bg-danger\">" + element + "</li>");
+                $legend.append("<p class='bg-danger'>" + element + "</p>");
             });
         }
     });
@@ -620,13 +620,11 @@ $(function() {
             statusMessages.push("Please provide a valid email");
         }
 
-
-
         if(statusMessages.length > 0) {
             var $legend = $("legend");
-            $legend.append("<ul></ul>");
+            $legend.append("<div></div>");
             $.each(statusMessages, function(index, element) {
-                $legend.find("ul").append("<li class=\"bg-danger\">" + element + "</li>");
+                $legend.append("<p class='bg-danger'>" + element + "</p>");
             });
         } else {
             var user = {
@@ -846,10 +844,10 @@ $(function() {
         }
 
         if (statusMessages.length > 0) {
-            var $status = $("#status ul");
+            var $status = $("#status");
             $status.html("");
             for (var i = 0; i < statusMessages.length; i++) {
-                $status.append("<li class=\"bg-danger\">" + statusMessages[i] + "</li>");
+                $status.append("<p class='bg-danger'>" + statusMessages[i] + "</p>");
             }
         } else {
             $.ajax({
@@ -1367,10 +1365,10 @@ $(function() {
 
         if(statusMessages.length > 0){
             //error melding her
-            var $status = $("#status ul");
+            var $status = $("#status");
             $status.html("");
             for (var i = 0; i < statusMessages.length; i++) {
-                $status.append("<li class=\"bg-danger\">" + statusMessages[i] + "</li>");
+                $status.append("<p class=\"bg-danger\">" + statusMessages[i] + "</p>");
             }
         } else {
             $.ajax({
