@@ -6,13 +6,10 @@ var seminarService = require("../modules/seminar-service");
 var userService = require("../modules/user-service");
 
 
-connection.connect();
-
-
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    res.render('index', { "title": 'Foribus'});  
+    res.render('index', { "title": 'Foribus'});
 });
 
 /* GET register page */

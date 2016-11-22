@@ -3,7 +3,7 @@ block navigation
             .container-fluid
                 .navbar-header
                     a(href="/")
-                        img(id="logo" src="images/logoBlue.svg" alt="some_text")
+                        img(id="logo" src="images/logoBlue.svg" alt="Foribus Logo")
                     button(type="button", data-toggle="collapse" data-target="#navbar-collapse" , aria-expanded="false").navbar-toggle.collapsed
                         span.sr-only Toggle navigation
                         span.icon-bar
@@ -12,20 +12,31 @@ block navigation
                     a(href="/").navbar-brand Foribus
                 .collapse.navbar-collapse#navbar-collapse
                     ul.nav.navbar-nav.navbar-right
-                        li
+                        li.dropdown
                             if user != null
                                 if user.adminType === 'master'
-                                    a(href="/admin/dashboard")
+                                    a(href="/admin/dashboard" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false")
                                         i.material-icons &#xE851;
-                                        | Dashboard
+                                        | Menu
+                                        span(class="caret")
+                                    ul(class="dropdown-menu")
+                                        li: a(href="/admin/dashboard") Menu
+                                        li: a(href="/common/createNewSeminarGroup") Create new Seminargroup
+                                        li: a(href="/updateProfile") Update profile
                                 else if user.adminType === 'assistent'
-                                    a(href="/assistant/dashboard")
+                                    a(href="/assistant/dashboard" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false")
                                         i.material-icons &#xE851;
-                                        | Dashboard
-                                else 
-                                    a(href="/student/dashboard")
+                                        | Menu
+                                        span(class="caret")
+                                    ul(class="dropdown-menu")
+                                        li: a(href="/assistant/dashboard") Menu
+                                        li: a(href="/assistant/registerAttendance") Take Attendance
+                                        li: a(href="/common/createNewSeminarGroup") Create new Seminargroup
+                                        li: a(href="/updateProfile") Update profile
+                                else
+                                    a(href="/student/dashboard" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false")
                                         i.material-icons &#xE851;
-                                        | Dashboard
+                                        | Menu
 
                                 li
                                     a(href="/logout")
@@ -37,3 +48,6 @@ block navigation
                                     a(href="/login")
                                         i.material-icons &#xE88A 
                                         | Log in
+
+
+
