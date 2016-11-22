@@ -54,7 +54,7 @@ $(function() {
         .fail(function(data) {
             console.log("error");
             console.log(data);
-            $("legend").html("<span class='bg-danger'>" + data.responseJSON + "</span>");
+            $("legend").html("<span class='bg-danger'>Could not log in</span>");
         })
         .always(function() {
             console.log("complete");
