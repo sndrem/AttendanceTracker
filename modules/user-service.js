@@ -120,6 +120,7 @@ var userService = {
     },
 
     authenticate: function(req, res, next) {
+        console.log("Trying to authenticate", req.body);
         var email = req.body.email;
         var password = req.body.password;
 
