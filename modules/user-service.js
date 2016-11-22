@@ -120,7 +120,6 @@ var userService = {
     },
 
     authenticate: function(req, res, next) {
-        console.log("Trying to authenticate", req.body);
         var email = req.body.email;
         var password = req.body.password;
 
@@ -135,6 +134,7 @@ var userService = {
                var hashedPassword = crypto.createHash('sha256').update(result[0].salt + password, 'utf8').digest('hex');
                if(hashedPassword === result[0].password) {
                 req.message = "User found. Should procede to dashboard...";
+                console.log(req.message);
                 req.session.user = result[0];
                 next();
                } else {
