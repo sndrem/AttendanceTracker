@@ -604,15 +604,23 @@ $(function() {
 
         if(isEmpty(firstName)) {
             statusMessages.push("First name cannot be empty");
-        }
+        } 
+        else if((Number.isInteger(firstName)) || (!isNaN(parseFloat(firstName)) && isFinite(firstName))){
+            statusMessages.push("First name cannot be a number");
+        } 
 
         if(isEmpty(lastName)) {
             statusMessages.push("Last name cannot be empty");
+        }
+        else if((Number.isInteger(lastName)) || (!isNaN(parseFloat(lastName)) && isFinite(lastName))){
+            statusMessages.push("Last name cannot be a number");
         }
 
         if(isEmpty(email) || !myApp.isValidEmail(email)) {
             statusMessages.push("Please provide a valid email");
         }
+
+
 
         if(statusMessages.length > 0) {
             var $legend = $("legend");
