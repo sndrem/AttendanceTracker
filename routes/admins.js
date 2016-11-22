@@ -9,11 +9,9 @@ var courseService = require('../modules/course-service');
 /* GET Dashboard page */
 router.get("/dashboard", userService.requireLogin, userService.isAdmin, function(req, res, next) {
     const name = req.session.user.fName + " " + req.session.user.lName;
-    console.log("User: ", req.session.user.adminType);
-    res.locals.user.adminType = req.session.user.adminType;
     var model = {
         title: 'Admin dashboard',
-        user: name
+        userName: name
     }
     res.render("adminDashboard", model);
 });

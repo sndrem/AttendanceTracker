@@ -2,7 +2,6 @@ var crypto = require('crypto');
 var connection = require("../modules/connection");
 var utilities = require("../modules/utilities");
 
-
 var userService = {
     registerUser: function(req, res, next) {
         var firstName = req.body.firstName;
@@ -77,7 +76,6 @@ var userService = {
         connection.query(query, [firstName, lastName, email, userID], function(err, result) {
             if(err) {
                 next(err);
-                console.log("Error: ", err);
             } else {
                 req.resultSet = result;
                 req.session.user.eMail = email;
@@ -163,7 +161,7 @@ var userService = {
                     req.session.user.adminType = null;
                     req.redirect_url = '/student/dashboard';
                 } else {
-                    // If result, we know store the type of admin for the user
+                    // If result, we now store the type of admin for the user
                     req.session.user.adminType = result[0].adminType;
                     const adminType = req.session.user.adminType;
                     if(adminType === 'assistent') {

@@ -22,8 +22,6 @@ var expressValidator = require("express-validator");
 var session = require('client-sessions');
 var connection = require('./modules/connection');
 
-
-
 var userService = require("./modules/user-service");
 var routes = require('./routes/index');
 var students = require('./routes/students');
@@ -140,6 +138,8 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
+
+
 
 app.set('port', 3000);
 app.listen(app.get('port'), function() {
