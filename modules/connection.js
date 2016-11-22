@@ -16,7 +16,4 @@ connection.connect(function(err) {
     }
 })
 
-console.log("Creating connection and connecting to database");
-console.log(connection);
-
 module.exports = connection;
