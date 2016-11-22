@@ -7,4 +7,7 @@ var connection = mysql.createConnection({
     multipleStatements: true
 });
 
+console.log("Creating connection and connecting to database");
+console.log(connection);
+
 module.exports = connection;

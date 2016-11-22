@@ -61,7 +61,7 @@ tr:hover {
   width: auto; }
 
 /* general non-critical error messages */
-#status, #addAssistantStatus, .bg-danger, .bg-warning {
+#status, #addAssistantStatus, #removeAssistantStatus, .bg-danger, .bg-warning {
   background: #ECEFF1;
   color: #A95A10; }
 
