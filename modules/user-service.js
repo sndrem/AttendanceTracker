@@ -119,8 +119,6 @@ var userService = {
         } else {
             res.status(400).json({'message': 'Assistant and/or course cannot be empty'});
         }
-
-
     },
 
     authenticate: function(req, res, next) {
@@ -159,7 +157,7 @@ var userService = {
             if(err) {
                 next(err);
             } else {
-                // If no results, we know that the user is not 
+                // If no results, we know that the user is not
                 // an admin
                 if(result.length == 0) {
                     req.session.user.adminType = null;

@@ -105,9 +105,9 @@ app.use(function(req, res, next) {
 });
 
 app.use('/', routes);
-app.use('/student', students);
-app.use('/assistant', assistants);
 app.use('/admin', admins);
+app.use('/assistant', assistants);
+app.use('/student', students);
 app.use('/common', adminsAndAssistants);
 
 // catch 404 and forward to error handler
