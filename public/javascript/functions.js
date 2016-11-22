@@ -670,6 +670,7 @@ $(function() {
                 status: cancelled
             },
             success: function(data) {
+                $("#previousSeminar option:nth-child(1)").after("<option value=\"/" + semGrID + "/" + data + "\">" + place + " - Today " + "</option>");
             }
         })
         .done(function(insertID) {
