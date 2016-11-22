@@ -2,11 +2,7 @@ extends layout
 
 block content
     h3 #{title}: #{user.fName} #{user.lName}
-    if user.adminType == null
-        h4 Your seminars
-        include ./partials/dashboardNavElements
-    else
-        include ./partials/dashboardNavElements
+    include ./partials/dashboardNavElements
 
     .row
         .col-xs-12.col-sm-12.col-md-8.col-lg-8

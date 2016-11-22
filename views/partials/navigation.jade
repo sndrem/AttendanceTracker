@@ -20,19 +20,28 @@ block navigation
                                         | Menu
                                         span(class="caret")
                                     ul(class="dropdown-menu")
-                                        li: a(href="/admin/dashboard") Menu
-                                        li: a(href="/common/createNewSeminarGroup") Create new Seminargroup
+                                        li: a(href="/admin/dashboard") Dashboard
                                         li: a(href="/updateProfile") Update profile
+                                        li.divider
+                                        li: a(href="/admin/createNewAssistant") Register new assistant
+                                        li: a(href="/admin/addAssistantToCourse") Add Assistant to Course
+                                        li: a(href="/admin/removeAssistantFromCourse") Remove Assistant from Course
+                                        li.divider
+                                        li: a(href="/admin/createCourse") Create a new Course
+                                        li: a(href="/common/createNewSeminarGroup") Create a new Seminar Group
                                 else if user.adminType === 'assistent'
                                     a(href="/assistant/dashboard" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false")
                                         i.material-icons &#xE851;
                                         | Menu
                                         span(class="caret")
                                     ul(class="dropdown-menu")
-                                        li: a(href="/assistant/dashboard") Menu
+                                        li: a(href="/assistant/dashboard") Dashboard
+                                        li: a(href="/updateProfile") Update profile
+                                        li.divider
                                         li: a(href="/assistant/registerAttendance") Take Attendance
                                         li: a(href="/common/createNewSeminarGroup") Create new Seminargroup
-                                        li: a(href="/updateProfile") Update profile
+                                        li.divider
+                                        li: a(href="/student/dashboard") Your Student Dashboard
                                 else
                                     a(href="/student/dashboard" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false")
                                         i.material-icons &#xE851;

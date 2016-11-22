@@ -5,8 +5,6 @@ var cookieParser = require('cookie-parser');
 var seminarService = require("../modules/seminar-service");
 var userService = require("../modules/user-service");
 
-
-
 /* GET home page. */
 router.get('/', function(req, res, next) {
     res.render('index', { "title": 'Foribus'});

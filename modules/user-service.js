@@ -2,7 +2,6 @@ var crypto = require('crypto');
 var connection = require("../modules/connection");
 var utilities = require("../modules/utilities");
 
-
 var userService = {
     registerUser: function(req, res, next) {
         var firstName = req.body.firstName;
@@ -77,7 +76,6 @@ var userService = {
         connection.query(query, [firstName, lastName, email, userID], function(err, result) {
             if(err) {
                 next(err);
-                console.log("Error: ", err);
             } else {
                 req.resultSet = result;
                 req.session.user.eMail = email;
@@ -119,8 +117,6 @@ var userService = {
         } else {
             res.status(400).json({'message': 'Assistant and/or course cannot be empty'});
         }
-
-
     },
 
     authenticate: function(req, res, next) {
@@ -159,13 +155,13 @@ var userService = {
             if(err) {
                 next(err);
             } else {
-                // If no results, we know that the user is not 
+                // If no results, we know that the user is not
                 // an admin
                 if(result.length == 0) {
                     req.session.user.adminType = null;
                     req.redirect_url = '/student/dashboard';
                 } else {
-                    // If result, we know store the type of admin for the user
+                    // If result, we now store the type of admin for the user
                     req.session.user.adminType = result[0].adminType;
                     const adminType = req.session.user.adminType;
                     if(adminType === 'assistent') {
