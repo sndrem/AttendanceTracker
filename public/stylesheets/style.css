@@ -61,16 +61,16 @@ tr:hover {
   width: auto; }
 
 /* general non-critical error messages */
-#status, #addAssistantStatus, .bg-danger, .bg-warning {
+#status, #addAssistantStatus, #removeAssistantStatus, .bg-danger, .bg-warning {
   background: #ECEFF1;
-  color: #A95A10; }
+  color: #ef8f4a; }
 
 /* critical error messages */
 .bg-danger {
-  color: red; }
+  color: #cc462e; }
 
 .bg-warning {
-  color: red; }
+  color: #cc462e; }
 
 .frontPageBtn {
   margin-right: 5%; }
