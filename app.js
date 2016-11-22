@@ -1,6 +1,5 @@
 process.env.NODE_ENV = process.env.NODE_ENV || "test";
 // Henter .env-fil og laster environment variables
-console.log(process.env.NODE_ENV);
 if(process.env.NODE_ENV === 'production') {
     require('dotenv').config();
     console.log("Using .env-variables from .env-file");
