@@ -47,7 +47,13 @@ tr:hover
     max-height: 400px
     overflow-y: scroll
 
-/* general non-critical error messages
+.green-check
+    color: green
+
+.check
+    padding-left: 20px
+
+/* general non-critical error messages */
 #status
     background: $background
     color: $error
@@ -59,7 +65,7 @@ tr:hover
     @extend #status
     background: $backgroundWhite
 
-/* critical error messages
+/* critical error messages */
 .bg-danger
     @extend #status
     color: $criterror

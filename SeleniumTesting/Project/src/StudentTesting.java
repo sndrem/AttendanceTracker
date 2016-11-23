@@ -23,10 +23,14 @@ public class StudentTesting {
     //Setup for the driver and db connection, also wipes the person, course, enrolled_in, is_in_seminar_group and seminargroup tables + adds some data to test on.
     @BeforeClass
     public static void openBrowser() throws SQLException, ClassNotFoundException {
-        System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", "chromedriver");
         driver = new ChromeDriver();
         Class.forName("com.mysql.jdbc.Driver");
         db = DriverManager.getConnection("jdbc:mysql://localhost/testAtdb", "root", "");
+    }
+
+    @Before
+    public void setUp() throws Exception {
         Statement stmt = db.createStatement();
         stmt.executeUpdate("DELETE FROM `person`");
         stmt.executeUpdate("DELETE FROM `course`");

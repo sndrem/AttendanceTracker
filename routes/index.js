@@ -28,7 +28,7 @@ router.get("/logout", function(req, res, next) {
 
 /* GET about page */
 router.get("/about", function(req, res, next) {
-    res.render("about");
+    res.render("about", {title: "About Foribus"});
 })
 
 /* POST registration page */

@@ -3,5 +3,39 @@ block navigation
     include partials/navigation
 
 block content
-    h3 #{title}
-    p We are students
+    .row
+        .col-xs-12.col-sm-8.col-md-6
+            h3 #{title}
+            p.lead Tired of creating your own attendance tracking system for each semester? Can't keep track of your paper notes with attendance? Don't worry, Foribus is here to help you!
+
+            table
+                tbody
+                    tr
+                        td Take Attendance
+                        td.check: i.material-icons.green-check &#xE5CA;
+                    tr
+                        td Send emails
+                        td.check: i.material-icons.green-check &#xE5CA;
+                    tr
+                        td Get an overview
+                        td.check: i.material-icons.green-check &#xE5CA;
+                    tr
+                        td Easy to user interface
+                        td.check: i.material-icons.green-check &#xE5CA;
+                    tr
+                        td Free of charge
+                        td.check: i.material-icons.green-check &#xE5CA;
+
+
+        .col-xs-12.col-sm-8.col-md-6
+            h3 Frequently Asked Questions
+
+            dl
+                dt Is Foribus free?
+                dd Yes, Foribus is completely free.
+                dt What can Foribus do for me?
+                dd Foribus lets you register attendance for your seminar groups.
+                dt Can Foribus help me send out emails to students?
+                dd Yes, Foribus has the ability to send out emails to students for free.
+                dt Can I as a student, check my own status of absence through Foribus?
+                dd Yes, that is the whole point of Foribus. No more sending emails to your teaching assistants or lecturer. Just log in and check for yourself.

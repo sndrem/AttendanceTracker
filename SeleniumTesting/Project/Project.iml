@@ -10,5 +10,7 @@
     <orderEntry type="library" name="client-combined-3.0.1-nodeps" level="project" />
     <orderEntry type="library" name="junit-4.12" level="project" />
     <orderEntry type="library" name="mysql-connector-java-5.0.8-bin" level="project" />
+    <orderEntry type="library" name="selenium-2.48" level="project" />
+    <orderEntry type="library" name="mysql-connector-java-5.1.35-bin" level="project" />
   </component>
 </module>

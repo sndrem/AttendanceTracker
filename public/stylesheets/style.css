@@ -64,6 +64,12 @@ tr:hover {
   max-height: 400px;
   overflow-y: scroll; }
 
+.green-check {
+  color: green; }
+
+.check {
+  padding-left: 20px; }
+
 /* general non-critical error messages */
 #status, #addAssistantStatus, #removeAssistantStatus, #statusMessage, .bg-danger, .bg-warning, .bg-danger-profile {
   background: #ECEFF1;
