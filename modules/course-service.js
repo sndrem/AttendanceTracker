@@ -66,7 +66,7 @@ var courseService ={
     },
 
     getAllCourses: function(req, res, next) {
-        const query = "SELECT * FROM course";
+        const query = "SELECT * FROM course ORDER BY courseID";
         connection.query(query, function(err, result) {
             if(err) {
                 next(err);
@@ -204,7 +204,6 @@ var courseService ={
     },
 
     updateCourse: function(req, res, next) {
-        console.log(req.body);
         const courseID = req.body.courseID;
         const courseName = req.body.courseName;
         const semester = req.body.semester;
@@ -216,10 +215,21 @@ var courseService ={
                     + "WHERE courseID = ?";
         connection.query(query, [courseID, courseName, semester, attendance, plannedSeminars, courseID], function(err, result) {
             if(err) {
-                console.log(err);
                 next(err);
             } else {
                 res.status(200).json("ok");
+            }
+        });
+    },
+
+    deleteCourse: function(req, res, next) {
+        const courseID = req.body.courseID;
+        const query = "DELETE FROM course WHERE courseID = ?";
+        connection.query(query, [courseID], function(err, result) {
+            if(err) {
+                next(err);
+            } else {
+                next();
             }
         });
     }

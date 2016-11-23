@@ -776,7 +776,37 @@ $(function() {
         .always(function() {
             console.log("complete");
         });
-        
+    });
+
+    $("#deleteCourseBtn").on('click', function(event) {
+        event.preventDefault();
+        var choice = confirm("This action is irreversible. Are you sure you want to delete this course?");
+        if(choice) {
+            const courseID = $("#courseID").val();
+            $.ajax({
+                url: '/admin/deleteCourse',
+                type: 'POST',
+                dataType: 'JSON',
+                data: {
+                    courseID: courseID
+                },
+                success: function(data) {
+                    document.location.href = data.redirect_url;
+                }
+            })
+            .done(function() {
+                console.log("success");
+            })
+            .fail(function() {
+                console.log("error");
+            })
+            .always(function() {
+                console.log("complete");
+            });
+            
+        } else {
+            return;
+        }
     });
 
     $("#previousSeminar").on('change', function(event) {
@@ -1422,6 +1452,7 @@ $(function() {
                     },
                     success: function(data) {
                         $status.html(data);
+                        $("table tbody").append("<tr><td>" + courseID + "</td><td>" + courseName + "</td><td>" + semester + "</td><td>" + attendancePercentage + " %</td><td>" + plannedSeminars + "</td><td><a href=\"/admin/editCourse/" + courseID + "\"><i class='material-icons'>&#xE3C9;</i></td></tr>");
                     }
                 })
                 .done(function() {

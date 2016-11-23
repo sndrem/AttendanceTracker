@@ -81,5 +81,9 @@ router.get("/editCourse/:courseID", userService.requireLogin, userService.isAdmi
 
 router.post("/updateCourse", userService.requireLogin, userService.isAdmin, courseService.updateCourse);
 
+router.post("/deleteCourse", userService.requireLogin, userService.isAdmin, courseService.deleteCourse, function(req, res, next) {
+    res.status(200).json({"redirect_url": "/admin/createCourse"});
+});
+
 
 module.exports = router;
