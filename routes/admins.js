@@ -11,7 +11,7 @@ router.get("/dashboard", userService.requireLogin, userService.isAdmin, function
     const name = req.session.user.fName + " " + req.session.user.lName;
     var model = {
         title: 'Admin dashboard',
-        userName: name
+        user: name
     }
     res.render("adminDashboard", model);
 });

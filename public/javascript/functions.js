@@ -103,7 +103,6 @@ $(function() {
                         user: JSON.stringify(user)
                     },
                     success: function(data) {
-                        //
                         $(".panel").addClass("panel-success");
                         $(".glyphicon-ok").removeClass('hide');
                     }
@@ -789,7 +788,7 @@ $(function() {
             var $legend = $("legend");
             $legend.append("<div></div>");
             $.each(statusMessages, function(index, element) {
-                $legend.append("<p class='bg-danger'>" + element + "</p>");
+                $legend.append("<p class='bg-danger-profile'>" + element + "</p>");
             });
         } else {
             var user = {
