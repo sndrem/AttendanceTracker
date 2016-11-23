@@ -39,4 +39,4 @@ block content
             h4 Currently assigned student assistants
             ul
             for assistant in assistants
-                li #{assistant.fName} #{assistant.lName}
+                li: a(href="mailto:#{assistant.eMail}") #{assistant.fName} #{assistant.lName}

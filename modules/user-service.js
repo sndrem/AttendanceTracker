@@ -248,7 +248,7 @@ var userService = {
     },
 
     getAllAssistants: function(req, res, next) {
-        const query = "SELECT fName, lName, StudID "
+        const query = "SELECT fName, lName, StudID, eMail "
                     + "FROM person "
                     + "JOIN admins "
                     + "ON person.`StudID` = admins.`id` "
