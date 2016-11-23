@@ -49,15 +49,15 @@ $(function() {
             }
         })
         .done(function() {
-            console.log("success");
+            
         })
         .fail(function(data) {
-            console.log("error");
-            console.log(data);
+            
+            
             $("legend").html("<span class='bg-danger'>Could not log in</span>");
         })
         .always(function() {
-            console.log("complete");
+            
         });
     };
 
@@ -81,14 +81,14 @@ $(function() {
             }
         })
         .done(function() {
-            console.log("success");
+            
         })
         .fail(function() {
             $("#status").html(
                 "<p class='bg-warning'>There is already a user with that username or mail address</p>")
         })
         .always(function() {
-            console.log("complete");
+            
         });f
     };
 
@@ -103,19 +103,19 @@ $(function() {
                     user: JSON.stringify(user)
                 },
                 success: function(data) {
-                    // console.log(data);
+                    // 
                     $(".panel").addClass("panel-success");
                     $(".glyphicon-ok").removeClass('hide');
                 }
             })
             .done(function() {
-                console.log("success");
+                
             })
             .fail(function() {
-                console.log("error");
+                
             })
             .always(function() {
-                console.log("complete");
+                
             });
         }
     };
@@ -142,13 +142,13 @@ $(function() {
                     }
                 })
                 .done(function() {
-                    console.log("success");
+                    
                 })
                 .fail(function() {
-                    console.log("error");
+                    
                 })
                 .always(function() {
-                    console.log("complete");
+                    
                 });
         }
     };
@@ -167,14 +167,14 @@ $(function() {
             }
         })
         .done(function() {
-            console.log("success");
+            
         })
         .fail(function() {
-            console.log("error");
+            
             $("#addAssistantStatus").html(userID + " is already assigned as an assistant for " + courseID);
         })
         .always(function() {
-            console.log("complete");
+            
         });
     };
 
@@ -191,13 +191,13 @@ $(function() {
             }
         })
         .done(function() {
-            console.log("success");
+            
         })
         .fail(function() {
-            console.log("error");
+            
         })
         .always(function() {
-            console.log("complete");
+            
         });
     };
 
@@ -214,13 +214,13 @@ $(function() {
             }
         })
         .done(function() {
-            console.log("success");
+            
         })
         .fail(function() {
-            console.log("error");
+            
         })
         .always(function() {
-            console.log("complete");
+            
             $("#fetchCoursesForAssistant").trigger('click');
         });
     };
@@ -242,10 +242,10 @@ $(function() {
             }, 2500)
         })
         .fail(function() {
-            console.log("error");
+            
         })
         .always(function() {
-            console.log("complete");
+            
         });
     };
 
@@ -320,7 +320,7 @@ $(function() {
     }
 
     function populateDropdown(data) {
-        console.log("Should populate dropdown");
+        
         var $selectDiv = $(".multipleNameSelect");
         var $select = $("#multipleNameSelect");
         $selectDiv.removeClass('hide');
@@ -397,13 +397,13 @@ $(function() {
                     }
                 })
                 .done(function() {
-                    console.log("success");
+                    
                 })
                 .fail(function(data) {
-                    console.log("error");
+                    
                 })
                 .always(function() {
-                    console.log("complete");
+                    
                     location.reload();
                 });
         });
@@ -412,7 +412,7 @@ $(function() {
     function showSeminarList(data) {
         var $table = $("#courseTable tbody");
         //$table.html("");
-        console.log(data);
+        
         for (var i = 0; i < data.length; i++) {
 
             var course = data[i];
@@ -449,9 +449,9 @@ $(function() {
     function fetchSeminarGroups() {
         $('.fetchSeminarGroups').one("click", function(e) {
             e.preventDefault();
-            console.log("click");
+            
             var courseID = $(this).data("courseid");
-            console.log(courseID);
+            
             $.ajax({
                     url: '/student/listSeminars',
                     type: 'POST',
@@ -461,19 +461,19 @@ $(function() {
                     },
                     async: true,
                     success: function(data) {
-                        console.log(data);
+                        
                         showSeminarList(data);
                         addClickEventForSeminarRegistration();
                     }
                 })
                 .done(function() {
-                    console.log("success");
+                    
                 })
                 .fail(function() {
-                    console.log("error");
+                    
                 })
                 .always(function() {
-                    console.log("complete");
+                    
 
                 });
         });
@@ -507,11 +507,29 @@ $(function() {
         var $lastName = $("#lastName");
         var $email = $("#email");
         var $studentID = $("#studentID");
-        console.log(data.fName);
+        
         $studentID.val(data.StudID);
         $firstName.val(data.fName).prop('disabled', true);
         $lastName.val(data.lName).prop('disabled', true);
         $email.val(data.eMail).prop('disabled', true);
+    }
+
+    // Function to show thumbnail cards for some data
+    function showSeminarGroupCards(data) {
+        if (data) {
+            var $seminar = $("section.seminars");
+            $seminar.html("");
+            $.each(data, function(index, val) {
+                /* iterate through array or object */
+                const html = "<div class=\"col-xs-12 col-sm-12 col-md-6 col-lg-4\">" +
+                    "<div class=\"thumbnail\" >" +
+                    "<span class='badge'>" + val.numOfStudents + "</span>" +
+                    "<a href=\"/assistant/takeAttendance/" + val.semGrID + "\"><h4>" + val.name + "</h4></a>" +
+                    "</div>" +
+                    "</div>";
+                $seminar.append(html);
+            });
+        }
     }
 
     // ########## On-click event ##########
@@ -682,10 +700,10 @@ $(function() {
             resetAttendanceBtnClickListener(semGrID);
         })
         .fail(function() {
-            console.log("error");
+            
         })
         .always(function() {
-            console.log("complete");
+            
         });
     });
 
@@ -710,19 +728,19 @@ $(function() {
                 updateID: updateID
             },
             success: function(data) {
-                console.log(data);
+                
             }
         })
         .done(function() {
-            console.log("success");
+            
             $("#status").html("Seminar group is now updated");
             resetAttendanceBtnClickListener(semGrID);
         })
         .fail(function() {
-            console.log("error");
+            
         })
         .always(function() {
-            console.log("complete");
+            
         });
     });
 
@@ -784,13 +802,13 @@ $(function() {
                     }
                 })
                 .done(function() {
-                    console.log("success");
+                    
                 })
                 .fail(function() {
-                    console.log("error");
+                    
                 })
                 .always(function() {
-                    console.log("complete");
+                    
 
                 });
         } else {
@@ -812,17 +830,17 @@ $(function() {
                     success: function(data) {
                         showCourseList(data);
                         fetchSeminarGroups();
-                        console.log(data);
+                        
                     }
                 })
                 .done(function() {
-                    console.log("success");
+                    
                 })
                 .fail(function() {
-                    console.log("error");
+                    
                 })
                 .always(function() {
-                    console.log("complete");
+                    
                 })
         } else {
             $courseTable.addClass("hide");
@@ -875,13 +893,13 @@ $(function() {
                     }
                 })
                 .done(function() {
-                    console.log("success");
+                    
                 })
                 .fail(function() {
-                    console.log("error");
+                    
                 })
                 .always(function() {
-                    console.log("complete");
+                    
                 })
         }
     });
@@ -930,36 +948,20 @@ $(function() {
                 }
             })
             .done(function() {
-                console.log("success");
+                
             })
             .fail(function() {
-                console.log("error");
+                
             })
             .always(function() {
-                console.log("complete");
+                
             });
     });
 
     // Trigger change at page load so the chosen element is fetching data at page load
     $("#courseSelection").trigger('change');
 
-    // Function to show thumbnail cards for some data
-    function showSeminarGroupCards(data) {
-        if (data) {
-            var $seminar = $("section.seminars");
-            $seminar.html("");
-            $.each(data, function(index, val) {
-                /* iterate through array or object */
-                const html = "<div class=\"col-xs-12 col-sm-12 col-md-6 col-lg-4\">" +
-                    "<div class=\"thumbnail\" >" +
-                    "<span class='badge'>" + val.numOfStudents + "</span>" +
-                    "<a href=\"/assistant/takeAttendance/" + val.semGrID + "\"><h4>" + val.name + "</h4></a>" +
-                    "</div>" +
-                    "</div>";
-                $seminar.append(html);
-            });
-        }
-    }
+
 
     // This function call appends the value written in the courseID field
     // to the groupName-field used when creating a new seminargroup
@@ -1003,13 +1005,13 @@ $(function() {
                     }
                 })
                 .done(function() {
-                    console.log("success");
+                    
                 })
                 .fail(function() {
-                    console.log("error");
+                    
                 })
                 .always(function() {
-                    console.log("complete");
+                    
                 });
         } else {
             hideFormFields();
@@ -1050,13 +1052,13 @@ $(function() {
             }
         })
         .done(function() {
-            console.log("success");
+            
         })
         .fail(function() {
-            console.log("error");
+            
         })
         .always(function() {
-            console.log("complete");
+            
         });
     });
 
@@ -1106,7 +1108,7 @@ $(function() {
             message: JSON.stringify(formattedMessage)
         },
         success: function(data){
-            console.log(data);
+            
             $(".sendMessage").append("<div class='alert alert-success'>Mail successfully sent</div>");
             myApp.resetForm();
             setTimeout(function(){
@@ -1115,10 +1117,10 @@ $(function() {
         },
       })
       .done(function() {
-          console.log("success");
+          
       })
       .fail(function() {
-          console.log("error");
+          
           $(".sendMessage").append("<div class='alert alert-warning'>Mail could not be sent</div>");
                 myApp.resetForm();
                 setTimeout(function(){
@@ -1126,7 +1128,7 @@ $(function() {
             }, 5000);
       })
       .always(function() {
-          console.log("complete");
+          
       });
     });
 
@@ -1246,13 +1248,13 @@ $(function() {
                     }
                 })
                 .done(function() {
-                    console.log("success");
+                    
                 })
                 .fail(function(data) {
-                    console.log("error");
+                    
                 })
                 .always(function() {
-                    console.log("complete");
+                    
                     location.reload();
                 });
         });
@@ -1321,13 +1323,13 @@ $(function() {
                     }
                 })
                 .done(function() {
-                    console.log("success");
+                    
                 })
                 .fail(function() {
-                    console.log("error");
+                    
                 })
                 .always(function() {
-                    console.log("complete");
+                    
 
                 });
         });
@@ -1388,13 +1390,13 @@ $(function() {
                     }
                 })
                 .done(function() {
-                    console.log("success");
+                    
                 })
                 .fail(function(data) {
-                    console.log("error");
+                    
                 })
                 .always(function() {
-                    console.log("complete");
+                    
                 });
         }
     });
@@ -1435,13 +1437,13 @@ $(function() {
                 }
             })
             .done(function() {
-                console.log("success");
+                
             })
             .fail(function() {
-                console.log("error");
+                
             })
             .always(function() {
-                console.log("complete");
+                
             });
     });
 
@@ -1456,14 +1458,20 @@ $(function() {
         }
     });
 
-
-
     $("#multipleNameSelect").on('blur change', function(event) {
         event.preventDefault();
         var value = $(this).val();
         var $studentID = $("#studentID");
         $studentID.val(value);
         $studentID.trigger('change');
+    });
+
+    $("#studentIDSelection").on('change', function(event) {
+        event.preventDefault;
+        var student = $(this).val();
+        var $studentID = $("#studentID");
+        $studentID.val(student);
+        $studentID.trigger('keyup');
     });
 
     /**
@@ -1502,7 +1510,7 @@ $(function() {
                         studentID: studentID
                     },
                     success: function(data) {
-                        console.log(data);
+                        
                         if (data) {
                             if(data.length > 1) {
                                 // showWarningMessage
@@ -1521,13 +1529,13 @@ $(function() {
                     }
                 })
                 .done(function() {
-                    console.log("success");
+                    
                 })
                 .fail(function() {
-                    console.log("error");
+                    
                 })
                 .always(function() {
-                    console.log("complete");
+                    
                 });
         } else {
             hideFormFields();

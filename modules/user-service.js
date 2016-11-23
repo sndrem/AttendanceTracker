@@ -261,6 +261,20 @@ var userService = {
                 next();
             }
         });
+    },
+
+    getAllUsers: function(req, res, next) {
+        const query = "SELECT StudID, concat(fName, ' ', lName) as fullName "
+                    + "FROM person "
+                    + "ORDER BY fullName";
+        connection.query(query, function(err, result) {
+            if(err) {
+                next(err);
+            } else {
+                req.allUsers = result;
+                next();
+            }
+        });
     }
 };
 

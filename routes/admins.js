@@ -18,8 +18,13 @@ router.get("/dashboard", userService.requireLogin, userService.isAdmin, function
 
 
 /* GET createNewAssistant */
-router.get("/createNewAssistant", userService.requireLogin, userService.isAdmin, function(req, res, next) {
-    res.render("createNewAssistant");
+router.get("/createNewAssistant", userService.requireLogin, userService.isAdmin, userService.getAllAssistants, userService.getAllUsers, function(req, res, next) {
+    var model = {
+        assistants: req.assistants,
+        users: req.allUsers
+    }
+    console.log(model);
+    res.render("createNewAssistant", model);
 });
 
 
