@@ -25,18 +25,18 @@
       <file leaf-file-name="StudentTesting.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Project/src/StudentTesting.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="375">
-              <caret line="61" column="35" selection-start-line="61" selection-start-column="35" selection-end-line="61" selection-end-column="35" />
+            <state relative-caret-position="105">
+              <caret line="187" column="28" selection-start-line="187" selection-start-column="28" selection-end-line="187" selection-end-column="28" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <marker date="1479901357000" expanded="true" signature="1195:1215" ph="DELETE FROM " />
-                <marker date="1479901357000" expanded="true" signature="1247:1267" ph="DELETE FROM " />
-                <marker date="1479901357000" expanded="true" signature="1299:1324" ph="DELETE FROM " />
-                <marker date="1479901357000" expanded="true" signature="1356:1382" ph="DELETE FROM " />
-                <marker date="1479901357000" expanded="true" signature="1414:1447" ph="DELETE FROM " />
-                <marker date="1479901357000" expanded="true" signature="1479:1579" ph="INSERT INTO `seminargroup`... " />
-                <marker date="1479901357000" expanded="true" signature="1611:1711" ph="INSERT INTO `seminargroup`... " />
-                <marker date="1479901357000" expanded="true" signature="1743:1902" ph="INSERT INTO `course`... " />
+                <marker date="1479906819000" expanded="true" signature="1195:1215" ph="DELETE FROM " />
+                <marker date="1479906819000" expanded="true" signature="1247:1267" ph="DELETE FROM " />
+                <marker date="1479906819000" expanded="true" signature="1299:1324" ph="DELETE FROM " />
+                <marker date="1479906819000" expanded="true" signature="1356:1382" ph="DELETE FROM " />
+                <marker date="1479906819000" expanded="true" signature="1414:1447" ph="DELETE FROM " />
+                <marker date="1479906819000" expanded="true" signature="1479:1579" ph="INSERT INTO `seminargroup`... " />
+                <marker date="1479906819000" expanded="true" signature="1611:1711" ph="INSERT INTO `seminargroup`... " />
+                <marker date="1479906819000" expanded="true" signature="1743:1902" ph="INSERT INTO `course`... " />
               </folding>
             </state>
           </provider>
@@ -149,7 +149,7 @@
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
   </component>
-  <component name="RunManager" selected="JUnit.StudentTesting.testValidUserLogin">
+  <component name="RunManager" selected="JUnit.StudentTesting.testInvalidUserLogin">
     <configuration default="false" name="StudentTesting" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <module name="Project" />
@@ -171,48 +171,6 @@
       <patterns />
       <method />
     </configuration>
-    <configuration default="false" name="StudentTesting.testLogOut" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <module name="Project" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="StudentTesting" />
-      <option name="METHOD_NAME" value="testLogOut" />
-      <option name="TEST_OBJECT" value="method" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="singleModule" />
-      </option>
-      <envs />
-      <patterns />
-      <method />
-    </configuration>
-    <configuration default="false" name="StudentTesting.testChangeEmail" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <module name="Project" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="StudentTesting" />
-      <option name="METHOD_NAME" value="testChangeEmail" />
-      <option name="TEST_OBJECT" value="method" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="singleModule" />
-      </option>
-      <envs />
-      <patterns />
-      <method />
-    </configuration>
     <configuration default="false" name="StudentTesting.testValidUserLogin" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <module name="Project" />
@@ -221,6 +179,69 @@
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="StudentTesting" />
       <option name="METHOD_NAME" value="testValidUserLogin" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <envs />
+      <patterns />
+      <method />
+    </configuration>
+    <configuration default="false" name="StudentTesting (1)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="Project" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="StudentTesting" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <envs />
+      <patterns />
+      <method />
+    </configuration>
+    <configuration default="false" name="StudentTesting.testSignUpForSeminar" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="Project" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="StudentTesting" />
+      <option name="METHOD_NAME" value="testSignUpForSeminar" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <envs />
+      <patterns />
+      <method />
+    </configuration>
+    <configuration default="false" name="StudentTesting.testInvalidUserLogin" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="Project" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="StudentTesting" />
+      <option name="METHOD_NAME" value="testInvalidUserLogin" />
       <option name="TEST_OBJECT" value="method" />
       <option name="VM_PARAMETERS" value="-ea" />
       <option name="PARAMETERS" />
@@ -702,18 +723,20 @@
       <envs />
       <method />
     </configuration>
-    <list size="4">
+    <list size="5">
       <item index="0" class="java.lang.String" itemvalue="JUnit.StudentTesting" />
-      <item index="1" class="java.lang.String" itemvalue="JUnit.StudentTesting.testLogOut" />
-      <item index="2" class="java.lang.String" itemvalue="JUnit.StudentTesting.testChangeEmail" />
-      <item index="3" class="java.lang.String" itemvalue="JUnit.StudentTesting.testValidUserLogin" />
+      <item index="1" class="java.lang.String" itemvalue="JUnit.StudentTesting.testValidUserLogin" />
+      <item index="2" class="java.lang.String" itemvalue="JUnit.StudentTesting (1)" />
+      <item index="3" class="java.lang.String" itemvalue="JUnit.StudentTesting.testSignUpForSeminar" />
+      <item index="4" class="java.lang.String" itemvalue="JUnit.StudentTesting.testInvalidUserLogin" />
     </list>
     <recent_temporary>
-      <list size="4">
-        <item index="0" class="java.lang.String" itemvalue="JUnit.StudentTesting.testValidUserLogin" />
+      <list size="5">
+        <item index="0" class="java.lang.String" itemvalue="JUnit.StudentTesting.testInvalidUserLogin" />
         <item index="1" class="java.lang.String" itemvalue="JUnit.StudentTesting" />
-        <item index="2" class="java.lang.String" itemvalue="JUnit.StudentTesting.testChangeEmail" />
-        <item index="3" class="java.lang.String" itemvalue="JUnit.StudentTesting.testLogOut" />
+        <item index="2" class="java.lang.String" itemvalue="JUnit.StudentTesting.testSignUpForSeminar" />
+        <item index="3" class="java.lang.String" itemvalue="JUnit.StudentTesting (1)" />
+        <item index="4" class="java.lang.String" itemvalue="JUnit.StudentTesting.testValidUserLogin" />
       </list>
     </recent_temporary>
   </component>
@@ -732,44 +755,44 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1479900281211</updated>
-      <workItem from="1479900282822" duration="2097000" />
+      <workItem from="1479900282822" duration="3371000" />
     </task>
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="StudentTesting - 2016.11.23 at 12h 34m 12s.xml">
-      <configuration name="StudentTesting" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="StudentTesting - 2016.11.23 at 12h 38m 39s.xml">
-      <configuration name="StudentTesting" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="StudentTesting - 2016.11.23 at 12h 46m 34s.xml">
-      <configuration name="StudentTesting" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="StudentTesting - 2016.11.23 at 13h 43m 26s.xml">
       <configuration name="StudentTesting" configurationId="JUnit" />
     </history-entry>
     <history-entry file="StudentTesting - 2016.11.23 at 13h 45m 02s.xml">
       <configuration name="StudentTesting" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="StudentTesting_testChangeEmail - 2016.11.23 at 12h 47m 18s.xml">
-      <configuration name="StudentTesting.testChangeEmail" configurationId="JUnit" />
+    <history-entry file="StudentTesting - 2016.11.23 at 13h 54m 41s.xml">
+      <configuration name="StudentTesting" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="StudentTesting - 2016.11.23 at 13h 55m 56s.xml">
+      <configuration name="StudentTesting" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="StudentTesting - 2016.11.23 at 14h 12m 54s.xml">
+      <configuration name="StudentTesting" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="StudentTesting_(1) - 2016.11.23 at 13h 49m 55s.xml">
+      <configuration name="StudentTesting (1)" configurationId="JUnit" />
     </history-entry>
     <history-entry file="StudentTesting_testChangeEmail - 2016.11.23 at 13h 43m 05s.xml">
       <configuration name="StudentTesting.testChangeEmail" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="StudentTesting_testLogOut - 2016.11.23 at 12h 39m 45s.xml">
-      <configuration name="StudentTesting.testLogOut" configurationId="JUnit" />
+    <history-entry file="StudentTesting_testInvalidUserLogin - 2016.11.23 at 14h 13m 14s.xml">
+      <configuration name="StudentTesting.testInvalidUserLogin" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="StudentTesting_testLogOut - 2016.11.23 at 12h 43m 13s.xml">
-      <configuration name="StudentTesting.testLogOut" configurationId="JUnit" />
+    <history-entry file="StudentTesting_testSignUpForSeminar - 2016.11.23 at 13h 56m 17s.xml">
+      <configuration name="StudentTesting.testSignUpForSeminar" configurationId="JUnit" />
     </history-entry>
     <history-entry file="StudentTesting_testValidUserLogin - 2016.11.23 at 13h 46m 16s.xml">
       <configuration name="StudentTesting.testValidUserLogin" configurationId="JUnit" />
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2097000" />
+    <option name="totallyTimeSpent" value="3371000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="873" extended-state="6" />
@@ -824,18 +847,18 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/Project/src/StudentTesting.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="61" column="35" selection-start-line="61" selection-start-column="35" selection-end-line="61" selection-end-column="35" />
+        <state relative-caret-position="105">
+          <caret line="187" column="28" selection-start-line="187" selection-start-column="28" selection-end-line="187" selection-end-column="28" />
           <folding>
             <element signature="imports" expanded="true" />
-            <marker date="1479901357000" expanded="true" signature="1195:1215" ph="DELETE FROM " />
-            <marker date="1479901357000" expanded="true" signature="1247:1267" ph="DELETE FROM " />
-            <marker date="1479901357000" expanded="true" signature="1299:1324" ph="DELETE FROM " />
-            <marker date="1479901357000" expanded="true" signature="1356:1382" ph="DELETE FROM " />
-            <marker date="1479901357000" expanded="true" signature="1414:1447" ph="DELETE FROM " />
-            <marker date="1479901357000" expanded="true" signature="1479:1579" ph="INSERT INTO `seminargroup`... " />
-            <marker date="1479901357000" expanded="true" signature="1611:1711" ph="INSERT INTO `seminargroup`... " />
-            <marker date="1479901357000" expanded="true" signature="1743:1902" ph="INSERT INTO `course`... " />
+            <marker date="1479906819000" expanded="true" signature="1195:1215" ph="DELETE FROM " />
+            <marker date="1479906819000" expanded="true" signature="1247:1267" ph="DELETE FROM " />
+            <marker date="1479906819000" expanded="true" signature="1299:1324" ph="DELETE FROM " />
+            <marker date="1479906819000" expanded="true" signature="1356:1382" ph="DELETE FROM " />
+            <marker date="1479906819000" expanded="true" signature="1414:1447" ph="DELETE FROM " />
+            <marker date="1479906819000" expanded="true" signature="1479:1579" ph="INSERT INTO `seminargroup`... " />
+            <marker date="1479906819000" expanded="true" signature="1611:1711" ph="INSERT INTO `seminargroup`... " />
+            <marker date="1479906819000" expanded="true" signature="1743:1902" ph="INSERT INTO `course`... " />
           </folding>
         </state>
       </provider>
