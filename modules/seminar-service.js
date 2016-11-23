@@ -19,9 +19,7 @@ var seminarService = {
                                 +    "WHERE person.`StudID` = ?";
         connection.query(userSeminarGroupQuery, [req.session.user.StudID], function(err, result) {
             if(err) {
-                console.log("Error: " , err);
             } else {
-                console.log(result);
                 req.seminarGroups = result;
                 next();
             }
@@ -120,7 +118,6 @@ var seminarService = {
         connection.query(query, [courseID, req.session.user.StudID], function(err, result) {
             if(err) {
                 next(err);
-                console.log(err);
             } else {
                 req.resultSet = result;
                 next();
@@ -150,7 +147,6 @@ var seminarService = {
             //kjører query2 som sjekker om det finnes en gruppe med likt navn og courseID
             connection.query(query, [courseID, groupName], function(err, result) {
                 if(err) {
-                    console.log("Error", err);
                     next(err);
                 } else {
                     req.queryResult = result;
@@ -169,10 +165,8 @@ var seminarService = {
         const query = "SELECT * FROM seminargroup WHERE name = ? AND courseID = ?";
         connection.query(query, [groupName, courseID],function(err,result){
                 if(err){
-                    console.log("ERROR:",err);
                     next(err);
                 }else{
-                    console.log("RESULT", result);
                     if(result.length == 0){
                         next();
                     }else{
@@ -231,7 +225,6 @@ var seminarService = {
         const query = "INSERT INTO enrolled_in SET ?";
         connection.query(query, values, function(err, result) {
             if(err) {
-                console.log("There was an error:", err);
                 next();
             } else {
 
@@ -486,10 +479,8 @@ var seminarService = {
             const query = "INSERT INTO attends_seminar (StudID, semID, attended) VALUES ?";
             connection.query(query, [studentList], function(err, data) {
                 if(err) {
-                    console.log(err);
                     next(err);
                 } else {
-                    console.log(data);
                     next();
                 }
             });
@@ -507,7 +498,6 @@ var seminarService = {
                     + "VALUES(?, ?, ?, ?, ?, ?)";
         connection.query(query, [semGrID, 1, place, date, 120, status], function(err, data) {
             if(err) {
-                console.log(err);
                 next(err);
             } else {
                 req.seminarInsertId = data.insertId;
@@ -529,7 +519,6 @@ var seminarService = {
                     + "WHERE semID = ?";
         connection.query(query, [place, status, updateID], function(err, data) {
             if(err) {
-                console.log(err);
                 next(err);
             } else {
                 req.resultSet = data;
@@ -552,10 +541,8 @@ var seminarService = {
             });
             connection.query(queries, function(err, data) {
                 if(err) {
-                    console.log("Error:", err);
                     next(err);
                 } else {
-                    console.log(data);
                     next();
                 }
             });
@@ -654,7 +641,6 @@ var seminarService = {
                     + "ORDER BY seminar.`date` desc"
         connection.query(query, [userID, semGrID], function(err, result) {
             if(err) {
-                console.log(err);
                 next(err);
             } else {
                 req.studentAttendance = result;

@@ -54,7 +54,6 @@ var courseService ={
                 if(err) {
                     next(err);
                 } else {
-                    console.log(result);
                     req.resultSet = result;
                     next();
                 }
@@ -112,7 +111,6 @@ var courseService ={
                 next(err);
             } else {
                 if(result.length == 0) {
-                   console.log("the course does not exists");
                    res.status(200).json("The course does not exists. Contact the system admin for creation of courses");
                 } else {
                    next();
@@ -164,7 +162,6 @@ var courseService ={
 
         connection.query(query, values, function(err, result) {
             if(err){
-                console.log("error ", err);
                 next(err);
             } else{
                 req.resultSet = result;

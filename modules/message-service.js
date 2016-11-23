@@ -17,7 +17,6 @@ var messageService ={
         var from_email = new helper.Email('noreply@foribus.com');
         for(var i = 0; i < students.length; i++) {
             var student = students[i];
-            console.log("Sending mail to: " + student.name + " with email: " + student.email);
             var formattedMessage = message.replace(/{name}/gi, student.name);
             formattedMessage = formattedMessage.replace(/{beenAway}/gi, student.beenAway);
             var to_email = new helper.Email(student.email);
@@ -34,12 +33,8 @@ var messageService ={
 
             sg.API(request, function(error, response) {
               if(error) {
-                console.log("Error: ", error);
                 next(error);
               }
-              console.log("Code: ", response.statusCode);
-              console.log("Body: ", response.body);
-              console.log("Headerson: ", response.headers);
             });
         }
         next();
