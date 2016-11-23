@@ -1,0 +1,32 @@
+extends layout
+block content
+    h2 Edit Course
+
+    form(action="/admin/updateCourse" method="POST")
+        legend#status
+        .form-group
+            label(for="courseID") Course ID
+            input#courseID(type="text" name="courseID" value="#{course.courseID}" placeholder="Course ID eg. INFO100" required).form-control
+
+        .form-group
+            label(for="courseName") Course name
+            input#courseName(type="text" name="courseName" value="#{course.name}" placeholder="Course name eg. Examen facultatum - Grunnkurs i informasjonsvitskap" required).form-control
+
+        .form-group
+            label(for="semester") Semester
+            input#semester(type="text" name="courseSemester" value="#{course.semester}" placeholder="Semester for the course eg. Vår, Høst eller vår og høst" required).form-control
+
+        .form-group
+            label(for="attendancePercentage") Attendance in percent (%)
+            select#attendancePercentage(name="attendancePercentage").form-control
+                - for (var i = 0; i < 101; i++)
+                    - if(i == course.attendance)
+                        option(value="#{i}" selected) #{i}
+                    - else
+                        option(value="#{i}") #{i}
+        .form-group
+            label(for="plannedSeminars") Planned Seminars
+            input#plannedSeminars(type="text" name ="plannedSeminars" value="#{course.plannedSeminars}" placeholder="if empty, this will default to 0").form-control
+
+        .form-group
+            button.btn.btn-primary#updateCourseBtn Update course

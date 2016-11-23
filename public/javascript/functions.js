@@ -744,6 +744,41 @@ $(function() {
         });
     });
 
+    $("#updateCourseBtn").on('click', function(event) {
+        event.preventDefault();
+        const courseID = $("#courseID").val();
+        const courseName = $("#courseName").val();
+        const semester = $("#semester").val();
+        const attendance = $("#attendancePercentage").val();
+        const plannedSeminars = $("#plannedSeminars").val();
+
+        $.ajax({
+            url: '/admin/updateCourse',
+            type: 'POST',
+            dataType: 'JSON',
+            data: {
+                courseID: courseID,
+                courseName: courseName,
+                semester: semester,
+                attendance: attendance,
+                plannedSeminars: plannedSeminars
+            },
+            success: function(data) {
+                console.log(data);
+            }
+        })
+        .done(function() {
+            console.log("success");
+        })
+        .fail(function() {
+            console.log("error");
+        })
+        .always(function() {
+            console.log("complete");
+        });
+        
+    });
+
     $("#previousSeminar").on('change', function(event) {
         event.preventDefault();
         var prevSeminarUrlLocation = $(this).val();

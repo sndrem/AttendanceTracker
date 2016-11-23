@@ -1,33 +1,58 @@
 extends layout
 
 block content
-    h2 Create a new course
+    
 
-    form(action="/admin/createCourse" method="POST")
-        legend#status
-        .form-group
-            label(for="courseID") Course ID
-            input#courseID(type="text" name="courseID" placeholder="Course ID eg. INFO100" required).form-control
+    .row
+        .col-xs-12.col-sm-8.col-md-6
+            h2 Create a new course
+            form(action="/admin/createCourse" method="POST")
+                legend#status
+                .form-group
+                    label(for="courseID") Course ID
+                    input#courseID(type="text" name="courseID" placeholder="Course ID eg. INFO100" required).form-control
 
-        .form-group
-            label(for="courseName") Course name
-            input#courseName(type="text" name="courseName" placeholder="Course name eg. Examen facultatum - Grunnkurs i informasjonsvitskap" required).form-control
+                .form-group
+                    label(for="courseName") Course name
+                    input#courseName(type="text" name="courseName" placeholder="Course name eg. Examen facultatum - Grunnkurs i informasjonsvitskap" required).form-control
 
-        .form-group
-            label(for="semester") Semester
-            input#semester(type="text" name="courseSemester" placeholder="Semester for the course eg. Vår, Høst eller vår og høst" required).form-control
+                .form-group
+                    label(for="semester") Semester
+                    input#semester(type="text" name="courseSemester" placeholder="Semester for the course eg. Vår, Høst eller vår og høst" required).form-control
 
-        .form-group
-            label(for="attendancePercentage") Attendance in percent (%)
-            select#attendancePercentage(name="attendancePercentage").form-control
-                - for (var i = 0; i < 101; i++)
-                    - if(i == 80)
-                        option(value="#{i}" selected) #{i}
-                    - else
-                        option(value="#{i}") #{i}
-        .form-group
-            label(for="plannedSeminars") Planned Seminars
-            input#plannedSeminars(type="text" name ="plannedSeminars" placeholder="if empty, this will default to 0").form-control
+                .form-group
+                    label(for="attendancePercentage") Attendance in percent (%)
+                    select#attendancePercentage(name="attendancePercentage").form-control
+                        - for (var i = 0; i < 101; i++)
+                            - if(i == 80)
+                                option(value="#{i}" selected) #{i}
+                            - else
+                                option(value="#{i}") #{i}
+                .form-group
+                    label(for="plannedSeminars") Planned Seminars
+                    input#plannedSeminars(type="text" name ="plannedSeminars" placeholder="if empty, this will default to 0").form-control
 
-        .form-group
-            button.btn.btn-primary#createCourseBtn Create new course
+                .form-group
+                    button.btn.btn-primary#createCourseBtn Create new course
+        .col-xs-12.col-sm-8.col-md-6
+            h2 Courses
+            table.table.table-striped
+                thead
+                    tr
+                        th Course ID
+                        th Name
+                        th Semester
+                        th Attendance
+                        th Planned seminars
+                        th Edit course
+
+                tbody
+                    for course in courses
+                        tr
+                            td #{course.courseID}
+                            td #{course.name}
+                            td #{course.semester}
+                            td #{course.attendance} %
+                            td #{course.plannedSeminars}
+                            td: a(href="/admin/editCourse/#{course.courseID}")
+                                | <i class="material-icons">&#xE3C9;</i>

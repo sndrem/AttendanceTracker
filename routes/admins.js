@@ -23,7 +23,6 @@ router.get("/createNewAssistant", userService.requireLogin, userService.isAdmin,
         assistants: req.assistants,
         users: req.allUsers
     }
-    console.log(model);
     res.render("createNewAssistant", model);
 });
 
@@ -65,13 +64,22 @@ router.post("/addAssistantToCourse", userService.requireLogin, userService.isAdm
 });
 
 /* GET createNewCourse */
-router.get("/createCourse", userService.requireLogin, userService.isAdmin, function(req, res, next) {
-    res.render("createCourse");
+router.get("/createCourse", userService.requireLogin, userService.isAdmin, courseService.getAllCourses, function(req, res, next) {
+    var model = {
+        courses: req.courses
+    }
+    res.render("createCourse", model);
 });
 
 router.post("/createCourse", userService.requireLogin, userService.isAdmin, courseService.courseExists, courseService.createCourse, function(req, res,next){
     res.status(200).json("Course created");
 });
+
+router.get("/editCourse/:courseID", userService.requireLogin, userService.isAdmin, courseService.getSpecificCourse, function(req, res, next) {
+    res.render("editCourse", {course: req.courseDetails});
+});
+
+router.post("/updateCourse", userService.requireLogin, userService.isAdmin, courseService.updateCourse);
 
 
 module.exports = router;
