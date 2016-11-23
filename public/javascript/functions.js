@@ -7,116 +7,116 @@ $(function() {
 
     // Initialize Froala wysiwyg editor
     $('#froala').froalaEditor({
-      toolbarButtons: ['bold', 'italic', 'underline', 'strikeThrough', 'color', 'fontSize', 'fontFamily', 'emoticons', '|', 'paragraphFormat', 'align', 'undo', 'redo', 'html'],
-      fontSizeSelection: true,
-      heightMin: 100,
-      heightMax: 200,
-      // Colors list.
-      colorsBackground: [
-        '#15E67F', '#E3DE8C', '#D8A076', '#D83762', '#76B6D8', 'REMOVE',
-        '#1C7A90', '#249CB8', '#4ABED9', '#FBD75B', '#FBE571', '#FFFFFF'
-      ],
-      colorsDefaultTab: 'text',
-      colorsStep: 6,
-      colorsText: [
-        '#15E67F', '#E3DE8C', '#D8A076', '#D83762', '#76B6D8', 'REMOVE',
-        '#1C7A90', '#249CB8', '#4ABED9', '#FBD75B', '#FBE571', '#FFFFFF'
-      ],
-      emoticonsStep: 4
+        toolbarButtons: ['bold', 'italic', 'underline', 'strikeThrough', 'color', 'fontSize', 'fontFamily', 'emoticons', '|', 'paragraphFormat', 'align', 'undo', 'redo', 'html'],
+        fontSizeSelection: true,
+        heightMin: 100,
+        heightMax: 200,
+        // Colors list.
+        colorsBackground: [
+            '#15E67F', '#E3DE8C', '#D8A076', '#D83762', '#76B6D8', 'REMOVE',
+            '#1C7A90', '#249CB8', '#4ABED9', '#FBD75B', '#FBE571', '#FFFFFF'
+        ],
+        colorsDefaultTab: 'text',
+        colorsStep: 6,
+        colorsText: [
+            '#15E67F', '#E3DE8C', '#D8A076', '#D83762', '#76B6D8', 'REMOVE',
+            '#1C7A90', '#249CB8', '#4ABED9', '#FBD75B', '#FBE571', '#FFFFFF'
+        ],
+        emoticonsStep: 4
     });
 
-    var defaultBeenAwayHtml = "<p>Hey {name}</p><p>You have been away {beenAway} times, and if you want to be "
-                            + "able to take the exam, then you have to start showing up.</p>";
+    var defaultBeenAwayHtml = "<p>Hey {name}</p><p>You have been away {beenAway} times, and if you want to be " + "able to take the exam, then you have to start showing up.</p>";
     $('#froala').froalaEditor('html.set', defaultBeenAwayHtml);
 
 
-/**
-    ###########  My app ###########
-*/
+    /**
+        ###########  My app ###########
+    */
     myApp.login = function(email, password) {
         // TODO Post request to server
         // Server should log in
         $.ajax({
-            url: '/login',
-            type: 'POST',
-            dataType: 'JSON',
-            data: {
-                email: email,
-                password: password
-            },
-            success: function(data) {
-                document.location.href = data.redirect_url;
-            }
-        })
-        .done(function() {
-            
-        })
-        .fail(function(data) {
-            
-            
-            $("legend").html("<span class='bg-danger'>Could not log in</span>");
-        })
-        .always(function() {
-            
-        });
+                url: '/login',
+                type: 'POST',
+                dataType: 'JSON',
+                data: {
+                    email: email,
+                    password: password
+                },
+                success: function(data) {
+                    document.location.href = data.redirect_url;
+                }
+            })
+            .done(function() {
+
+            })
+            .fail(function(data) {
+
+
+                $("legend").html("<span class='bg-danger'>Could not log in</span>");
+            })
+            .always(function() {
+
+            });
     };
 
 
     myApp.register = function(firstName, lastName, studentID, email, password, confirmPassword) {
         // TODO Post request to server for registration
         $.ajax({
-            url: '/register',
-            type: 'POST',
-            dataType: 'JSON',
-            data: {
-                firstName: firstName,
-                lastName: lastName,
-                studentID: studentID,
-                email: email,
-                password: password,
-                confirmPassword: confirmPassword
-            },
-            success: function(data) {
-                document.location.href = "/login";
-            }
-        })
-        .done(function() {
-            
-        })
-        .fail(function() {
-            $("#status").html(
-                "<p class='bg-warning'>There is already a user with that username or mail address</p>")
-        })
-        .always(function() {
-            
-        });f
+                url: '/register',
+                type: 'POST',
+                dataType: 'JSON',
+                data: {
+                    firstName: firstName,
+                    lastName: lastName,
+                    studentID: studentID,
+                    email: email,
+                    password: password,
+                    confirmPassword: confirmPassword
+                },
+                success: function(data) {
+                    document.location.href = "/login";
+                }
+            })
+            .done(function() {
+
+            })
+            .fail(function() {
+                $("#status").html(
+                    "<p class='bg-warning'>There is already a user with that username or mail address</p>")
+            })
+            .always(function() {
+
+            });
+        f
     };
 
     myApp.updateProfile = function(user) {
         // TODO Implement update functionality
-        if(user) {
+        if (user) {
             $.ajax({
-                url: '/updateProfile',
-                type: 'POST',
-                dataType: 'JSON',
-                data: {
-                    user: JSON.stringify(user)
-                },
-                success: function(data) {
-                    // 
-                    $(".panel").addClass("panel-success");
-                    $(".glyphicon-ok").removeClass('hide');
-                }
-            })
-            .done(function() {
-                
-            })
-            .fail(function() {
-                
-            })
-            .always(function() {
-                
-            });
+                    url: '/updateProfile',
+                    type: 'POST',
+                    dataType: 'JSON',
+                    data: {
+                        user: JSON.stringify(user)
+                    },
+                    success: function(data) {
+                        //
+                        $(".panel").addClass("panel-success");
+                        $(".glyphicon-ok").removeClass('hide');
+                    }
+                })
+                .done(function() {
+
+                })
+                .fail(function() {
+
+                })
+                .always(function() {
+
+                });
         }
     };
 
@@ -142,111 +142,110 @@ $(function() {
                     }
                 })
                 .done(function() {
-                    
+
                 })
                 .fail(function() {
-                    
+
                 })
                 .always(function() {
-                    
+
                 });
         }
     };
 
     myApp.addAssistantToCourse = function(userID, courseID) {
         $.ajax({
-            url: '/admin/addAssistantToCourse',
-            type: 'POST',
-            dataType: 'JSON',
-            data: {
-                studentAssistant: userID,
-                courseSelection: courseID
-            },
-            success: function(data) {
-                $("#addAssistantStatus").html(userID + " is now asssigned as an assistant for " + courseID);
-            }
-        })
-        .done(function() {
-            
-        })
-        .fail(function() {
-            
-            $("#addAssistantStatus").html(userID + " is already assigned as an assistant for " + courseID);
-        })
-        .always(function() {
-            
-        });
+                url: '/admin/addAssistantToCourse',
+                type: 'POST',
+                dataType: 'JSON',
+                data: {
+                    studentAssistant: userID,
+                    courseSelection: courseID
+                },
+                success: function(data) {
+                    $("#addAssistantStatus").html(userID + " is now asssigned as an assistant for " + courseID);
+                }
+            })
+            .done(function() {
+
+            })
+            .fail(function() {
+
+                $("#addAssistantStatus").html(userID + " is already assigned as an assistant for " + courseID);
+            })
+            .always(function() {
+
+            });
     };
 
     myApp.fetchSeminarGroupsForAssistant = function(userID) {
         $.ajax({
-            url: '/common/fetchSeminarGroupsForAssistant',
-            type: 'POST',
-            dataType: 'JSON',
-            data: {
-                userID: userID
-            },
-            success: function(data) {
-                populateTable(data);
-            }
-        })
-        .done(function() {
-            
-        })
-        .fail(function() {
-            
-        })
-        .always(function() {
-            
-        });
+                url: '/common/fetchSeminarGroupsForAssistant',
+                type: 'POST',
+                dataType: 'JSON',
+                data: {
+                    userID: userID
+                },
+                success: function(data) {
+                    populateTable(data);
+                }
+            })
+            .done(function() {
+
+            })
+            .fail(function() {
+
+            })
+            .always(function() {
+
+            });
     };
 
     myApp.removeAssistantFromCourse = function(userID, courseID) {
         $.ajax({
-            url: '/admin/removeAssistantFromCourse',
-            type: 'POST',
-            dataType: 'JSON',
-            data: {
-                userID: userID,
-                courseID: courseID
-            },
-            success: function(data) {
-            }
-        })
-        .done(function() {
-            
-        })
-        .fail(function() {
-            
-        })
-        .always(function() {
-            
-            $("#fetchCoursesForAssistant").trigger('click');
-        });
+                url: '/admin/removeAssistantFromCourse',
+                type: 'POST',
+                dataType: 'JSON',
+                data: {
+                    userID: userID,
+                    courseID: courseID
+                },
+                success: function(data) {}
+            })
+            .done(function() {
+
+            })
+            .fail(function() {
+
+            })
+            .always(function() {
+
+                $("#fetchCoursesForAssistant").trigger('click');
+            });
     };
 
     // Removes a person as an assistant
     myApp.removeAssistant = function(studentID) {
         $.ajax({
-            url: '/admin/removeAssistant',
-            type: 'POST',
-            dataType: 'JSON',
-            data: {
-                StudID: studentID
-            },
-        })
-        .done(function() {
-            $("legend").html("<p class='bg-warning'>" + studentID + " was successfully removed as an assistant</p>");
-            setTimeout(function() {
-                document.location.reload();
-            }, 2500)
-        })
-        .fail(function() {
-            
-        })
-        .always(function() {
-            
-        });
+                url: '/admin/removeAssistant',
+                type: 'POST',
+                dataType: 'JSON',
+                data: {
+                    StudID: studentID
+                },
+            })
+            .done(function() {
+                $("legend").html("<p class='bg-warning'>" + studentID + " was successfully removed as an assistant</p>");
+                setTimeout(function() {
+                    document.location.reload();
+                }, 2500)
+            })
+            .fail(function() {
+
+            })
+            .always(function() {
+
+            });
     };
 
     // ########### Functions ###########
@@ -271,12 +270,12 @@ $(function() {
     }
 
     function getStudentAttendanceList() {
-        // Get all students 
+        // Get all students
         var students = [];
         var cancelled = isSeminarCancelled();
         $(".student-attendance").each(function(index, element) {
             // if the seminar is cancelled, everyone gets registered as attended
-            if(cancelled === 1) {
+            if (cancelled === 1) {
                 students.push({
                     StudID: $(element).val(),
                     attended: true
@@ -303,14 +302,14 @@ $(function() {
         return $("#semGrID").val();
     }
 
-     function resetAttendanceBtnClickListener(semGrID) {
+    function resetAttendanceBtnClickListener(semGrID) {
         $("#resetAttendanceBtn").on('click', function(event) {
             event.preventDefault();
             document.location.href = "/assistant/takeAttendance/" + semGrID;
         });
     }
 
-     function isEmpty(value) {
+    function isEmpty(value) {
         return value.length == 0;
     }
 
@@ -320,12 +319,12 @@ $(function() {
     }
 
     function populateDropdown(data) {
-        
+
         var $selectDiv = $(".multipleNameSelect");
         var $select = $("#multipleNameSelect");
         $selectDiv.removeClass('hide');
         $select.html("");
-        for(var i = 0; i < data.length; i++) {
+        for (var i = 0; i < data.length; i++) {
             $select.append("<option value=\"" + data[i].StudID + "\">" + data[i].fName + " " + data[i].lName + "</option>");
         }
     }
@@ -360,19 +359,7 @@ $(function() {
         return attended === 1 ? "<td class='success'>Yes</td>" : "<td class='warning'>No</td>";
     }
 
-    $("#removeStudentAsAssistant").on('click', function(event) {
-        event.preventDefault();
-        var confirmation = confirm("Are you sure you want to remove the student as an assistant? This step cannot be undone, so use it with care");
-        if(confirmation) {
-            const studentID = $("#studentAssistant").val();
-            myApp.removeAssistant(studentID);
-        } else {
-            return;
-        }
-    });
-
-
-        // Function to mark a element as green
+    // Function to mark a element as green
     function colorMarkElement(element, color) {
         element.css('background-color', color);
         element.css('color', '#2d2d2d');
@@ -397,13 +384,13 @@ $(function() {
                     }
                 })
                 .done(function() {
-                    
+
                 })
                 .fail(function(data) {
-                    
+
                 })
                 .always(function() {
-                    
+
                     location.reload();
                 });
         });
@@ -412,25 +399,24 @@ $(function() {
     function showSeminarList(data) {
         var $table = $("#courseTable tbody");
         //$table.html("");
-        
+
         for (var i = 0; i < data.length; i++) {
 
             var course = data[i];
 
             $("[data-courseid=" + course.courseID + "]").after("<tr class=semHead" + course.courseID + ">" +
-             "<th></th><th></th>" + "<th>Seminar Group</th>" + "<th>Registrer</th></tr>" + 
-             "<tr class=semInfo>" +
+                "<th></th><th></th>" + "<th>Seminar Group</th>" + "<th>Registrer</th></tr>" +
+                "<tr class=semInfo>" +
                 "<td>" + "</td>" + "<td></td>" +
                 "<td>" + course.name + "</td>" +
-                "<td><a data-courseid=\"" + course.courseID + "\" data-seminarkey=\"" + course.semGrID 
-                + "\" class=\"registerForSeminarBtn\" href=\"#\">Sign Up</a></td>" +
+                "<td><a data-courseid=\"" + course.courseID + "\" data-seminarkey=\"" + course.semGrID + "\" class=\"registerForSeminarBtn\" href=\"#\">Sign Up</a></td>" +
                 "</tr>").one();
             $(".semHead" + course.courseID + ">:gt(3)").remove();
             $(".semInfo tr").remove();
         }
     }
 
-    
+
     function showCourseList(data) {
         var $table = $("#courseTable tbody");
         $table.html("");
@@ -449,9 +435,9 @@ $(function() {
     function fetchSeminarGroups() {
         $('.fetchSeminarGroups').one("click", function(e) {
             e.preventDefault();
-            
+
             var courseID = $(this).data("courseid");
-            
+
             $.ajax({
                     url: '/student/listSeminars',
                     type: 'POST',
@@ -461,33 +447,33 @@ $(function() {
                     },
                     async: true,
                     success: function(data) {
-                        
+
                         showSeminarList(data);
                         addClickEventForSeminarRegistration();
                     }
                 })
                 .done(function() {
-                    
+
                 })
                 .fail(function() {
-                    
+
                 })
                 .always(function() {
-                    
+
 
                 });
         });
     }
 
     function addClickEventForCourseRegistration() {
-         $(".createCourseBtn").on('click', function(e) {
+        $(".createCourseBtn").on('click', function(e) {
             e.preventDefault();
             var courseID = $(this).data('courseID');
 
         });
     };
 
-        // Method to populate the registration fields for the creation of a new student assistant
+    // Method to populate the registration fields for the creation of a new student assistant
     function unhideformFields() {
         $("form div.hide").each(function(index, val) {
             /* iterate through array or object */
@@ -507,7 +493,7 @@ $(function() {
         var $lastName = $("#lastName");
         var $email = $("#email");
         var $studentID = $("#studentID");
-        
+
         $studentID.val(data.StudID);
         $firstName.val(data.fName).prop('disabled', true);
         $lastName.val(data.lName).prop('disabled', true);
@@ -532,6 +518,169 @@ $(function() {
         }
     }
 
+    // Returns the number of checked checkboxes
+    function getNumOfCheckedCheckboxes() {
+        return $("table tr td:nth-child(5) input:checked").length;
+    }
+
+    function populateDropdown(data) {
+        var $selectDiv = $(".multipleNameSelect");
+        var $select = $("#multipleNameSelect");
+        $selectDiv.removeClass('hide');
+        $select.html("");
+        for (var i = 0; i < data.length; i++) {
+            $select.append("<option value=\"" + data[i].StudID + "\">" + data[i].fName + " " + data[i].lName + "</option>");
+        }
+    }
+
+    // Method to populate the registration fields for the creation of a new student assistant
+    function unhideformFields() {
+        $("form div.hide").each(function(index, val) {
+            /* iterate through array or object */
+            $(val).removeClass('hide');
+        });
+    }
+
+    function hideFormFields() {
+        $("#firstName").parent().addClass('hide');
+        $("#lastName").parent().addClass('hide');
+        $("#email").parent().addClass('hide');
+    }
+
+
+    function populateRegistrationFields(data) {
+        var $firstName = $("#firstName");
+        var $lastName = $("#lastName");
+        var $email = $("#email");
+        var $studentID = $("#studentID");
+
+        $studentID.val(data.StudID);
+        $firstName.val(data.fName).prop('disabled', true);
+        $lastName.val(data.lName).prop('disabled', true);
+        $email.val(data.eMail).prop('disabled', true);
+
+    }
+
+    // Function to mark a element as green
+    function colorMarkElement(element, color) {
+        element.css('background-color', color);
+        element.css('color', '#2d2d2d');
+    }
+
+
+    function addClickEventForSeminarRegistration() {
+        $(".registerForSeminarBtn").on('click', function(e) {
+            e.preventDefault();
+            var seminarKey = $(this).data('seminarkey');
+            var courseID = $(this).data('courseid');
+            $.ajax({
+                    url: '/student/signUpForSeminar/' + seminarKey,
+                    type: 'POST',
+                    dataType: 'JSON',
+                    data: {
+                        seminarGroup: seminarKey,
+                        courseID: courseID
+                    },
+                    success: function(data) {
+                        alert(data);
+                    }
+                })
+                .done(function() {
+
+                })
+                .fail(function(data) {
+
+                })
+                .always(function() {
+
+                    location.reload();
+                });
+        });
+    }
+
+    function showSeminarList(data) {
+        var $table = $("#courseTable tbody");
+
+        for (var i = 0; i < data.length; i++) {
+
+            var course = data[i];
+
+            $(
+                "[data-courseid=" + course.courseID + "]").after(
+                "<tr class=semHead" + course.courseID + ">" +
+                "<th></th>" +
+                "<th></th>" +
+                "<th>Seminar Group</th>" +
+                "<th>Registrer</th></tr>" +
+                "<tr class=semInfo>" +
+                "<td></td>" +
+                "<td></td>" +
+                "<td>" + course.name + "</td>" +
+                "<td>" +
+                "<a data-courseid=\"" + course.courseID + "\" data-seminarkey=\"" + course.semGrID +
+                "\" class=\"registerForSeminarBtn\" href=\"#\">Sign Up</a>" +
+                "</td>" +
+                "</tr>"
+            ).one();
+            $(".semHead" + course.courseID + ">:gt(3)").remove();
+            $(".semInfo tr").remove();
+        }
+    }
+
+
+    function showCourseList(data) {
+        var $table = $("#courseTable tbody");
+        $table.html("");
+        for (var i = 0; i < data.length; i++) {
+            var course = data[i];
+            $table.append("<tr data-courseid=\"" + course.courseID + "\" class='fetchSeminarGroups'>" +
+                "<td class='courseId'>" + course.courseID + "</td>" +
+                "<td >" + course.name + "</td>" +
+                "<td>" + course.semester + "</td>" +
+                "<td>" + course.attendance + " %" + "</td>" +
+                "</tr>");
+        }
+
+    }
+
+    function fetchSeminarGroups() {
+        $('.fetchSeminarGroups').one("click", function(e) {
+            e.preventDefault();
+            var courseID = $(this).data("courseid");
+            $.ajax({
+                    url: '/student/listSeminars',
+                    type: 'POST',
+                    dataType: 'JSON',
+                    data: {
+                        courseID: courseID
+                    },
+                    async: true,
+                    success: function(data) {
+                        showSeminarList(data);
+                        addClickEventForSeminarRegistration();
+                    }
+                })
+                .done(function() {
+
+                })
+                .fail(function() {
+
+                })
+                .always(function() {
+
+
+                });
+        });
+    }
+
+    function addClickEventForCourseRegistration() {
+        $(".createCourseBtn").on('click', function(e) {
+            e.preventDefault();
+            var courseID = $(this).data('courseID');
+
+        });
+    };
+
     // ########## On-click event ##########
 
     $("#loginButton").on('click', function(e) {
@@ -555,7 +704,7 @@ $(function() {
             var $legend = $("legend");
             $legend.append("<div></div>");
             $.each(statusMessages, function(index, element) {
-                 $legend.append("<p class='bg-danger'>" + element + "</p>");
+                $legend.append("<p class='bg-danger'>" + element + "</p>");
             })
         }
     });
@@ -620,25 +769,23 @@ $(function() {
 
         var statusMessages = [];
 
-        if(isEmpty(firstName)) {
+        if (isEmpty(firstName)) {
             statusMessages.push("First name cannot be empty");
-        } 
-        else if((Number.isInteger(firstName)) || (!isNaN(parseFloat(firstName)) && isFinite(firstName))){
+        } else if ((Number.isInteger(firstName)) || (!isNaN(parseFloat(firstName)) && isFinite(firstName))) {
             statusMessages.push("First name cannot be a number");
-        } 
-
-        if(isEmpty(lastName)) {
-            statusMessages.push("Last name cannot be empty");
         }
-        else if((Number.isInteger(lastName)) || (!isNaN(parseFloat(lastName)) && isFinite(lastName))){
+
+        if (isEmpty(lastName)) {
+            statusMessages.push("Last name cannot be empty");
+        } else if ((Number.isInteger(lastName)) || (!isNaN(parseFloat(lastName)) && isFinite(lastName))) {
             statusMessages.push("Last name cannot be a number");
         }
 
-        if(isEmpty(email) || !myApp.isValidEmail(email)) {
+        if (isEmpty(email) || !myApp.isValidEmail(email)) {
             statusMessages.push("Please provide a valid email");
         }
 
-        if(statusMessages.length > 0) {
+        if (statusMessages.length > 0) {
             var $legend = $("legend");
             $legend.append("<div></div>");
             $.each(statusMessages, function(index, element) {
@@ -647,7 +794,7 @@ $(function() {
         } else {
             var user = {
                 firstName: firstName,
-                lastName: lastName, 
+                lastName: lastName,
                 email: email
             }
             myApp.updateProfile(user);
@@ -668,7 +815,7 @@ $(function() {
 
         // Get place of seminar and check that it is not empty
         const place = getPlaceOfSeminar();
-        if(place.length === 0) {
+        if (place.length === 0) {
             alert("Please choose a place for the seminar");
             return;
         }
@@ -678,33 +825,33 @@ $(function() {
 
         // Post to server
         $.ajax({
-            url: '/assistant/takeAttendance/' + semGrID,
-            type: 'POST',
-            dataType: 'JSON',
-            data: {
-                students: JSON.stringify(students),
-                semGrID: semGrID,
-                place: place,
-                status: cancelled
-            },
-            success: function(data) {
-                $("#previousSeminar option:nth-child(1)").after("<option value=\"/" + semGrID + "/" + data + "\">" + place + " - Today " + "</option>");
-            }
-        })
-        .done(function(insertID) {
-            $("#status").html("Seminar opprettet.");
-            $updateBtn.removeClass('hide');
-            $updateBtn.parent().append("<button class='btn btn-default' id='resetAttendanceBtn'>Reset form/New seminar</button>");
-            $("#registerAttendanceBtn").addClass('hide');
-            $("form").append("<input id='insertID' name='insertID' type='text' value='" + insertID + "' hidden>");
-            resetAttendanceBtnClickListener(semGrID);
-        })
-        .fail(function() {
-            
-        })
-        .always(function() {
-            
-        });
+                url: '/assistant/takeAttendance/' + semGrID,
+                type: 'POST',
+                dataType: 'JSON',
+                data: {
+                    students: JSON.stringify(students),
+                    semGrID: semGrID,
+                    place: place,
+                    status: cancelled
+                },
+                success: function(data) {
+                    $("#previousSeminar option:nth-child(1)").after("<option value=\"/" + semGrID + "/" + data + "\">" + place + " - Today " + "</option>");
+                }
+            })
+            .done(function(insertID) {
+                $("#status").html("Seminar opprettet.");
+                $updateBtn.removeClass('hide');
+                $updateBtn.parent().append("<button class='btn btn-default' id='resetAttendanceBtn'>Reset form/New seminar</button>");
+                $("#registerAttendanceBtn").addClass('hide');
+                $("form").append("<input id='insertID' name='insertID' type='text' value='" + insertID + "' hidden>");
+                resetAttendanceBtnClickListener(semGrID);
+            })
+            .fail(function() {
+
+            })
+            .always(function() {
+
+            });
     });
 
     $("#updateAttendanceBtn").on('click', function(event) {
@@ -717,31 +864,31 @@ $(function() {
         const updateID = $("#insertID").val();
 
         $.ajax({
-            url: '/assistant/updateAttendance/' + semGrID,
-            type: 'POST',
-            dataType: 'JSON',
-            data: {
-                students: JSON.stringify(students),
-                status: cancelled,
-                place: place,
-                semGrID: semGrID,
-                updateID: updateID
-            },
-            success: function(data) {
-                
-            }
-        })
-        .done(function() {
-            
-            $("#status").html("Seminar group is now updated");
-            resetAttendanceBtnClickListener(semGrID);
-        })
-        .fail(function() {
-            
-        })
-        .always(function() {
-            
-        });
+                url: '/assistant/updateAttendance/' + semGrID,
+                type: 'POST',
+                dataType: 'JSON',
+                data: {
+                    students: JSON.stringify(students),
+                    status: cancelled,
+                    place: place,
+                    semGrID: semGrID,
+                    updateID: updateID
+                },
+                success: function(data) {
+
+                }
+            })
+            .done(function() {
+
+                $("#status").html("Seminar group is now updated");
+                resetAttendanceBtnClickListener(semGrID);
+            })
+            .fail(function() {
+
+            })
+            .always(function() {
+
+            });
     });
 
     $("#updateCourseBtn").on('click', function(event) {
@@ -753,45 +900,18 @@ $(function() {
         const plannedSeminars = $("#plannedSeminars").val();
 
         $.ajax({
-            url: '/admin/updateCourse',
-            type: 'POST',
-            dataType: 'JSON',
-            data: {
-                courseID: courseID,
-                courseName: courseName,
-                semester: semester,
-                attendance: attendance,
-                plannedSeminars: plannedSeminars
-            },
-            success: function(data) {
-                console.log(data);
-            }
-        })
-        .done(function() {
-            console.log("success");
-        })
-        .fail(function() {
-            console.log("error");
-        })
-        .always(function() {
-            console.log("complete");
-        });
-    });
-
-    $("#deleteCourseBtn").on('click', function(event) {
-        event.preventDefault();
-        var choice = confirm("This action is irreversible. Are you sure you want to delete this course?");
-        if(choice) {
-            const courseID = $("#courseID").val();
-            $.ajax({
-                url: '/admin/deleteCourse',
+                url: '/admin/updateCourse',
                 type: 'POST',
                 dataType: 'JSON',
                 data: {
-                    courseID: courseID
+                    courseID: courseID,
+                    courseName: courseName,
+                    semester: semester,
+                    attendance: attendance,
+                    plannedSeminars: plannedSeminars
                 },
                 success: function(data) {
-                    document.location.href = data.redirect_url;
+                    console.log(data);
                 }
             })
             .done(function() {
@@ -803,17 +923,50 @@ $(function() {
             .always(function() {
                 console.log("complete");
             });
-            
+    });
+
+    $("#deleteCourseBtn").on('click', function(event) {
+        event.preventDefault();
+        var choice = confirm("This action is irreversible. Are you sure you want to delete this course?");
+        if (choice) {
+            const courseID = $("#courseID").val();
+            $.ajax({
+                    url: '/admin/deleteCourse',
+                    type: 'POST',
+                    dataType: 'JSON',
+                    data: {
+                        courseID: courseID
+                    },
+                    success: function(data) {
+                        document.location.href = data.redirect_url;
+                    }
+                })
+                .done(function() {
+                    console.log("success");
+                })
+                .fail(function() {
+                    console.log("error");
+                })
+                .always(function() {
+                    console.log("complete");
+                });
+
         } else {
             return;
         }
     });
 
-    $("#previousSeminar").on('change', function(event) {
+    $("#removeStudentAsAssistant").on('click', function(event) {
         event.preventDefault();
-        var prevSeminarUrlLocation = $(this).val();
-        document.location.href = "/assistant/previousSeminars" + prevSeminarUrlLocation;
+        var confirmation = confirm("Are you sure you want to remove the student as an assistant? This step cannot be undone, so use it with care");
+        if (confirmation) {
+            const studentID = $("#studentAssistant").val();
+            myApp.removeAssistant(studentID);
+        } else {
+            return;
+        }
     });
+
 
     $("#addAssistantToCourseBtn").on('click', function(event) {
         event.preventDefault();
@@ -821,15 +974,15 @@ $(function() {
         var courseID = $("#courseSelection").val();
         var statusMessages = [];
 
-        if(isEmpty(userID)) {
+        if (isEmpty(userID)) {
             statusMessages.push("User cannot be empty");
         }
 
-        if(isEmpty(courseID)) {
+        if (isEmpty(courseID)) {
             statusMessages.push("Course cannot be empty");
         }
 
-        if(statusMessages.length == 0) {
+        if (statusMessages.length == 0) {
             myApp.addAssistantToCourse(userID, courseID);
         } else {
             var $legend = $("#addAssistantStatus");
@@ -842,7 +995,7 @@ $(function() {
     $("#fetchCoursesForAssistant").on('click', function(event) {
         event.preventDefault();
         var userID = $("#studentAssistant").val();
-        if(userID.length > 0) {
+        if (userID.length > 0) {
             myApp.fetchSeminarGroupsForAssistant(userID);
         } else {
             $("legend").html("Du må velge en bruker for å fortsette");
@@ -867,13 +1020,13 @@ $(function() {
                     }
                 })
                 .done(function() {
-                    
+
                 })
                 .fail(function() {
-                    
+
                 })
                 .always(function() {
-                    
+
 
                 });
         } else {
@@ -895,17 +1048,17 @@ $(function() {
                     success: function(data) {
                         showCourseList(data);
                         fetchSeminarGroups();
-                        
+
                     }
                 })
                 .done(function() {
-                    
+
                 })
                 .fail(function() {
-                    
+
                 })
                 .always(function() {
-                    
+
                 })
         } else {
             $courseTable.addClass("hide");
@@ -940,31 +1093,31 @@ $(function() {
                     dataType: "json",
                     data: {
                         courseID: courseID,
-                        groupName: groupName},
+                        groupName: groupName
+                    },
                     async: true,
                     success: function(data) {
                         var $status = $("#status");
                         $status.html("");
                         $status.append(data);
-                        if(data.redirect_url) {
-                            $status.html("<p>There are no courses with " + courseID + " registered. If you are an admin you can create a new course. If you are a student assistant, then you need to contact an administrator.</p> "
-                                            + "<a href=\"" + data.redirect_url + "\" class=\"btn btn-primary\">Create new course</a>");
+                        if (data.redirect_url) {
+                            $status.html("<p>There are no courses with " + courseID + " registered. If you are an admin you can create a new course. If you are a student assistant, then you need to contact an administrator.</p> " + "<a href=\"" + data.redirect_url + "\" class=\"btn btn-primary\">Create new course</a>");
 
                         } else {
-                            setTimeout(function(){
-                            location.reload();
-                         }, 3000);
+                            setTimeout(function() {
+                                location.reload();
+                            }, 3000);
                         }
                     }
                 })
                 .done(function() {
-                    
+
                 })
                 .fail(function() {
-                    
+
                 })
                 .always(function() {
-                    
+
                 })
         }
     });
@@ -990,6 +1143,203 @@ $(function() {
         }
     });
 
+    $("#resetForm").on('click', function(event) {
+        event.preventDefault();
+        myApp.resetForm();
+        hideFormFields();
+        colorMarkElement($("#studentID"), '#FFF');
+    })
+
+    // Functionality for getting more attendance info for a given student
+    $(".studentAttendanceInfo").on('click', function(event) {
+        event.preventDefault();
+
+        const StudID = $(this).parent().data('student_id');
+        const semGrID = $(this).parent().data('semgrid');
+        const studentName = $(this)[0].innerHTML;
+        $.ajax({
+                url: '/assistant/studentAttendanceInfo',
+                type: 'POST',
+                dataType: 'JSON',
+                data: {
+                    StudID: StudID,
+                    semGrID: semGrID
+                },
+                success: function(data) {
+                    showAttendanceData(studentName, data);
+                }
+            })
+            .done(function() {
+
+            })
+            .fail(function() {
+
+            })
+            .always(function() {
+
+            });
+    });
+
+    $("#clearStudentAttendanceInfo").on('click', function(event) {
+        event.preventDefault();
+        var $well = $(".well");
+        $well.addClass('hide');
+        $well.find("tbody").html("");
+    });
+
+    $(".studentMessage").on('click', function(event) {
+        var $input = $(this).find('input');
+        $input.prop("checked", !input.prop("checked"));
+    });
+
+    $("#sendMessagesBtn").on('click', function(event) {
+        event.preventDefault();
+        var confirmation = confirm("This will send out an email to all students you have checked off. Are you sure you want to send the email?");
+        if (confirmation === false) {
+            return;
+        }
+
+        var formattedMessage = $('#froala').froalaEditor('html.get');
+
+        var students = [];
+        var $checkboxes = $("table tr td:nth-child(5) input:checked");
+        if ($checkboxes.length > 0) {
+            $checkboxes.each(function(index, el) {
+                var email = $(el).parent().parent().data("email")
+                var beenAway = parseInt($(el).parent().parent().find("td:nth-child(3)")[0].innerHTML);
+                var name = $(el).parent().parent().find("td:nth-child(1)")[0].innerHTML;
+                students.push({
+                    email: email,
+                    beenAway: beenAway,
+                    name: name
+                });
+            });
+        } else {
+            return;
+        }
+        $.ajax({
+                url: '/assistant/sendMessages',
+                type: 'POST',
+                dataType: 'JSON',
+                data: {
+                    students: JSON.stringify(students),
+                    message: JSON.stringify(formattedMessage)
+                },
+                success: function(data) {
+
+                    $(".sendMessage").append("<div class='alert alert-success'>Mail successfully sent</div>");
+                    myApp.resetForm();
+                    setTimeout(function() {
+                        $(".alert").remove();
+                    }, 5000);
+                },
+            })
+            .done(function() {
+
+            })
+            .fail(function() {
+
+                $(".sendMessage").append("<div class='alert alert-warning'>Mail could not be sent</div>");
+                myApp.resetForm();
+                setTimeout(function() {
+                    $(".alert").remove();
+                }, 5000);
+            })
+            .always(function() {
+
+            });
+    });
+
+
+
+
+    // Method for checking all input boxes
+    $("#checkAllAttendanceBtn").on('click', function(event) {
+        event.preventDefault();
+        $("form input[type='checkbox'].student-attendance").each(function(index, el) {
+            $(el).prop('checked', true);
+        });
+    });
+
+    $("#uncheckAllAttendanceBtn").on('click', function(event) {
+        event.preventDefault();
+        $("form input[type='checkbox'].student-attendance").each(function(index, el) {
+            $(el).prop('checked', false);
+        });
+    });
+
+
+
+    $("#createCourseBtn").on("click", function(e) {
+        e.preventDefault();
+        var $status = $("#status");
+
+        var courseID = $("#courseID").val();
+        var courseName = $("#courseName").val();
+        var semester = $("#semester").val();
+        var attendancePercentage = $("#attendancePercentage").val();
+        var plannedSeminars = $("#plannedSeminars").val();
+        var statusMessages = [];
+
+        if (courseID === '') {
+            statusMessages.push("Course id cannot be empty");
+        }
+
+        if (courseName === '') {
+            statusMessages.push("Course name cannot be empty");
+        }
+
+        if (semester === '') {
+            statusMessages.push("Semester cannot be empty");
+        }
+
+        if (statusMessages.length > 0) {
+            //error melding her
+            var $status = $("#status");
+            $status.html("");
+            for (var i = 0; i < statusMessages.length; i++) {
+                $status.append("<p class=\"bg-danger\">" + statusMessages[i] + "</p>");
+            }
+        } else {
+            $.ajax({
+                    url: '/admin/createCourse',
+                    type: 'POST',
+                    dataType: 'JSON',
+                    data: {
+                        courseID: courseID,
+                        courseName: courseName,
+                        semester: semester,
+                        attendancePercentage: attendancePercentage,
+                        plannedSeminars: plannedSeminars
+                    },
+                    success: function(data) {
+                        $status.html(data);
+                        $("table tbody").append("<tr><td>" + courseID + "</td><td>" + courseName + "</td><td>" + semester + "</td><td>" + attendancePercentage + " %</td><td>" + plannedSeminars + "</td><td><a href=\"/admin/editCourse/" + courseID + "\"><i class='material-icons'>&#xE3C9;</i></td></tr>");
+                    }
+                })
+                .done(function() {
+
+                })
+                .fail(function(data) {
+
+                })
+                .always(function() {
+
+                });
+        }
+    });
+
+
+    /**
+        ########## On-change events ##########
+    */
+
+    $("#previousSeminar").on('change', function(event) {
+        event.preventDefault();
+        var prevSeminarUrlLocation = $(this).val();
+        document.location.href = "/assistant/previousSeminars" + prevSeminarUrlLocation;
+    });
+
     $("#courseSelection").on('change', function(e) {
         e.preventDefault();
         const $select = $("#courseSelection");
@@ -1013,29 +1363,19 @@ $(function() {
                 }
             })
             .done(function() {
-                
+
             })
             .fail(function() {
-                
+
             })
             .always(function() {
-                
+
             });
     });
 
-    // Trigger change at page load so the chosen element is fetching data at page load
-    $("#courseSelection").trigger('change');
 
 
-
-    // This function call appends the value written in the courseID field
-    // to the groupName-field used when creating a new seminargroup
-    $("#courseID").keyup(function(e) {
-        const value = $(this).val();
-        $("#groupName").val(value);
-    });
-
-    // This function call is called when an admin enters the student id when 
+    // This function call is called when an admin enters the student id when
     // registering a student assistant
     $("#studentID").on("keyup change", function(e) {
         /* Act on the event */
@@ -1053,7 +1393,7 @@ $(function() {
                     },
                     success: function(data) {
                         if (data) {
-                            if(data.length > 1) {
+                            if (data.length > 1) {
                                 // showWarningMessage
                                 populateDropdown(data);
                             } else {
@@ -1070,13 +1410,13 @@ $(function() {
                     }
                 })
                 .done(function() {
-                    
+
                 })
                 .fail(function() {
-                    
+
                 })
                 .always(function() {
-                    
+
                 });
         } else {
             hideFormFields();
@@ -1090,140 +1430,6 @@ $(function() {
     });
 
 
-    $("#resetForm").on('click', function(event) {
-        event.preventDefault();
-        myApp.resetForm();
-        hideFormFields();
-        colorMarkElement($("#studentID"), '#FFF');
-    })
-
-    // Functionality for getting more attendance info for a given student
-    $(".studentAttendanceInfo").on('click', function(event) {
-        event.preventDefault();
-
-        const StudID = $(this).parent().data('student_id');
-        const semGrID = $(this).parent().data('semgrid');
-        const studentName = $(this)[0].innerHTML;
-        $.ajax({
-            url: '/assistant/studentAttendanceInfo',
-            type: 'POST',
-            dataType: 'JSON',
-            data: {
-                StudID: StudID,
-                semGrID: semGrID
-            },
-            success: function(data) {
-                showAttendanceData(studentName, data);
-            }
-        })
-        .done(function() {
-            
-        })
-        .fail(function() {
-            
-        })
-        .always(function() {
-            
-        });
-    });
-
-    $("#clearStudentAttendanceInfo").on('click', function(event) {
-        event.preventDefault();
-        var $well = $(".well");
-        $well.addClass('hide');
-        $well.find("tbody").html("");
-    });
-
-    $(".studentMessage").on('click', function(event) {
-        var $input = $(this).find('input');
-        $input.prop("checked", !input.prop("checked"));
-    });
-
-    $("#sendMessagesBtn").on('click', function(event) {
-        event.preventDefault();
-        var confirmation = confirm("This will send out an email to all students you have checked off. Are you sure you want to send the email?");
-        if(confirmation === false) {
-            return;
-        }
-
-        var formattedMessage = $('#froala').froalaEditor('html.get');
-
-        var students = [];
-        var $checkboxes = $("table tr td:nth-child(5) input:checked");
-        if($checkboxes.length > 0) {
-            $checkboxes.each(function(index, el) {
-                var email = $(el).parent().parent().data("email")
-                var beenAway = parseInt($(el).parent().parent().find("td:nth-child(3)")[0].innerHTML);
-                var name = $(el).parent().parent().find("td:nth-child(1)")[0].innerHTML;
-                students.push({
-                        email: email,
-                        beenAway: beenAway,
-                        name: name
-                });
-            });
-        } else {
-            return;
-        }
-      $.ajax({
-          url: '/assistant/sendMessages',
-          type: 'POST',
-          dataType: 'JSON',
-          data: {
-            students: JSON.stringify(students),
-            message: JSON.stringify(formattedMessage)
-        },
-        success: function(data){
-            
-            $(".sendMessage").append("<div class='alert alert-success'>Mail successfully sent</div>");
-            myApp.resetForm();
-            setTimeout(function(){
-                $(".alert").remove();
-            }, 5000);
-        },
-      })
-      .done(function() {
-          
-      })
-      .fail(function() {
-          
-          $(".sendMessage").append("<div class='alert alert-warning'>Mail could not be sent</div>");
-                myApp.resetForm();
-                setTimeout(function(){
-                    $(".alert").remove();
-            }, 5000);
-      })
-      .always(function() {
-          
-      });
-    });
-
-    // Makes the send message button active if at least one checkbox is checked
-    $("table tr td:nth-child(5) input").on('change', function(event) {
-        event.preventDefault();
-        var numOfCheckedCheckboxes = getNumOfCheckedCheckboxes();
-        if(numOfCheckedCheckboxes > 0) {
-            $("#sendMessagesBtn").prop('disabled', false);
-            $("#messageFormatting").removeClass('hide');    
-        } else {
-            $("#sendMessagesBtn").prop('disabled', true);
-            $("#messageFormatting").addClass('hide');
-        }
-    });
-
-    // Returns the number of checked checkboxes
-    function getNumOfCheckedCheckboxes() {
-        return $("table tr td:nth-child(5) input:checked").length;
-    }
-
-    function populateDropdown(data) {
-        var $selectDiv = $(".multipleNameSelect");
-        var $select = $("#multipleNameSelect");
-        $selectDiv.removeClass('hide');
-        $select.html("");
-        for(var i = 0; i < data.length; i++) {
-            $select.append("<option value=\"" + data[i].StudID + "\">" + data[i].fName + " " + data[i].lName + "</option>");
-        }
-    }
 
     $("#multipleNameSelect").on('blur change', function(event) {
         event.preventDefault();
@@ -1233,244 +1439,18 @@ $(function() {
         $studentID.trigger('change');
     });
 
-    //sort the table on text input for courses
-    $("#inputCourse").keyup(function() {
-        _this = this;
-
-        $.each($("#courseTable tbody tr"), function() {
-            if ($(this).text().toLowerCase().indexOf($(_this).val().toLowerCase()) === -1)
-                $(this).hide();
-            else
-                $(this).show();
-        });
-    });
-
-    // Method for checking all input boxes
-    $("#checkAllAttendanceBtn").on('click', function(event) {
+    // Makes the send message button active if at least one checkbox is checked
+    $("table tr td:nth-child(5) input").on('change', function(event) {
         event.preventDefault();
-        $("form input[type='checkbox'].student-attendance").each(function(index, el) {
-            $(el).prop('checked', true);
-        });
-    });
-
-    $("#uncheckAllAttendanceBtn").on('click', function(event) {
-        event.preventDefault();
-        $("form input[type='checkbox'].student-attendance").each(function(index, el) {
-            $(el).prop('checked', false);
-        });
-    });
-
-    // Method to populate the registration fields for the creation of a new student assistant
-    function unhideformFields() {
-        $("form div.hide").each(function(index, val) {
-            /* iterate through array or object */
-            $(val).removeClass('hide');
-        });
-    }
-
-    function hideFormFields() {
-        $("#firstName").parent().addClass('hide');
-        $("#lastName").parent().addClass('hide');
-        $("#email").parent().addClass('hide');
-    }
-
-
-    function populateRegistrationFields(data) {
-        var $firstName = $("#firstName");
-        var $lastName = $("#lastName");
-        var $email = $("#email");
-        var $studentID = $("#studentID");
-
-        $studentID.val(data.StudID);
-        $firstName.val(data.fName).prop('disabled', true);
-        $lastName.val(data.lName).prop('disabled', true);
-        $email.val(data.eMail).prop('disabled', true);
-
-    }
-
-    // Function to mark a element as green
-    function colorMarkElement(element, color) {
-        element.css('background-color', color);
-        element.css('color', '#2d2d2d');
-    }
-
-
-    function addClickEventForSeminarRegistration() {
-        $(".registerForSeminarBtn").on('click', function(e) {
-            e.preventDefault();
-            var seminarKey = $(this).data('seminarkey');
-            var courseID = $(this).data('courseid');
-            $.ajax({
-                    url: '/student/signUpForSeminar/' + seminarKey,
-                    type: 'POST',
-                    dataType: 'JSON',
-                    data: {
-                        seminarGroup: seminarKey,
-                        courseID: courseID
-                    },
-                    success: function(data) {
-                        alert(data);
-                    }
-                })
-                .done(function() {
-                    
-                })
-                .fail(function(data) {
-                    
-                })
-                .always(function() {
-                    
-                    location.reload();
-                });
-        });
-    }
-
-    function showSeminarList(data) {
-        var $table = $("#courseTable tbody");
-
-        for (var i = 0; i < data.length; i++) {
-
-            var course = data[i];
-
-            $(
-                "[data-courseid=" + course.courseID + "]").after(
-                "<tr class=semHead" + course.courseID + ">" +
-                "<th></th>" + 
-                "<th></th>" + 
-                "<th>Seminar Group</th>" + 
-                "<th>Registrer</th></tr>" + 
-                "<tr class=semInfo>" +
-                "<td></td>" + 
-                "<td></td>" +
-                "<td>" + course.name + "</td>" +
-                "<td>" + 
-                "<a data-courseid=\"" + course.courseID + "\" data-seminarkey=\"" + course.semGrID +
-                "\" class=\"registerForSeminarBtn\" href=\"#\">Sign Up</a>" +
-                "</td>" +
-                "</tr>"
-                ).one();
-            $(".semHead" + course.courseID + ">:gt(3)").remove();
-            $(".semInfo tr").remove();
-        }
-    }
-
-    
-    function showCourseList(data) {
-        var $table = $("#courseTable tbody");
-        $table.html("");
-        for (var i = 0; i < data.length; i++) {
-            var course = data[i];
-            $table.append("<tr data-courseid=\"" + course.courseID + "\" class='fetchSeminarGroups'>" +
-                "<td class='courseId'>" + course.courseID + "</td>" +
-                "<td >" + course.name + "</td>" +
-                "<td>" + course.semester + "</td>" +
-                "<td>" + course.attendance + " %" + "</td>" +
-                "</tr>");
-        }
-
-    }
-
-    function fetchSeminarGroups() {
-        $('.fetchSeminarGroups').one("click", function(e) {
-            e.preventDefault();
-            var courseID = $(this).data("courseid");
-            $.ajax({
-                    url: '/student/listSeminars',
-                    type: 'POST',
-                    dataType: 'JSON',
-                    data: {
-                        courseID: courseID
-                    },
-                    async: true,
-                    success: function(data) {
-                        showSeminarList(data);
-                        addClickEventForSeminarRegistration();
-                    }
-                })
-                .done(function() {
-                    
-                })
-                .fail(function() {
-                    
-                })
-                .always(function() {
-                    
-
-                });
-        });
-    }
-
-    function addClickEventForCourseRegistration() {
-         $(".createCourseBtn").on('click', function(e) {
-            e.preventDefault();
-            var courseID = $(this).data('courseID');
-
-        });
-    };
-
-    $("#createCourseBtn").on("click", function(e){
-        e.preventDefault();
-        var $status = $("#status");
-
-        var courseID = $("#courseID").val();
-        var courseName = $("#courseName").val();
-        var semester = $("#semester").val();
-        var attendancePercentage = $("#attendancePercentage").val();
-        var plannedSeminars = $("#plannedSeminars").val();
-        var statusMessages = [];
-
-        if (courseID === '') {
-            statusMessages.push("Course id cannot be empty");
-        }
-
-        if (courseName === '') {
-            statusMessages.push("Course name cannot be empty");
-        }
-
-        if (semester === '') {
-            statusMessages.push("Semester cannot be empty");
-        }
-
-        if(statusMessages.length > 0){
-            //error melding her
-            var $status = $("#status");
-            $status.html("");
-            for (var i = 0; i < statusMessages.length; i++) {
-                $status.append("<p class=\"bg-danger\">" + statusMessages[i] + "</p>");
-            }
+        var numOfCheckedCheckboxes = getNumOfCheckedCheckboxes();
+        if (numOfCheckedCheckboxes > 0) {
+            $("#sendMessagesBtn").prop('disabled', false);
+            $("#messageFormatting").removeClass('hide');
         } else {
-            $.ajax({
-                url: '/admin/createCourse',
-                    type: 'POST',
-                    dataType: 'JSON',
-                    data: {
-                        courseID : courseID,
-                        courseName : courseName,
-                        semester : semester,
-                        attendancePercentage : attendancePercentage,
-                        plannedSeminars : plannedSeminars
-                    },
-                    success: function(data) {
-                        $status.html(data);
-                        $("table tbody").append("<tr><td>" + courseID + "</td><td>" + courseName + "</td><td>" + semester + "</td><td>" + attendancePercentage + " %</td><td>" + plannedSeminars + "</td><td><a href=\"/admin/editCourse/" + courseID + "\"><i class='material-icons'>&#xE3C9;</i></td></tr>");
-                    }
-                })
-                .done(function() {
-                    
-                })
-                .fail(function(data) {
-                    
-                })
-                .always(function() {
-                    
-                });
+            $("#sendMessagesBtn").prop('disabled', true);
+            $("#messageFormatting").addClass('hide');
         }
     });
-
-
-    /**
-        ########## On-change events ##########
-    */
 
     $("#studentAssistant").on('change', function(e) {
         e.preventDefault();
@@ -1503,13 +1483,13 @@ $(function() {
                 }
             })
             .done(function() {
-                
+
             })
             .fail(function() {
-                
+
             })
             .always(function() {
-                
+
             });
     });
 
@@ -1517,8 +1497,8 @@ $(function() {
     $("table tr td:nth-child(5) input").on('change', function(event) {
         event.preventDefault();
         var numOfCheckedCheckboxes = getNumOfCheckedCheckboxes();
-        if(numOfCheckedCheckboxes > 0) {
-            $("#sendMessagesBtn").prop('disabled', false);    
+        if (numOfCheckedCheckboxes > 0) {
+            $("#sendMessagesBtn").prop('disabled', false);
         } else {
             $("#sendMessagesBtn").prop('disabled', true);
         }
@@ -1547,6 +1527,9 @@ $(function() {
     // Trigger change at page load so the chosen element is fetching data at page load
     $("#courseSelection").trigger('change');
 
+    // Trigger change at page load so the chosen element is fetching data at page load
+    $("#courseSelection").trigger('change');
+
     /**
         ########## KeyUp-events ##########
     */
@@ -1558,7 +1541,26 @@ $(function() {
         $("#groupName").val(value);
     });
 
-    // This function call is called when an admin enters the student id when 
+    //sort the table on text input for courses
+    $("#inputCourse").keyup(function() {
+        _this = this;
+
+        $.each($("#courseTable tbody tr"), function() {
+            if ($(this).text().toLowerCase().indexOf($(_this).val().toLowerCase()) === -1)
+                $(this).hide();
+            else
+                $(this).show();
+        });
+    });
+
+    // This function call appends the value written in the courseID field
+    // to the groupName-field used when creating a new seminargroup
+    $("#courseID").keyup(function(e) {
+        const value = $(this).val();
+        $("#groupName").val(value);
+    });
+
+    // This function call is called when an admin enters the student id when
     // registering a student assistant
     $("#studentID").on("keyup change", function(e) {
         /* Act on the event */
@@ -1576,9 +1578,9 @@ $(function() {
                         studentID: studentID
                     },
                     success: function(data) {
-                        
+
                         if (data) {
-                            if(data.length > 1) {
+                            if (data.length > 1) {
                                 // showWarningMessage
                                 populateDropdown(data);
                             } else {
@@ -1595,13 +1597,13 @@ $(function() {
                     }
                 })
                 .done(function() {
-                    
+
                 })
                 .fail(function() {
-                    
+
                 })
                 .always(function() {
-                    
+
                 });
         } else {
             hideFormFields();
@@ -1627,5 +1629,5 @@ $(function() {
         });
     });
 
-    
+
 });
