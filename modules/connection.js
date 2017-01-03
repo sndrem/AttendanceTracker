@@ -8,6 +8,7 @@ var connection = mysql.createConnection({
     multipleStatements: true
 });
 
+console.log('Hello from the connection file');
 connection.connect(function(err) {
     if(err) {
         console.log("Error connecting to database. Please check credentials");
