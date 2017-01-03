@@ -11,6 +11,7 @@ var connection = mysql.createConnection({
 console.log('Hello from the connection file');
 connection.connect(function(err) {
     if(err) {
+        console.log(err);
         console.log("Error connecting to database. Please check credentials");
     } else {
         console.log("Connected to database. Have a nice day");
