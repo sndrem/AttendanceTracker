@@ -1,4 +1,5 @@
 var mysql = require('mysql');
+console.log(process.env);
 var connection = mysql.createConnection({
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
