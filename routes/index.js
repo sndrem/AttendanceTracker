@@ -17,6 +17,7 @@ router.get('/register', function(req, res, next) {
 
 /* GET login page */
 router.get('/login', function(req, res, next) {
+    console.log("Login page...");
     res.render('login', {'title': "Log in"});
 });
 
