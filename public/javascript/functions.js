@@ -697,6 +697,10 @@ $(function() {
             statusMessages.push("Please provide a password");
         }
 
+        if(password.length <= 4) {
+            statusMessages.push("Please provide a password with 5 or more characters");
+        }
+
         if (statusMessages.length == 0) {
             myApp.login(email, password);
         } else {
@@ -738,6 +742,10 @@ $(function() {
 
         if (isEmpty(password)) {
             statusMessages.push("Please provide a password");
+        }
+
+        if(password.length <= 4) {
+            statusMessages.push("Please provide a password with 5 or more characters");
         }
 
         if (isEmpty(confirmPassword)) {
